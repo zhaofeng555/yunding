@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html  lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<body>
+
+<div class="col-md-2 side-nav"  th:fragment="menu">
+
+    <style>
+      .panel-heading {
+            margin: 5px 0px 0px 10px;
+            padding: 0;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            border-color: #DDDDDD;
+            position: relative;
+        }
+    
+        .side-nav-item {
+            display: block;
+            padding: 10px 15px 10px 15px;
+            background-color: #FFFFFF;
+            cursor: pointer;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .item-title {
+            background-color: #F5F5F5;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border-bottom: 1px solid #DDDDDD;
+        }
+
+      
+        .item-body {
+            padding: 10px 15px 5px 35px;
+            border-bottom: 1px solid #DDDDDD;
+        }
+
+        .item-second {
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .item-second a {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <div class="panel-group" id="accordion">
+
+        <div class="panel-heading panel">
+            <a data-toggle="collapse" data-parent="#accordion" href="#item-cangku" id="headcangku" class="side-nav-item item-title">
+                操作菜单
+            </a>
+            <div id="item-cangku" class="panel-collapse collapse in">
+                <div class="item-body">
+                    <ul class="list-unstyled">
+                        <li class="item-second"><a href="/goto/company">公司简介</a></li>
+                        <li class="item-second"><a href="/goto/userInfo">个人信息</a></li>
+                        <li class="item-second"><a href="/goto/transaction">挂盘交易</a></li>
+                        <li class="item-second"><a href="/goto/register">注册申报</a></li>
+                        <li class="item-second"><a href="/goto/increaseInfo">增长明细</a></li>
+                        <li class="item-second"><a href="/goto/cash">申请提现</a></li>
+                        <li class="item-second"><a href="/goto/transfer">转换股权</a></li>
+                        <li class="item-second"><a href="/goto/myAssets">我的资产</a></li>
+                        <li class="item-second"><a href="/goto/export">资产转出</a></li>
+                        <li class="item-second"><a href="/goto/transactionListing">交易记录</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="copy">
+    &copy; 2017 www.yunding.cn
+</div>
+</body>
+</html>
+

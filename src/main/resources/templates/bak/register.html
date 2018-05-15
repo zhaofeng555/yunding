@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注册用户</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/commons.css" />
+<script type="text/javascript">
+
+function checkAndSubmit(){
+	var registUsername=$("#registerForm").find('input[name="username"]').val();
+	var cardId=$("#registerForm").find('input[name="cardId"]').val();
+	var recUsername=$("#registerForm").find('input[name="recUsername"]').val();
+	
+/*
+var dateStr=$("#registerForm").find('input[name="mobileApplyTime"]').val();
+	if(!isDate(dateStr)){
+		alert("领取日期格式不正确!") ;
+		return;
+	}
+*/
+	
+	checkRegisterUsername(registUsername, recUsername, cardId);
+}
+
+//check registerUsername
+function checkRegisterUsername(registUsername, recUsername, cardId){
+	$.ajax({
+		type: "post",
+		url:"/auth/check.do",
+		contentType:"application/x-www-form-urlencoded",
+		data:{
+			"username":registUsername,
+			"cardId":cardId
+		},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.data == 1){
+				alert("用户名已经存在");
+			}else if(resp.data == 2){
+				alert("身份证号已经存在");
+			}else{
+				checkRecUsername(recUsername);
+			}
+		}
+	});
+}
+
+//check recUserName
+function checkRecUsername(recUsername){
+	$.ajax({
+		type: "post",
+		url:"/auth/getIdByUsername.do",
+		contentType:"application/x-www-form-urlencoded",
+		data:{
+			"username":recUsername
+		},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.data){
+				$("#recUserId").val(resp.data);
+				subRegisterForm();
+			}else{
+				alert("推荐人不存在");
+			}
+		}
+	});
+}
+
+function subRegisterForm(){
+	$("#registerForm").submit();
+}
+
+function isDate(dateStr){
+	var a = /^(\d{4})-(\d{2})-(\d{2})$/
+	if (!a.test(dateStr)) { 
+		return false 
+	} 
+	else 
+		return true 
+} 
+</script>
+</head>
+<body class="text-center">
+<h2>注册界面</h2>
+<form id="registerForm" class="form-horizontal" action="user/register" method="post">
+	<input type="hidden" name="recUserId" id="recUserId" value=""/>
+    <div class="form-group">
+        <label for="inputtext1" class="col-sm-2 control-label">帐号</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext1" name="username" placeholder="登录账号" required="required"/>
+        </div>
+        <label for="inputtext2" class="col-sm-2 control-label">手机型号</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext2" name="mobilType" placeholder="领取的手机型号" required="required"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext3" class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-3">
+            <input type="password" class="form-control" id="inputtext3" name="password" placeholder="密码" required="required"/>
+        </div>
+        <label for="inputtext6" class="col-sm-2 control-label">领取日期</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext6" name="mobileApplyTime" placeholder="领取手机日期(例如：2017-11-11)" required="required"/>
+        </div>
+        
+    </div>
+    <div class="form-group">
+        <label for="inputtext5" class="col-sm-2 control-label">确认密码</label>
+        <div class="col-sm-3">
+            <input type="password" class="form-control" id="inputtext5" name="repassword" placeholder="确认密码" required="required"/>
+        </div>
+        <label for="inputtext8" class="col-sm-2 control-label">手机金额</label>
+        <div class="col-sm-3">
+            <input type="number" class="form-control" id="inputtext8" name="mobileTotalMoney" placeholder="手机总金额(元)" required="required" min="1"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext9" class="col-sm-2 control-label">姓名</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext9" name="realName" placeholder="真实姓名" required="required"/>
+        </div>
+       
+        <label for="inputtext10" class="col-sm-2 control-label">每期尝还</label>
+        <div class="col-sm-3">
+            <input type="number" class="form-control" id="inputtext10" name="mobilePerMoney" placeholder="每期应还金额(元)" required="required"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext7" class="col-sm-2 control-label">身份证</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext7" name="cardId" placeholder="身份证号" required="required"/>
+        </div>
+        
+        
+        <label for="inputtext12" class="col-sm-2 control-label">送出部数</label>
+        <div class="col-sm-3">
+            <input type="number" class="form-control" id="inputtext12" name="mobileNum" placeholder="送出的手机部数" required="required"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext11" class="col-sm-2 control-label">开户行</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext11" name="bankName" placeholder="开户行名称(全称)" required="required"/>
+        </div>
+        <label for="inputtext14" class="col-sm-2 control-label">联系方式</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext14" name="telephoneNo" placeholder="联系方式(手机、座机)"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext13" class="col-sm-2 control-label">银行卡号</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="inputtext13" name="bankNo" placeholder="银行卡号" required="required"/>
+        </div>
+        <label for="inputtext15" class="col-sm-2 control-label">推荐人</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" name="recUsername" id="recUsername" placeholder="推荐人的用户名" required="required"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input  class="btn btn-default" id="subButton" onclick="checkAndSubmit();" value="注册"/>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

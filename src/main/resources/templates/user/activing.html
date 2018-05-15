@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="UTF-8" />
+
+<script src="/js/jquery-2.1.0.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/commons.css" />
+<script type="text/javascript">
+	function changeUser(userId) {
+		if (!confirm("您确定审核通过该用户？")) {
+			return false;
+		}
+
+		$.ajax({
+			type : "post",
+			url : "/user/active",
+			contentType : "application/x-www-form-urlencoded",
+			data : {
+				userId : userId
+			},
+			dataType : "json",
+			success : function(resp, textStatus) {
+				if (resp.code == 0) {
+					alert('激活成功');
+					window.location.reload();
+				} else {
+					alert('激活失败');
+				}
+			}
+		});
+	}
+
+	function delUser(userId) {
+		if (!confirm("您确定删除该用户？")) {
+			return false;
+		}
+
+		$.ajax({
+			type : "post",
+			url : "/user/delete",
+			contentType : "application/x-www-form-urlencoded",
+			data : {
+				userId : userId
+			},
+			dataType : "json",
+			success : function(resp, textStatus) {
+				if (resp.code == 0) {
+					alert('删除成功');
+					window.location.reload();
+				} else {
+					alert('删除失败');
+				}
+			}
+		});
+
+	}
+</script>
+</head>
+<body class="container">
+
+	<div th:replace="commons :: menu"></div>
+
+	<div class="col-md-10">
+
+		<h3>激活用户列表</h3>
+
+		<div th:unless="${#lists.isEmpty(users)}">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>ID号</td>
+						<td>用户名</td>
+						<td>姓名</td>
+						<td>联系方式</td>
+						<td>开户行</td>
+						<td>银行卡号</td>
+						<td>领取手机金额</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.id}">id</td>
+						<td th:text="${user.username}">id</td>
+						<td th:text="${user.realName}">id</td>
+						<td th:text="${user.cardId}">id</td>
+						<td th:text="${user.bankName}">id</td>
+						<td th:text="${user.bankNo}">id</td>
+						<td th:text="${user.mobileTotalMoney}">id</td>
+						<td th:attr="userId=${user.id}"><a href="javascript:void(0)"
+							th:onclick="'changeUser('+${user.id}+');'">激活</a> &nbsp;&nbsp; <a
+							href="javascript:void(0)" th:onclick="'delUser('+${user.id}+');'">删除</a>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			<ul class="pager">
+				<li class="previous" th:classappend="${users.isFirst()}? 'disabled'">
+					<a href="#"
+					th:href="@{/user/activing(page=${users.getNumber()-1},size=15)}">&larr;
+						上一页</a>
+				</li>
+				<li class="next" th:classappend="${users.isLast()}? 'disabled'">
+					<a href="#"
+					th:href="@{/user/activing(page=${users.getNumber()+1},size=15)}">下一页
+						&rarr;</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

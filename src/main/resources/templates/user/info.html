@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/commons.css" />
+
+<script type="text/javascript">
+
+function userCash(){
+	$('#userCashDialog').modal('show');
+}
+
+function showChangeUserPassword(){
+	$('#changeUserPasswdDialog').modal('show');
+}
+
+function changUserPassword(){
+	var oldPassword = $("#changUserPaaswdForm").find("input[name='oldPassword']").val();
+	var newPassword = $("#changUserPaaswdForm").find("input[name='newPassword']").val();
+	var reNewPassword = $("#changUserPaaswdForm").find("input[name='reNewPassword']").val();
+	
+	if(newPassword != reNewPassword){
+		alert("两次输入的密码不一样");
+		return;
+	}
+	
+	$.ajax({
+		type: "post",
+		url:"/user/changePasswd.do?",
+		dataType:"json",
+		data:{
+			oldPassword:oldPassword,
+			newPassword:newPassword
+		},
+		success: function(resp, textStatus){
+			$('#changeUserPasswdDialog').modal('hide');
+			if(resp.code ==0){
+				//parent.document.location.reload();
+				//window.location.reload(true);
+				window.location.href="/login";
+			}else{
+				alert(resp.msg);
+			}
+		}
+	});
+	
+}
+
+function createCash(){
+	var num = parseInt($("#num").val());
+	if(num%100 != 0){
+		alert("提现金额要100的整数倍");
+		return false;
+	}
+	if(!confirm("您确定要提现？")){
+		 return false;
+	 }
+	$.ajax({
+		type: "post",
+		url:"/cash/createcash.do?num="+num,
+		dataType:"json",
+		success: function(resp, textStatus){
+			$('#userCashDialog').modal('hide');
+			if(resp.code ==0){
+				//parent.document.location.reload();
+				window.location.reload(true);
+				//window.location.href="/user/info";
+			}else{
+				alert(resp.msg);
+			}
+		}
+	});
+}
+
+</script>
+
+</head>
+<body class="container">
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+        	<img alt="主页" src="/css/images/timg.jpg" width="60px" height="30px;"/>
+        </a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <!-- <li><a href="#notice_info">系统通知</a></li> -->
+            <li><a href="/user/rec_user?level=1">第一代推荐</a></li>
+            <li><a href="/user/rec_user?level=2">第二代推荐</a></li>
+            <li><a href="/user/rec_user?level=3">第三代推荐</a></li>
+            <!-- <li><a href="#team_sum">团队人数</a></li> -->
+            <li class=" active dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    	个人信息
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="showChangeUserPassword();">修改密码</a></li>
+                    <li><a href="/user/logout">退出登录</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    </div>
+</nav>
+
+
+	<div class="user_info" id="user_info">
+		<h2>个人信息</h2>
+		<form class="form-horizontal">
+			<div class="form-group">
+        <label for="inputtext1" class="col-sm-2 control-label">帐号</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.username}" ></span>
+        </div>
+        <label for="inputtext2" class="col-sm-2 control-label">手机型号</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.mobilType}" ></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext6" class="col-sm-2 control-label">领取日期</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.mobileApplyTime}" ></span>
+        </div>
+        <label for="inputtext8" class="col-sm-2 control-label">手机金额</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.mobileTotalMoney}" ></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext7" class="col-sm-2 control-label">身份证</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.cardId}" ></span>
+        </div>
+          <label for="inputtext10" class="col-sm-2 control-label">每期尝还</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.mobilePerMoney}" ></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext9" class="col-sm-2 control-label">姓名</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.realName}" ></span>
+        </div>
+       <label for="inputtext12" class="col-sm-2 control-label">送出部数</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.mobileNum}" ></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputtext11" class="col-sm-2 control-label">开户行</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.bankName}" ></span>
+        </div>
+        <label for="inputtext13" class="col-sm-2 control-label">银行卡号</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.bankNo}" ></span>
+        </div>
+    </div>
+    <div class="form-group">
+       
+        <label for="inputtext14" class="col-sm-2 control-label">联系方式</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.telephoneNo}" ></span>
+        </div>
+        <label for="inputtext15" class="col-sm-2 control-label">推荐人</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.recUsername}" ></span>
+        </div>
+    </div>
+    <div class="form-group">
+       
+        <label for="inputtext16" class="col-sm-2 control-label">账户佣金</label>
+        <div class="col-sm-3">
+        	<span class="form-control" th:text="${user.moneyNum}" ></span>
+        </div>
+        <label for="inputtext17" class="col-sm-2 control-label"></label>
+        <div class="col-sm-3">
+        	<input type="button" value="提现" onclick="userCash();"/>
+        </div>
+    </div>
+		</form>
+	</div>
+	<div class="notice_info" id="notice_info" >
+		<h3>系统通知</h3>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>标题</td>
+						<td>内容</td>
+						<td>发布日期</td>
+					</tr>
+				</thead>
+				<tbody th:unless="${#lists.isEmpty(notices)}">
+					<tr  th:each="notice : ${notices}">
+					<td ><a href="#" target="_blank" th:href="@{/notice/edit.do(id=${notice.id})}"><span th:text="${notice.name}"></span></a></td>
+					<td th:text="${notice.content}">内容</td>
+					<td th:text="${notice.createTimeCn}">日期</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+	
+	<div class="cash_info" id="cash_info">
+		<h3>提现列表</h3>
+		<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>Id号</td>
+						<td>数额</td>
+						 <td>开户行</td>
+			            <td>银行账号</td>
+			            <td>联系方式</td>
+						<td>发布日期</td>
+						<td>状态</td>
+					</tr>
+				</thead>
+				<tbody th:unless="${#lists.isEmpty(cashs)}">
+					<tr  th:each="cash : ${cashs}">
+					<td th:text="${cash.id}">id</td>
+					<td th:text="${cash.num}">num</td>
+					<td th:text="${cash.bankName}">id</td>
+		            <td th:text="${cash.bankNo}">id</td>
+		            <td th:text="${cash.telephoneNo}">id</td>
+					<td th:text="${cash.createTimeCn}">time</td>
+					<td th:text="${cash.statusCn}">status</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+	
+	<div class="rec_info" >
+		<div id="team_sum">
+			<h3>团队人数：</h3><span class="team_sum" th:text="${teamSum}">1</span>人
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="modal fade" id="userCashDialog" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">×</button>
+					</div>
+					<div class="modal-body">
+						
+						<form id="editForm" class="form-horizontal">
+						    <div class="form-group">
+						        <label for="inputtext2" class="col-sm-2 control-label">提现金额</label>
+						        <div class="col-sm-8">
+						            <input type="number" class="form-control" id="num" name="num" placeholder="提现数(100的整数倍)"/>
+						        </div>
+						    </div>
+						    <div class="form-group">
+						        <div class="col-sm-offset-2 col-sm-10">
+						            <input type="button"  class="btn btn-default" onclick="createCash();" value="提交申请"/>
+						        </div>
+						    </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" id="changeUserPasswdDialog" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">×</button>
+					</div>
+					<div class="modal-body">
+						
+						<form id="changUserPaaswdForm" class="form-horizontal">
+						    <div class="form-group">
+						        <label for="inputtext2" class="col-sm-3 control-label">原始密码：</label>
+						        <div class="col-sm-7">
+						            <input type="password" class="form-control" name="oldPassword" placeholder="原始密码"/>
+						        </div>
+						    </div>
+						    <div class="form-group">
+						        <label for="inputtext2" class="col-sm-3 control-label">新密码：</label>
+						        <div class="col-sm-7">
+						            <input type="password" class="form-control" name="newPassword" placeholder="新密码"/>
+						        </div>
+						    </div>
+						    <div class="form-group">
+						        <label for="inputtext2" class="col-sm-3 control-label">确认新密码：</label>
+						        <div class="col-sm-7">
+						            <input type="password" class="form-control" name="reNewPassword" placeholder="再次输入新密码"/>
+						        </div>
+						    </div>
+						    <div class="form-group">
+						        <div class="col-sm-offset-3 col-sm-10">
+						            <input type="button"  class="btn btn-default" onclick="changUserPassword();" value="保存"/>
+						        </div>
+						    </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+</body>
+</html>

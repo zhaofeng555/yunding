@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>登录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="js/jquery-2.1.0.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/commons.css" />
+<script type="text/javascript">
+	//登录错误提示
+function myLoad(){
+	var h = window.location.href;
+	if(h.indexOf('error') > 0){
+		alert("用户名或密码错误");
+	}
+}
+myLoad();	
+
+
+function freshImg(){
+	$("#imgAuth").attr("src", "/auth/identifycode.do?"+Math.random())
+}
+
+function subUserForm(){
+	var username=$("#username").val();
+	if(username.length==0){
+		alert('请输入用户名');
+		return;
+	}
+	var password=$("#password").val();
+	if(password.length==0){
+		alert('请输入密码');
+		return;
+	}
+	var idetifycode = $("#idetifycode").val();
+	if(idetifycode.length==0){
+		alert('请输入验证码');
+		return;
+	}
+	validateCode(idetifycode);
+}
+
+function validateCode(idetifycode){
+	$.ajax({
+		type: "post",
+		url: "auth/validateIdentifycode.do",
+		contentType:"application/x-www-form-urlencoded",
+		data:{identifycode:idetifycode},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				$("#loginForm").submit();
+			}else{
+				alert('验证码不正确');
+			}
+		}
+	});
+}
+
+
+
+
+</script>
+</head>
+<body class="text-center">
+
+	<div class="container">
+		<h2>会员登录</h2>
+		<form id="loginForm" class="form-horizontal" action="admin"
+			method="post">
+			<div class="form-group">
+				<label for="inputtext1"
+					class="col-sm-2  col-md-offset-2 control-label">帐号</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="username"
+						name="username" placeholder="登录账号" required="required" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputtext2"
+					class="col-sm-2  col-md-offset-2 control-label">密码</label>
+				<div class="col-sm-4">
+					<input type="password" class="form-control" id="password"
+						name="password" placeholder="密码" required="required" />
+				</div>
+			</div>
+			<!-- 
+			<div class="form-group">
+				<label for="inputtext2"
+					class="col-sm-2  col-md-offset-2 control-label">验证码</label>
+				<div class="col-sm-4">
+                        <input type="text" id="idetifycode" name="idetifycode"  class="form-control" placeholder="验证码"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-4 col-md-offset-4">
+                        <img id="imgAuth"  class="form-control"  alt="验证码" src="/auth/identifycode.do" onclick="freshImg();"/>
+				</div>
+			</div>
+			 -->
+
+
+
+			<div class="form-group">
+				<div class="col-sm-2 col-md-offset-4">
+					<a href="/register" class="form-control">注册</a>
+				</div>
+				<div class="col-sm-2 ">
+					<input type="button" class="form-control" value="登录" onclick="subUserForm();"/>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+</body>
+</html>

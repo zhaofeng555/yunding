@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>公告管理</title>
+
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/js/xheditor/xheditor-1.2.2.min.js"></script>
+<script type="text/javascript" src="/js/xheditor/xheditor_lang/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+$.fn.serializeObject = function()    
+{    
+   var o = {};    
+   var a = this.serializeArray();    
+   $.each(a, function() {    
+       if (o[this.name]) {    
+           if (!o[this.name].push) {    
+               o[this.name] = [o[this.name]];    
+           }    
+           o[this.name].push(this.value || '');    
+       } else {    
+           o[this.name] = this.value || '';    
+       }    
+   });    
+   return o;    
+};  
+
+	function showAddNoticeDialog(){
+		$("#noticeContent").val("");
+		$("#name").val("");
+		
+		$('#addNoticeDialog').modal('show');
+	}
+	function delNotice(id) {
+		if(!confirm("您确定删除此通知操作？")){
+			 return false;
+		 }
+		
+		$.ajax({
+			type: "post",
+			url:"/notice/delete.do",
+			contentType:"application/x-www-form-urlencoded",
+			data:{
+				id:id
+			},
+			dataType:"json",
+			success: function(resp, textStatus){
+				if(resp.code == 0){
+					alert('删除成功');
+					 window.location.reload();
+				}else{
+					alert('删除失败');
+				}
+			}
+		});
+	}
+
+	function saveNotice(){
+		$.ajax({
+			type: "post",
+			url:"/notice/save.do",
+			contentType:"application/x-www-form-urlencoded",
+			data:$("#addNoticeForm").serializeObject(),
+			dataType:"json",
+			success: function(resp, textStatus){
+				if(resp.code == 0){
+					alert("添加成功");	
+					window.location.reload();
+				}else{
+					alert(resp.message);
+				}
+			}
+		});
+	}
+
+	$(function(){
+		$('#noticeContent').xheditor({upImgUrl:"notice/uploadNoticeImage.do",upImgExt:"jpg,jpeg,gif,png"});
+	})
+</script>
+</head>
+
+<body class="container">
+	<div th:replace="commons :: menu"></div>
+
+	<div class="col-md-10">
+		<h2>公告列表</h2>
+		<input type="button" value="增加公告" onclick="showAddNoticeDialog();"/>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<td>ID</td>
+					<td>公告名字</td>
+					<td>公告内容</td>
+					<td>创建日期</td>
+					<td>操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="notice : ${notices.getContent()}">
+					<td th:text="${notice.id}">标题</td>
+					<td th:text="${notice.name}">标题</td>
+					<td th:text="${notice.content}">内容</td>
+					<td th:text="${notice.createTimeCn}">日期</td>
+					<td>
+						<a href="#" target="_blank" th:href="@{/notice/edit.do(id=${notice.id})}"><span>预览</span></a>
+						<a href="javascript:void(0)" th:onclick="'delNotice('+${notice.id}+');'"><span>删除</span></a>
+						</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<ul class="pager">
+			<li class="previous" th:classappend="${notices.isFirst()}? 'disabled'">
+				<a href="#" th:href="@{/notice/listing(page=${notices.getNumber()-1},size=15)}">&larr; 上一页</a>
+			</li>
+			<li class="next" th:classappend="${notices.isLast()}? 'disabled'">
+				<a href="#" th:href="@{/notice/listing(page=${notices.getNumber()+1},size=15)}">下一页 &rarr;</a>
+			</li>
+		</ul>
+
+	</div>
+	
+	 
+ <!--发布公告 -->
+<div class="modal fade" id="addNoticeDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">×</button>
+             </div>
+             <div class="modal-body">
+             <form id="addNoticeForm">
+             	<table>
+             		<tr>
+             			<td>公告名称</td><td><input type="text" name="name" id="name" value=""/></td>
+             		</tr>
+             		<tr>
+             			<td>公告内容</td><td>
+             			
+             			 <textarea rows="50" cols="10" id="noticeContent" name="content"></textarea>
+             			
+             			</td>
+             		</tr>
+             	</table>
+             </form>
+             </div>
+             <div class="modal-footer">
+                 <a href="javascript:void(0)" onclick="saveNotice()" class="btn btn-default" data-dismiss="modal">发布</a>
+             </div>
+         </div>
+     </div>
+ </div>
+	
+</body>
+</html>

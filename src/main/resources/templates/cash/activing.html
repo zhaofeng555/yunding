@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+
+    <script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+<script type="text/javascript">
+
+function changecash(cashId){
+	if(!confirm("您确定审核通过该用户的提现？")){
+		 return false;
+	 }
+	
+	$.ajax({
+		type: "post",
+		url:"/cash/checkcash",
+		contentType:"application/x-www-form-urlencoded",
+		data:{
+			cashId:cashId
+		},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('审核通过');
+				  window.location.reload();
+			}else{
+				alert('审核失败');
+			}
+		}
+	});
+}
+
+</script>
+</head>
+<body class="container">
+
+<div th:replace="commons :: menu"></div>
+
+<div class="col-md-10">
+
+<h3>提现审核列表</h3>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>用户名</td>
+            <td>提现金额</td>
+            <td>申请日期</td>
+            <td>真实姓名</td>
+            <td>开户行</td>
+            <td>银行账号</td>
+            <td>联系方式</td>
+            <td>申请状态</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+    
+       <tr  th:each="cash : ${cashs}">
+            <td th:text="${cash.username}">id</td>
+            <td th:text="${cash.num}">id</td>
+            <td th:text="${cash.createTimeCn}">id</td>
+            <td th:text="${cash.realName}">id</td>
+            <td th:text="${cash.bankName}">id</td>
+            <td th:text="${cash.bankNo}">id</td>
+            <td th:text="${cash.telephoneNo}">id</td>
+            <td th:text="${cash.statusCn}">id</td>
+            <td th:if="${cash.status eq 0}">
+            	<a href="javascript:void(0)" th:onclick="'changecash('+${cash.id}+');'">通过</a>  
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    
+    <ul class="pager">
+		<li class="previous" th:classappend="${cashs.isFirst()}? 'disabled'">
+			<a href="#" th:href="@{/cash/activing(page=${cashs.getNumber()-1},size=15)}">&larr; 上一页</a>
+		</li>
+		<li class="next" th:classappend="${cashs.isLast()}? 'disabled'">
+			<a href="#" th:href="@{/cash/activing(page=${cashs.getNumber()+1},size=15)}">下一页 &rarr;</a>
+		</li>
+	</ul>
+    <!-- 
+	 -->
+</div>
+</body>
+</html>

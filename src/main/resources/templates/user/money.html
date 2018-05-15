@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>提现管理</title>
+</head>
+
+<script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+
+<body class="container">
+<div th:replace="commons :: menu"></div>
+
+<div class="col-md-10">
+    <h2>提现列表</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>用户名</td>
+            <td>开户行</td>
+            <td>银行卡</td>
+            <td>提现金额</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>公告1</td>
+            <td>公告内容哈哈哈哈哈哈哈……</td>
+            <td>2017-11-1</td>
+            <td>1000</td>
+            <td><a href="#">编辑</a></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>公告2</td>
+            <td>公告内容哈哈哈哈哈哈哈……</td>
+            <td>2017-11-1</td>
+            <td>2000</td>
+            <td><a href="#">编辑</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

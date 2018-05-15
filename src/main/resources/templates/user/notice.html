@@ -1,0 +1,47 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>公告管理</title>
+</head>
+<script src="js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/css/commons.css" />
+
+<body  class="container">
+<div th:replace="commons :: menu"></div>
+
+<div class="col-md-10">
+        <h2>公告列表</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>公告名字</td>
+                <td>公告内容</td>
+                <td>创建日期</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>公告1</td>
+                <td>公告内容哈哈哈哈哈哈哈……</td>
+                <td>2017-11-1</td>
+                <td><a href="#">编辑</a></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>公告2</td>
+                <td>公告内容哈哈哈哈哈哈哈……</td>
+                <td>2017-11-1</td>
+                <td><a href="#">编辑</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

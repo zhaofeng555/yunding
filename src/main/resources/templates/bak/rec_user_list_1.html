@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="/js/jquery-2.1.0.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/commons.css" />
+
+</head>
+<body class="container">
+
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/user/info">返回主页</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li><a href="/user/rec_user?level=1">第一代推荐</a></li>
+		            <li><a href="/user/rec_user?level=2">第二代推荐</a></li>
+		            <li><a href="/user/rec_user?level=3">第三代推荐</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="rec_info">
+		<div class="first_rec_info" id="first_rec_info">
+			<h3 th:text="${title}"></h3>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td>ID号</td>
+						<td>用户名</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.id}">id</td>
+						<td th:text="${user.username}">id</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<!-- 
+			 <ul class="pager">
+				<li class="previous" th:classappend="${users.isFirst()}? 'disabled'">
+					<a href="#" th:href="@{/user/recInfo(page=${cashs.getNumber()-1},size=15,level=${level})}">&larr; 上一页</a>
+				</li>
+				<li class="next" th:classappend="${users.isLast()}? 'disabled'">
+					<a href="#" th:href="@{/user/recInfo(page=${cashs.getNumber()+1},size=15,level=${level})}">下一页 &rarr;</a>
+				</li>
+			</ul>
+			 -->
+		</div>
+	</div>
+
+
+
+
+</body>
+</html>
