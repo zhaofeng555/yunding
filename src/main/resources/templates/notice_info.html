@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>公告页</title>
+<style>
+body{
+	text-align: center;
+}
+table{
+	padding:20px auto;
+	margin:20px auto;
+}
+.name{
+	width:600px;
+	font-size: 20px;
+	font-weight: bold;
+}
+.content{
+	width:1000px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+	<table>
+		<tr>
+			<td colspan="3">
+			<h2>网站公告</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td class="name" align="center" th:text="${notice.name }">name</td>
+			<td align="right" width="200px;" th:text="${notice.createTimeCn }">createTimeCn</td>
+		</tr>
+		<tr>
+			<td colspan="3" class="content" th:utext="${notice.content }"></td>
+		</tr>
+	</table>
+</body></html>
