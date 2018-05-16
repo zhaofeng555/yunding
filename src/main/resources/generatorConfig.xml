@@ -28,7 +28,7 @@
 
        <!--  
         -->
-       <table tableName="%" >
+       <table tableName="user" >
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table> 
     </context>

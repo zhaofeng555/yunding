@@ -55,6 +55,11 @@ public abstract class CustomService<T>{
 	public Integer count(Example e) {
 		return  getMapper().selectCountByExample(e);
 	}
+	
+	public Integer count(Class<T> clazz) {
+		Example e = new Example(clazz);
+		return  getMapper().selectCountByExample(e);
+	}
 
 	public List<T> getPageList(Example e, Page<T> page) {
 		if (page == null) {

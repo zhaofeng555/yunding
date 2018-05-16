@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+
+    <script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    
+    <script type="text/javascript">
+	function viewUser(id){
+		$('#editForm').find("input").empty();
+		
+		$('#viewUserDialog').modal('show');
+		
+		$.ajax({
+			type: "post",
+			url:"/user/get.do",
+			contentType:"application/x-www-form-urlencoded",
+			data:{id:id},
+			dataType:"json",
+			success: function(resp, textStatus){
+				var user = resp.user;
+				for(var a in user){
+					$('#editForm').find("input[name='"+a+"']").val(user[a]);
+					/*
+					if(a == 'mobileApplyTime'){
+						$('#editForm').find("input[name='mobileApplyTime']").val(user['mobileApplyTimeCn']);
+					}else{
+						$('#editForm').find("input[name='"+a+"']").val(user[a]);
+					}
+					*/
+				}
+			}
+		});
+	}
+	
+	function saveUser(){
+		$.ajax({
+			type: "post",
+			url:"/user/save.do",
+			contentType:"application/x-www-form-urlencoded",
+			data:$("#editForm").serialize(),
+			dataType:"json",
+			success: function(resp, textStatus){
+				window.location.reload();
+			}
+		});
+	}
+</script>
+    
+</head>
+<body class="container">
+test
+
+</body>
+</html>

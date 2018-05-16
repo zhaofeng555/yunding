@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,14 +67,38 @@ public abstract class BaseController<T> {
 		return OutpubResult.getSuccess(id);
 	}
 	
-	@RequestMapping(value="/list", method=RequestMethod.GET)
+	@RequestMapping(value="/lis", method=RequestMethod.GET)
 	@ResponseBody
 	public OutpubResult list(
 			@RequestParam(required=false, defaultValue="1")Integer pageNum, 
-			@RequestParam(required=false, defaultValue="100")Integer pageSize
-			) {
+			@RequestParam(required=false, defaultValue="15")Integer pageSize) {
 		List<T> list = getService().getPageList(entityClass, pageNum, pageSize);
 		return OutpubResult.getSuccess(list);
+	}
+	
+	@RequestMapping(value="/listing", method=RequestMethod.GET)
+	public String list(
+			@RequestParam(required=false, defaultValue="1")Integer pageNum, 
+			@RequestParam(required=false, defaultValue="15")Integer pageSize,
+			ModelMap map) {
+		
+		String simpleClassName = entityClass.getSimpleName();
+		
+		List<T> list = getService().getPageList(entityClass, pageNum, pageSize);
+		
+		Integer sum = getService().count(entityClass);
+		Integer total = sum/pageSize;
+		if(sum%pageSize != 0){
+			++total;
+		}
+		
+		map.put("data", list);
+		map.put("pageNum", pageNum);
+		map.put("total", total);
+		map.put("isFirst", (pageNum<=1));
+		map.put("isLast", (pageNum>=total));
+		map.put("pageSize", pageSize);
+		return simpleClassName+"/list";
 	}
 	
 }

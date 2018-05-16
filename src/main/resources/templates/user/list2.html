@@ -67,22 +67,22 @@
             <td>ID号</td>
             <td>用户名</td>
             <td>姓名</td>
-            <td>身份证号</td>
-            <td>银行卡号</td>
             <td>联系方式</td>
-            <td>数字资产</td>
+            <td>银行卡号</td>
+            <td>领取手机金额</td>
+            <td>提成金额</td>
             <td>操作</td>
         </tr>
         </thead>
         <tbody>
-        <tr  th:each="user : ${data}">
+        <tr  th:each="user : ${users.content}">
             <td th:text="${user.id}">id</td>
             <td th:text="${user.username}">id</td>
             <td th:text="${user.realName}">id</td>
             <td th:text="${user.cardId}">id</td>
             <td th:text="${user.bankNo}">id</td>
-            <td th:text="${user.mobile}">id</td>
-            <td th:text="${user.assets}">id</td>
+            <td th:text="${user.mobileTotalMoney}">id</td>
+            <td th:text="${user.moneyNum}">id</td>
             <td>
             <a href="javascript:void(0)" th:onclick="'viewUser('+${user.id}+');'">修改</a>  
             </td>
@@ -92,8 +92,8 @@
     </table>
     
 		<ul class="pager">
-			<li class="previous" th:classappend="${isFirst}? 'disabled'"><a href="#" th:href="@{/user/listing(pageNum=${pageNum-1},pageSize=15)}">&larr; 上一页</a></li>
-			<li class="next" th:classappend="${isLast}? 'disabled'"><a href="#" th:href="@{/user/listing(pageNum=${pageNum+1},pageSize=15)}">下一页 &rarr;</a></li>
+			<li class="previous" th:classappend="${users.isFirst()}? 'disabled'"><a href="#" th:href="@{/user/listing(page=${users.getNumber()-1},size=15)}">&larr; 上一页</a></li>
+			<li class="next" th:classappend="${users.isLast()}? 'disabled'"><a href="#" th:href="@{/user/listing(page=${users.getNumber()+1},size=15)}">下一页 &rarr;</a></li>
 		</ul>
 </div>
 </div>

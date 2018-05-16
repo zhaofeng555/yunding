@@ -14,7 +14,8 @@ public class User {
 
     private String realname;
 
-    private String no;
+    @Column(name = "cardId")
+    private String cardid;
 
     @Column(name = "bank_name")
     private String bankName;
@@ -29,6 +30,8 @@ public class User {
     private Integer buyNum;
 
     private String mail;
+
+    private String mobile;
 
     @Column(name = "rec_user_id")
     private Long recUserId;
@@ -106,17 +109,17 @@ public class User {
     }
 
     /**
-     * @return no
+     * @return cardId
      */
-    public String getNo() {
-        return no;
+    public String getCardid() {
+        return cardid;
     }
 
     /**
-     * @param no
+     * @param cardid
      */
-    public void setNo(String no) {
-        this.no = no;
+    public void setCardid(String cardid) {
+        this.cardid = cardid;
     }
 
     /**
@@ -177,6 +180,20 @@ public class User {
      */
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    /**
+     * @return mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     /**
