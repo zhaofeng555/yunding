@@ -54,13 +54,14 @@
 </head>
 <body class="container">
 
+<header th:replace="commons :: header"></header>
 <div th:replace="commons :: menu"></div>
 
 <div class="col-md-10">
 
 <h3>用户信息</h3>
 
-<div th:unless="${#lists.isEmpty(users)}">
+<div th:unless="${#lists.isEmpty(data)}">
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -78,7 +79,7 @@
         <tr  th:each="user : ${data}">
             <td th:text="${user.id}">id</td>
             <td th:text="${user.username}">id</td>
-            <td th:text="${user.realName}">id</td>
+            <td th:text="${user.realname}">id</td>
             <td th:text="${user.cardId}">id</td>
             <td th:text="${user.bankNo}">id</td>
             <td th:text="${user.mobile}">id</td>

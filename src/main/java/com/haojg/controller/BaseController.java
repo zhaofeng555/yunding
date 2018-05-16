@@ -67,7 +67,7 @@ public abstract class BaseController<T> {
 		return OutpubResult.getSuccess(id);
 	}
 	
-	@RequestMapping(value="/lis", method=RequestMethod.GET)
+	@RequestMapping(value="/list", method=RequestMethod.GET)
 	@ResponseBody
 	public OutpubResult list(
 			@RequestParam(required=false, defaultValue="1")Integer pageNum, 

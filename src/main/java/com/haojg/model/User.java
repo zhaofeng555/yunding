@@ -14,8 +14,8 @@ public class User {
 
     private String realname;
 
-    @Column(name = "cardId")
-    private String cardid;
+    @Column(name = "card_id")
+    private String cardId;
 
     @Column(name = "bank_name")
     private String bankName;
@@ -109,17 +109,17 @@ public class User {
     }
 
     /**
-     * @return cardId
+     * @return card_id
      */
-    public String getCardid() {
-        return cardid;
+    public String getCardId() {
+        return cardId;
     }
 
     /**
-     * @param cardid
+     * @param cardId
      */
-    public void setCardid(String cardid) {
-        this.cardid = cardid;
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
     }
 
     /**

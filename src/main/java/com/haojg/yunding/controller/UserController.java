@@ -3,6 +3,7 @@ package com.haojg.yunding.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.haojg.controller.BaseController;
 import com.haojg.model.User;
@@ -21,4 +22,10 @@ public class UserController extends BaseController<User> {
 		return service;
 	}
 
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(){
+		
+		return "";
+	}
+	
 }
