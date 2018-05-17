@@ -15,7 +15,7 @@ public abstract class CustomService<T>{
 
 	public abstract CustomerMapper<T> getMapper();
 
-	public T getOne(Object id) {
+	public T getOne(Long id) {
 		return getMapper().selectByPrimaryKey(id);
 	}
 

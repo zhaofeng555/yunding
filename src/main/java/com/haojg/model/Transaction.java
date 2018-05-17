@@ -22,6 +22,9 @@ public class Transaction {
     @Column(name = "create_time")
     private Date createTime;
 
+    @Column(name = "update_time")
+    private Date updateTime;
+
     /**
      * @return id
      */
@@ -118,5 +121,19 @@ public class Transaction {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * @return update_time
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

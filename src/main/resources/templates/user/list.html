@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta charset="UTF-8"/>
 
-    <script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-    
-    <script type="text/javascript">
+<head th:replace="commons :: head"></head>
+
+<body class="container">
+
+<script type="text/javascript">
 	function viewUser(id){
 		$('#editForm').find("input").empty();
 		
@@ -50,9 +46,6 @@
 		});
 	}
 </script>
-    
-</head>
-<body class="container">
 
 <header th:replace="commons :: header"></header>
 <div th:replace="commons :: menu"></div>
