@@ -43,4 +43,5 @@ public class UserController extends BaseController<User> {
 		return "userInfo";
 	}
 	
+	
 }
