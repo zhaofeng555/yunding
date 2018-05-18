@@ -1,5 +1,6 @@
 package com.haojg.yunding.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,40 @@ public class UserController extends BaseController<User> {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(){
+	public String login(HttpSession session,
+			String username, String password, String verifyCode){
 		
-		return "";
+		session.setAttribute("userId", "1");
+		
+		return "redirect:/user/admin";
+	}
+	
+	@RequestMapping(value="/admin", method=RequestMethod.GET)
+	public String admin(HttpSession session, HttpServletRequest request){
+		
+		return "admin";
+	}
+	
+	
+	public OutpubResult register(User user, HttpSession session) throws Exception {
+		
+//		Object userId = session.getAttribute("userId");
+		Integer buyNum = user.getBuyNum();
+		Long userId = 1L;
+		User recUser = service.getOne(userId);
+		Double assets = recUser.getAssets();
+		if(assets < buyNum) {
+			// error
+			return null;
+		}
+		
+		recUser.setAssets(assets - buyNum);
+		service.saveOrUpdate(recUser);
+		
+		user.setRecUserId(recUser.getId());
+		service.saveOrUpdate(user);
+		
+		return null;
 	}
 	
 

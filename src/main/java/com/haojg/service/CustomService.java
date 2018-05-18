@@ -1,6 +1,11 @@
 package com.haojg.service;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -22,16 +27,16 @@ public abstract class CustomService<T>{
 	public T selectOne(T record) {
 		return getMapper().selectOne(record);
 	}
-	public List<T> getAll(Class<T> clazz) {
-		return getListByExample(new Example(clazz));
+	public List<T> getAll() {
+		return getListByExample(new Example(entityClass));
 	}
 
-	public List<T> getPageList(Class<T> clazz, Page<T> page) {
+	public List<T> getPageList(Page<T> page) {
 		if (page == null) {
-			return getAll(clazz);
+			return getAll();
 		}
 
-		Example e = new Example(clazz);
+		Example e = new Example(entityClass);
 		int offset = (page.getPageNum()-1) * page.getPageSize();
 		int limit = page.getPageSize();
 		RowBounds row = new RowBounds(offset, limit);
@@ -47,17 +52,17 @@ public abstract class CustomService<T>{
 		return getMapper().selectByExampleAndRowBounds(e, row);
 	}
 	
-	public List<T> getPageList(Class<T> clazz, Integer pageNum, Integer pageSize){
+	public List<T> getPageList(Integer pageNum, Integer pageSize){
 		Page<T> page = new Page<>(pageNum, pageSize);
-		return getPageList(clazz, page);
+		return getPageList(page);
 	}
 	
 	public Integer count(Example e) {
 		return  getMapper().selectCountByExample(e);
 	}
 	
-	public Integer count(Class<T> clazz) {
-		Example e = new Example(clazz);
+	public Integer count() {
+		Example e = new Example(entityClass);
 		return  getMapper().selectCountByExample(e);
 	}
 
@@ -117,6 +122,27 @@ public abstract class CustomService<T>{
 	@Transactional
 	public int insertList(List<T> recordList) {
 		return getMapper().insertList(recordList);
+	}
+	
+	@Transactional
+	public int saveOrUpdate(T record) throws Exception {
+		
+		Method getId=entityClass.getDeclaredMethod("getId");
+		Object id = getId.invoke(record);
+		if(id == null) {
+			return getMapper().insertSelective(record);
+		}else {
+			return getMapper().updateByPrimaryKeySelective(record);
+		}
+	}
+	
+	protected Class<T> entityClass;
+
+	@PostConstruct
+	public void init() {
+		Type genType = getClass().getGenericSuperclass();  
+        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();  
+        entityClass = (Class) params[0];  
 	}
 	
 }

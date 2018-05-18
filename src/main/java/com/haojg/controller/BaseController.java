@@ -1,6 +1,5 @@
 package com.haojg.controller;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -41,16 +40,7 @@ public abstract class BaseController<T> {
 	@ResponseBody
 	public OutpubResult save(T record) throws Exception {
 		
-		@SuppressWarnings("unchecked")
-		Method getId=entityClass.getDeclaredMethod("getId");
-		Object id = getId.invoke(record);
-		
-		int ct = 0;
-		if(id == null) {
-			ct = getService().insertSelective(record);
-		}else {
-			ct = getService().updateByPrimaryKeySelective(record);
-		}
+		int ct = getService().saveOrUpdate(record);
 		
 		if(ct == 0) {
 			return OutpubResult.getError("保存失败");
@@ -73,7 +63,7 @@ public abstract class BaseController<T> {
 	public OutpubResult list(
 			@RequestParam(required=false, defaultValue="1")Integer pageNum, 
 			@RequestParam(required=false, defaultValue="15")Integer pageSize) {
-		List<T> list = getService().getPageList(entityClass, pageNum, pageSize);
+		List<T> list = getService().getPageList(pageNum, pageSize);
 		return OutpubResult.getSuccess(list);
 	}
 	
@@ -85,9 +75,9 @@ public abstract class BaseController<T> {
 		
 		String simpleClassName = entityClass.getSimpleName();
 		
-		List<T> list = getService().getPageList(entityClass, pageNum, pageSize);
+		List<T> list = getService().getPageList(pageNum, pageSize);
 		
-		Integer sum = getService().count(entityClass);
+		Integer sum = getService().count();
 		Integer total = sum/pageSize;
 		if(sum%pageSize != 0){
 			++total;

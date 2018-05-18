@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>云鼎 登录</title>
+<title>云顶 登录</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,9 @@
 		});
 	</script>
 	
+	<!-- 
 	<h1>云顶.中国版  会员系统</h1>
+	 -->
 	<div class="login-form">
 		<div class="close"></div>
 		<div class="head-info">
@@ -34,15 +36,25 @@
 			<img src="/images/avtar.png" />
 		</div>
 		<form action="/goto/admin">
-			<input type="text" class="text" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}" />
-			<div class="key">
-				<input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}" />
+			<div>
+			<input type="text" name="username" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" />
+			</div>
+			<div>
+			<input type="password" name="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'xxxxxx';}" />
+			</div>
+			<div>
+			<img id="imgAuth" height="40px" width="200px"  alt="验证码" src="/auth/identifycode.do" onclick="freshImg();"/>
+			</div>
+			<div>
+				<input type="text" id="idetifycode" name="idetifycode" value="验证码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}" />
 			</div>
 			<div class="signin">
 				<input type="submit" value="登录" />
-			</div>
+			</div> 
 		</form>
 	</div>
+	
+	
 	<div class="copy-rights">
 		<p>Copyright &copy; yunding.com</p>
 	</div>

@@ -19,7 +19,6 @@ public class TransactionService extends CustomService<Transaction> {
 	public CustomerMapper<Transaction> getMapper() {
 		return mapper;
 	}
-	
 
 	
 	public void refreshTrasaction(){
