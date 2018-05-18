@@ -1,18 +1,30 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<script th:src="@{/js/jquery-2.1.0.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	type="text/css" />
+<head th:replace="commons :: head"></head>
+
+<body class="container">
 
 <script type="text/javascript">
-	
+function registUser(){
+	$.ajax({
+		type: "post",
+		url:"/user/register",
+		contentType:"application/x-www-form-urlencoded",
+		data:$("#registUserForm").serialize(),
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('注册成功');
+				//window.location.href='user/registerListing';
+				window.location.reload();
+			}else{
+				alert(resp.message)
+			}
+		}
+	});
+}
+
 </script>
 <style>
 h1 {
@@ -25,76 +37,117 @@ h1 {
 	color: #2B2B36;
 }
 </style>
-</head>
-<body class="container">
+
 	<h1>注册申报：</h1>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">
-		<form class="form-horizontal" role="form" action="/user/register" method="post">
+		<form class="form-horizontal col-md-11" role="form" id="registUserForm" action="/user/register" method="post">
+			<input type="hidden" name="assets" value="0"/>
+			<input type="hidden" name="stockNum" value="0"/>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">账号：</label>
+				<label for="username" class="col-sm-2 control-label">账号：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="username" name="username" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">密码：</label>
+				<label for="password"  class="col-sm-2 control-label">密码：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="password" name="password" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">确认密码：</label>
+				<label for="repassword" class="col-sm-2 control-label">确认密码：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="repassword" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">姓名：</label>
+				<label for="realname" class="col-sm-2 control-label">姓名：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="realname" name="realname" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">身份证号：</label>
+				<label for="cardId" class="col-sm-2 control-label">身份证号：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="cardId" name="cardId" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">开户行：</label>
+				<label for="bankName" class="col-sm-2 control-label">开户行：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="bankName" name="bankName" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">银行卡号：</label>
+				<label for="bankNo" class="col-sm-2 control-label">银行卡号：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="bankNo" name="bankNo" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">购买份额：</label>
+				<label for="buyNum" class="col-sm-2 control-label">购买份额：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="buyNum" name="buyNum" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">邮箱：</label>
+				<label for="mail" class="col-sm-2 control-label">邮箱：</label>
 				<div class="col-sm-10">
-					<input type="text" value=""/>
+					<input type="text" id="mail" name="mail" value=""/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="mobile" class="col-sm-2 control-label">电话：</label>
+				<div class="col-sm-10">
+					<input type="text" id="mobile" name="mobile" value=""/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputEmail4" class="col-sm-2 control-label"></label>
 				<div class="col-sm-10">
-					<button type="button" class="btn btn-success">提交</button>
+					<input type="button" class="btn btn-success" value="提交" onclick="registUser()"/>
 				</div>
 			</div>
 		</form>
 		
+		<div class="col-md-12">
+			
+			<div class="col-sm-12">注册申报记录</div>
+			<div th:unless="${#lists.isEmpty(data)}">
+			    <table class="table table-bordered">
+			        <thead>
+			        <tr>
+			            <td>账号</td>
+			            <td>姓名</td>
+			            <td>联系方式</td>
+			            <td>银行卡号</td>
+			            <td>购买份额</td>
+			            <td>电话</td>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        <tr  th:each="user : ${data}">
+			            <td th:text="${user.username}">id</td>
+			            <td th:text="${user.realname}">id</td>
+			            <td th:text="${user.cardId}">id</td>
+			            <td th:text="${user.bankNo}">id</td>
+			            <td th:text="${user.buyNum}">id</td>
+			            <td th:text="${user.mobile}">id</td>
+			        </tr>
+			
+			        </tbody>
+			    </table>
+			</div>
+		</div>
+		
 	</div>
+
+
+
+
 
 </body>
 </html>

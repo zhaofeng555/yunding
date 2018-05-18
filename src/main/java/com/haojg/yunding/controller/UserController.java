@@ -1,5 +1,8 @@
 package com.haojg.yunding.controller;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +19,8 @@ import com.haojg.output.OutpubResult;
 import com.haojg.service.CustomService;
 import com.haojg.service.UserService;
 import com.haojg.util.UserHelper;
+
+import tk.mybatis.mapper.entity.Example;
 
 @Controller
 @RequestMapping("/user")
@@ -50,10 +55,10 @@ public class UserController extends BaseController<User> {
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	@ResponseBody
-	public OutpubResult register(User user, HttpServletRequest request) throws Exception {
+	public OutpubResult register(User user, HttpServletRequest request){
 		
 		User recUser = UserHelper.getCurrentUser(request);
-		
+		recUser=service.getOne(recUser.getId());
 		Integer buyNum = user.getBuyNum();
 		Double assets = recUser.getAssets();
 		if(assets < buyNum) {
@@ -61,17 +66,36 @@ public class UserController extends BaseController<User> {
 			return OutpubResult.getError("资产不足");
 		}
 		
-		recUser.setAssets(assets - buyNum);
-		service.saveOrUpdate(recUser);
-		
-		user.setRecUserId(recUser.getId());
-		service.saveOrUpdate(user);
+		try {
+			user.setUpdateTime(new Date());
+			user.setRecUserId(recUser.getId());
+			service.insertSelective(user);
+			
+			recUser.setAssets(assets - buyNum);
+			service.updateByPrimaryKeySelective(recUser);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return OutpubResult.getError("注册失败");
+		}
 		
 		return OutpubResult.getSuccess("注册成功");
 	}
 	
+	@RequestMapping(value="/registerListing", method=RequestMethod.GET)
+	public String registerList(ModelMap map, HttpServletRequest request){
+		User curUser = UserHelper.getCurrentUser(request);
+		
+		Example e = new Example(User.class);
+		e.createCriteria().andEqualTo("recUserId", curUser.getId());
+		
+		List<User> userList = service.getListByExample(e);
+		map.put("data", userList);
+		
+		return "register";
+	}
 
-	@RequestMapping(value="/me", method=RequestMethod.GET)
+	@RequestMapping(value={"/me"}, method=RequestMethod.GET)
 	public String myInfo(ModelMap map,  HttpServletRequest request) {
 		User user = UserHelper.getCurrentUser(request);
 		User data = getService().getOne(user.getId());
@@ -79,6 +103,15 @@ public class UserController extends BaseController<User> {
 		
 		map.put("data", data);
 		return "userInfo";
+	}
+	@RequestMapping(value={"/assets"}, method=RequestMethod.GET)
+	public String myAssets(ModelMap map,  HttpServletRequest request) {
+		User user = UserHelper.getCurrentUser(request);
+		User data = getService().getOne(user.getId());
+		UserHelper.setCurrentUser(request, data);
+		
+		map.put("data", data);
+		return "myAssets";
 	}
 	
 	@RequestMapping(value="/get", method=RequestMethod.GET)

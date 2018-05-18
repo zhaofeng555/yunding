@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head th:replace="commons :: head"></head>
 
-<script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<body class="container">
 
 <script type="text/javascript">
 	
 </script>
-</head>
-<body class="container">
 
 	<div th:replace="commons :: menu"></div>
 
@@ -20,7 +14,7 @@
 
 		<h3>提现历史记录</h3>
 
-		<div th:unless="${#lists.isEmpty(cashs)}">
+		<div th:unless="${#lists.isEmpty(data)}">
 			<table class="table table-bordered">
 		        <thead>
 		        <tr>
@@ -43,18 +37,12 @@
 		        </tbody>
 		    </table>
 
+
 			<ul class="pager">
-				<li class="previous" th:classappend="${cashs.isFirst()}? 'disabled'">
-					<a href="#"
-					th:href="@{/cash/listing(page=${cashs.getNumber()-1},size=15)}">&larr;
-						上一页</a>
-				</li>
-				<li class="next" th:classappend="${cashs.isLast()}? 'disabled'">
-					<a href="#"
-					th:href="@{/cash/listing(page=${cashs.getNumber()+1},size=15)}">下一页
-						&rarr;</a>
-				</li>
+				<li class="previous" th:classappend="${isFirst}? 'disabled'"><a href="#" th:href="@{/cash/listing(pageNum=${pageNum-1},pageSize=15)}">&larr; 上一页</a></li>
+				<li class="next" th:classappend="${isLast}? 'disabled'"><a href="#" th:href="@{/cash/listing(pageNum=${pageNum+1},pageSize=15)}">下一页 &rarr;</a></li>
 			</ul>
+			
 		</div>
 	</div>
 </body>

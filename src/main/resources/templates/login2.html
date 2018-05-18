@@ -73,10 +73,6 @@ function validateCode(idetifycode){
 	});
 }
 
-
-
-
-
 	</script>
 	
 	<!-- 
@@ -93,12 +89,12 @@ function validateCode(idetifycode){
 		<div class="avtar">
 			<img src="/images/avtar.png" />
 		</div>
-		<form action="/goto/admin">
+		<form action="/user/login" method="post">
 			<div>
-			<input type="text" name="username" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" />
+			<input type="text" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" />
 			</div>
 			<div>
-			<input type="password" name="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'xxxxxx';}" />
+			<input type="password" name="password" value="xxx" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'xxxxxx';}" />
 			</div>
 			<div>
 			<img id="imgAuth" height="40px" width="200px"  alt="验证码" src="/auth/identifycode.do" onclick="freshImg();"/>

@@ -1,15 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<script th:src="@{/js/jquery-2.1.0.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	type="text/css" />
+<head th:replace="commons :: head"></head>
+
+<body class="container">
 
 <script type="text/javascript">
 	
@@ -25,30 +19,30 @@ h1 {
 	color: #2B2B36;
 }
 </style>
-</head>
-<body class="container">
+
 	<h1>增长记录：</h1>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">
+		<div th:unless="${#lists.isEmpty(data)}">
+		    <table class="table table-bordered">
+		        <thead>
+		        <tr>
+		            <td>增长</td>
+		            <td>总资产</td>
+		            <td>日期</td>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr  th:each="info : ${data}">
+		            <td th:text="${info.num}">id</td>
+		            <td th:text="${info.sum}">id</td>
+		            <td th:text="${#dates.format(info.createTime, 'yyyy-MM-dd')}">id</td>
+		        </tr>
 		
-	
-		<table class="table table-bordered">
-		  <tr>
-		  	<td>日期</td><td>增长份额</td><td>总额</td>
-		  </tr>
-		  <tr>
-		  	<td>2018-5-11</td><td>10</td><td>11000</td>
-		  </tr>
-		  <tr>
-		  	<td>2018-5-10</td><td>10</td><td>11000</td>
-		  </tr>
-		  <tr>
-		  	<td>2018-5-9</td><td>10</td><td>11000</td>
-		  </tr>
-		</table>
-	
-		
+		        </tbody>
+		    </table>
+		</div>
 	</div>
 
 </body>

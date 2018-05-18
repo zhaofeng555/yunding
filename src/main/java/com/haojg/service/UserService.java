@@ -2,7 +2,6 @@ package com.haojg.service;
 
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class UserService extends CustomService<User> {
 		.andEqualTo("password", password);
 		
 		List<User> userList = getListByExample(e);
-		if(CollectionUtils.isEmpty(userList)) {
+		if(userList ==null || userList.isEmpty()) {
 			return null;
 		}
 		return userList.get(0);

@@ -1,18 +1,27 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head th:replace="commons :: head"></head>
 
-<script th:src="@{/js/jquery-2.1.0.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	type="text/css" />
+<body class="container">
 
 <script type="text/javascript">
-	
+function subTransation(){
+	$.ajax({
+		type: "post",
+		url:"/transaction/apply",
+		contentType:"application/x-www-form-urlencoded",
+		data:$("#editTrasactionForm").serialize(),
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('挂盘成功');
+				window.location.reload();
+			}else{
+				alert(resp.message)
+			}
+		}
+	});
+}
 </script>
 <style>
 h1 {
@@ -25,77 +34,71 @@ h1 {
 	color: #2B2B36;
 }
 </style>
-</head>
-<body class="container">
+
 	<h1>挂盘交易：</h1>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">
-		<form class="form-horizontal" role="form">
+		<form class="form-horizontal" role="form" id="editTrasactionForm">
 		
-		<div class="col-sm-12">买入操作</div>
+		<div class="form-group">
+			<label for="inputEmail4" class="col-sm-2 control-label">操作类型：</label>
+			<div class="col-sm-10">
+				<select name="type">
+					<option value="0">买入</option>
+					<option value="1">卖出</option>
+				</select>
+			</div>
+		</div>
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label">价格：</label>
 			<div class="col-sm-10">
-				<input type="text" value=""/>
+				<input type="number" name="price" value=""/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label">份额：</label>
 			<div class="col-sm-10">
-				<input type="text" value=""/>
+				<input type="number" name="num"  value=""/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label"></label>
 			<div class="col-sm-10">
-				<button type="button" class="btn btn-success">提交</button>
+				<button type="button" class="btn btn-success" onclick="subTransation()">提交</button>
 			</div>
 		</div>
 	</form>
 	
-	<form class="form-horizontal" role="form">
-		
-		<div class="col-sm-12">卖出操作</div>
-		<div class="form-group">
-			<label for="inputEmail4" class="col-sm-2 control-label">价格：</label>
-			<div class="col-sm-10">
-				<input type="text" value=""/>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail4" class="col-sm-2 control-label">份额：</label>
-			<div class="col-sm-10">
-				<input type="text" value=""/>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="inputEmail4" class="col-sm-2 control-label"></label>
-			<div class="col-sm-10">
-				<button type="button" class="btn btn-success">提交</button>
-			</div>
-		</div>
-	</form>
-	
-	<form class="form-horizontal" role="form">
-		
-		<div class="col-sm-12">最近的历史记录</div>
-		<table class="table table-bordered">
-		  <tr>
-		  	<td>价格</td><td>份额</td><td>操作</td><td>状态</td>
-		  </tr>
-		  <tr>
-		  	<td>1.1</td><td>10000</td><td>买入</td><td>未成交</td>
-		  </tr>
-		  <tr>
-		  	<td>1.1</td><td>10000</td><td>买入</td><td>成交</td>
-		  </tr>
-		  <tr>
-		  	<td>1.5</td><td>20000</td><td>卖出</td><td>成交</td>
-		  </tr>
-		</table>
-	</form>
 
+	<div th:unless="${#lists.isEmpty(data)}">
+		<div class="col-sm-12">最近的历史记录</div>
+			<table class="table table-bordered">
+		        <thead>
+		        <tr>
+		            <td>价格</td>
+		            <td>份额</td>
+		            <td>买/卖</td>
+		            <td>时间</td>
+		            <td>状态</td>
+		            <td>操作</td>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr  th:each="tran : ${data}">
+		            <td th:text="${tran.price}">id</td>
+		            <td th:text="${tran.num}">id</td>
+		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
+		            <td  th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
+		            <td th:text="${tran.state==0} ? '未审核':'通过'">id</td>
+		            <td th:if="${tran.state eq 0}">
+		            	<a href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">撤回</a>  
+		            </td>
+		        </tr>
+		
+		        </tbody>
+		    </table>
+		</div>
 	
 		
 	</div>
