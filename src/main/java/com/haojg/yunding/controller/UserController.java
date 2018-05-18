@@ -15,6 +15,7 @@ import com.haojg.model.User;
 import com.haojg.output.OutpubResult;
 import com.haojg.service.CustomService;
 import com.haojg.service.UserService;
+import com.haojg.util.UserHelper;
 
 @Controller
 @RequestMapping("/user")
@@ -29,10 +30,14 @@ public class UserController extends BaseController<User> {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(HttpSession session,
-			String username, String password, String verifyCode){
+	public String login(String username, String password, String verifyCode, HttpServletRequest request){
 		
-		session.setAttribute("userId", "1");
+		User user = service.login(username, password);
+		if(user ==null) {
+			return "redirect:/login.html?error=1";
+		}
+		
+		UserHelper.setCurrentUser(request, user);
 		
 		return "redirect:/user/admin";
 	}
@@ -43,17 +48,17 @@ public class UserController extends BaseController<User> {
 		return "admin";
 	}
 	
-	
-	public OutpubResult register(User user, HttpSession session) throws Exception {
+	@RequestMapping(value="/register", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult register(User user, HttpServletRequest request) throws Exception {
 		
-//		Object userId = session.getAttribute("userId");
+		User recUser = UserHelper.getCurrentUser(request);
+		
 		Integer buyNum = user.getBuyNum();
-		Long userId = 1L;
-		User recUser = service.getOne(userId);
 		Double assets = recUser.getAssets();
 		if(assets < buyNum) {
 			// error
-			return null;
+			return OutpubResult.getError("资产不足");
 		}
 		
 		recUser.setAssets(assets - buyNum);
@@ -62,18 +67,30 @@ public class UserController extends BaseController<User> {
 		user.setRecUserId(recUser.getId());
 		service.saveOrUpdate(user);
 		
-		return null;
+		return OutpubResult.getSuccess("注册成功");
 	}
 	
 
 	@RequestMapping(value="/me", method=RequestMethod.GET)
-	public String get(ModelMap map, HttpSession session) {
-//		Object id = session.getAttribute("userId");
-		Long id = new Long(1L);
-		User data = getService().getOne(id);
+	public String myInfo(ModelMap map,  HttpServletRequest request) {
+		User user = UserHelper.getCurrentUser(request);
+		User data = getService().getOne(user.getId());
+		UserHelper.setCurrentUser(request, data);
+		
 		map.put("data", data);
 		return "userInfo";
 	}
+	
+	@RequestMapping(value="/get", method=RequestMethod.GET)
+	@ResponseBody
+	public OutpubResult get(ModelMap map,  HttpServletRequest request) {
+		User user = UserHelper.getCurrentUser(request);
+		User data = getService().getOne(user.getId());
+		UserHelper.setCurrentUser(request, data);
+		return OutpubResult.getSuccess(data);
+	}
+	
+	
 	
 	
 }

@@ -14,6 +14,8 @@ public class User {
 
     private String realname;
 
+    private Integer role;
+
     @Column(name = "card_id")
     private String cardId;
 
@@ -106,6 +108,20 @@ public class User {
      */
     public void setRealname(String realname) {
         this.realname = realname;
+    }
+
+    /**
+     * @return role
+     */
+    public Integer getRole() {
+        return role;
+    }
+
+    /**
+     * @param role
+     */
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     /**

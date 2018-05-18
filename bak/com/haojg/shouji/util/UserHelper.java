@@ -12,10 +12,13 @@ public class UserHelper {
 		User user = (User)session.getAttribute("user");
 		return (user != null && user.getRole()==0);
 	}
+	
 
 	public static User getCurrentUser(HttpServletRequest request) {
 		User user = (User)request.getSession().getAttribute("user");
 		return user;
 	}
+	
+	
 	
 }
