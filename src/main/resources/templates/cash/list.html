@@ -5,14 +5,36 @@
 <body class="container">
 
 <script type="text/javascript">
+function changecash(cashId){
+	if(!confirm("您确定审核通过该用户的提现？")){
+		 return false;
+	 }
 	
+	$.ajax({
+		type: "post",
+		url:"/cash/checkcash",
+		contentType:"application/x-www-form-urlencoded",
+		data:{
+			cashId:cashId
+		},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('审核通过');
+				  window.location.reload();
+			}else{
+				alert('审核失败');
+			}
+		}
+	});
+}
 </script>
 
 	<div th:replace="commons :: menu"></div>
 
 	<div class="col-md-10">
 
-		<h3>提现历史记录</h3>
+		<h3>提现管理</h3>
 
 		<div th:unless="${#lists.isEmpty(data)}">
 			<table class="table table-bordered">
@@ -36,7 +58,6 @@
 		
 		        </tbody>
 		    </table>
-
 
 			<ul class="pager">
 				<li class="previous" th:classappend="${isFirst}? 'disabled'"><a href="#" th:href="@{/cash/listing(pageNum=${pageNum-1},pageSize=15)}">&larr; 上一页</a></li>

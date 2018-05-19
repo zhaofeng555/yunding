@@ -1,18 +1,28 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head th:replace="commons :: head"></head>
 
-<script th:src="@{/js/jquery-2.1.0.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	type="text/css" />
+<body class="container">
 
 <script type="text/javascript">
-	
+function subExport(){
+	$.ajax({
+		type: "post",
+		url:"/export/apply",
+		contentType:"application/x-www-form-urlencoded",
+		data:$("#exportForm").serialize(),
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				//alert('申请成功,请等待审核……');
+				alert('转出成功');
+				window.location.reload();
+			}else{
+				alert(resp.message)
+			}
+		}
+	});
+}
 </script>
 <style>
 h1 {
@@ -25,45 +35,44 @@ h1 {
 	color: #2B2B36;
 }
 </style>
-</head>
-<body class="container">
-	<h1>个人资产转出申请：</h1>
+
+	<h1>个人资产转出：</h1>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">
-		<form class="form-horizontal">
+		<form class="form-horizontal" id="exportForm">
 		
 		<div class="form-group">
 		<label for="inputEmail4" class="col-sm-2 control-label">账号：</label>
 			<div class="col-sm-8">
-				<div>xxx</div>
+				<div th:text="${data.username}">xxx</div>
 			</div>
 		</div>
 		
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">持有份额：</label>
+		<label for="inputEmail4" class="col-sm-2 control-label">持有资产份额：</label>
 			<div class="col-sm-8">
-				<div>xxx</div>
-			</div>
-		</div>
-		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">持有股份：</label>
-			<div class="col-sm-8">
-				<div>xxx</div>
+				<div th:text="${data.assets}">xxx</div>
 			</div>
 		</div>
 		
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">转出资产：</label>
+		<label for="inputEmail4" class="col-sm-2 control-label">转出数额：</label>
 			<div class="col-sm-8">
-				<input type="text" value="10"/>
+				<input type="text" value="10" name="num"/>
+			</div>
+		</div>
+		<div class="form-group">
+		<label for="inputEmail4" class="col-sm-2 control-label">转出数额：</label>
+			<div class="col-sm-8">
+				<input type="text" name="toUsername" value=""/>
 			</div>
 		</div>
 		
 		<div class="form-group">
 		<label for="inputEmail4" class="col-sm-2 control-label"></label>
 			<div class="col-sm-8">
-				<input type="button" class="btn btn-success" value="提交"/>
+				<input type="button" class="btn btn-success" onclick="subExport()" value="提交"/>
 			</div>
 		</div>
 		

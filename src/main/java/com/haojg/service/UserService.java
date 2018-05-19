@@ -33,4 +33,15 @@ public class UserService extends CustomService<User> {
 		}
 		return userList.get(0);
 	}
+	
+	public User findByUsername(String username) {
+		Example e = new Example(User.class);
+		e.createCriteria().andEqualTo("username", username);
+		
+		List<User> userList = getListByExample(e);
+		if(userList ==null || userList.isEmpty()) {
+			return null;
+		}
+		return userList.get(0);
+	}
 }

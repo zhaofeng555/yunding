@@ -11,6 +11,12 @@ public class Export {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "to_user_id")
+    private Long toUserId;
+
+    @Column(name = "to_username")
+    private String toUsername;
+
     /**
      * 导出
      */
@@ -53,6 +59,34 @@ public class Export {
      */
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    /**
+     * @return to_user_id
+     */
+    public Long getToUserId() {
+        return toUserId;
+    }
+
+    /**
+     * @param toUserId
+     */
+    public void setToUserId(Long toUserId) {
+        this.toUserId = toUserId;
+    }
+
+    /**
+     * @return to_username
+     */
+    public String getToUsername() {
+        return toUsername;
+    }
+
+    /**
+     * @param toUsername
+     */
+    public void setToUsername(String toUsername) {
+        this.toUsername = toUsername;
     }
 
     /**

@@ -12,9 +12,9 @@ public class IncreaseInfo {
     @Column(name = "user_id")
     private Long userId;
 
-    private Integer num;
+    private Double num;
 
-    private Integer sum;
+    private Double sum;
 
     @Column(name = "create_time")
     private Date createTime;
@@ -50,28 +50,28 @@ public class IncreaseInfo {
     /**
      * @return num
      */
-    public Integer getNum() {
+    public Double getNum() {
         return num;
     }
 
     /**
      * @param num
      */
-    public void setNum(Integer num) {
+    public void setNum(Double num) {
         this.num = num;
     }
 
     /**
      * @return sum
      */
-    public Integer getSum() {
+    public Double getSum() {
         return sum;
     }
 
     /**
      * @param sum
      */
-    public void setSum(Integer sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 

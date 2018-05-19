@@ -35,15 +35,18 @@ public class UserController extends BaseController<User> {
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST)
+//	@ResponseBody
 	public String login(String username, String password, String verifyCode, HttpServletRequest request){
 		
 		User user = service.login(username, password);
 		if(user ==null) {
 			return "redirect:/login.html?error=1";
+//			return OutpubResult.getError("用户名或密码错误");
 		}
 		
 		UserHelper.setCurrentUser(request, user);
 		
+//		return OutpubResult.getSuccess("注册成功");
 		return "redirect:/user/admin";
 	}
 	
@@ -60,8 +63,12 @@ public class UserController extends BaseController<User> {
 		User recUser = UserHelper.getCurrentUser(request);
 		recUser=service.getOne(recUser.getId());
 		Integer buyNum = user.getBuyNum();
-		Double assets = recUser.getAssets();
-		if(assets < buyNum) {
+		
+		Integer recBuyNum = recUser.getBuyNum();
+		Double recAssets = recUser.getAssets();
+		
+		
+		if((recBuyNum+recAssets) < buyNum) {
 			// error
 			return OutpubResult.getError("资产不足");
 		}
@@ -71,7 +78,13 @@ public class UserController extends BaseController<User> {
 			user.setRecUserId(recUser.getId());
 			service.insertSelective(user);
 			
-			recUser.setAssets(assets - buyNum);
+			//扣除推荐人的数字资产
+			if(recBuyNum >= buyNum){
+				recUser.setBuyNum(recBuyNum-buyNum);
+			}else{
+				recUser.setBuyNum(0);
+				recUser.setAssets(recAssets - (buyNum-recBuyNum));
+			}
 			service.updateByPrimaryKeySelective(recUser);
 			
 		} catch (Exception e) {

@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.haojg.controller.BaseController;
 import com.haojg.model.Cash;
+import com.haojg.model.Export;
 import com.haojg.model.User;
 import com.haojg.output.OutpubResult;
-import com.haojg.service.CashService;
+import com.haojg.service.ExportService;
 import com.haojg.service.CustomService;
 import com.haojg.service.UserService;
 import com.haojg.util.UserHelper;
@@ -24,23 +25,23 @@ import com.haojg.util.UserHelper;
 import tk.mybatis.mapper.entity.Example;
 
 @Controller
-@RequestMapping("/cash")
-public class CashController extends BaseController<Cash> {
+@RequestMapping("/export")
+public class ExportController extends BaseController<Export> {
 
 	@Autowired
-	CashService service;
+	ExportService service;
 	
 	@Autowired
 	UserService userService;
 	
 	@Override
-	public CustomService<Cash> getService() {
+	public CustomService<Export> getService() {
 		return service;
 	}
 	
 	@RequestMapping(value="/apply", method=RequestMethod.POST)
 	@ResponseBody
-	public OutpubResult register(Integer num, HttpServletRequest request){
+	public OutpubResult register(Export export, HttpServletRequest request){
 		
 		User curUser = UserHelper.getCurrentUser(request);
 		
@@ -48,52 +49,41 @@ public class CashController extends BaseController<Cash> {
 		
 		Double assets = curUser.getAssets();
 		
+		Integer num = export.getNum();
 		if(assets<num){
 			return OutpubResult.getSuccess("资产不足");
 		}
 		
-		Cash c = new Cash();
-		c.setCreateTime(new Date());
-		c.setUpdateTime(new Date());
-		c.setUserId(curUser.getId());
-		c.setNum(num);
-		c.setState(0);
+		User toUser = userService.findByUsername(export.getToUsername());
+		if(toUser == null){
+			return OutpubResult.getSuccess("转出的用户不存在");
+		}
 		
-		service.insertSelective(c);
+		export.setCreateTime(new Date());
+		export.setUpdateTime(new Date());
+		export.setUserId(curUser.getId());
+		export.setToUserId(toUser.getId());
+		export.setState(0);
+		
+		service.insertSelective(export);
 		
 		curUser.setAssets(assets-num);
 		userService.updateByPrimaryKeySelective(curUser);
 		
-		return OutpubResult.getSuccess("注册成功");
+		return OutpubResult.getSuccess("转出成功");
 	}
 	
-	@RequestMapping(value="/cashListing", method=RequestMethod.GET)
+	@RequestMapping(value="/exportListing", method=RequestMethod.GET)
 	public String registerList(ModelMap map, HttpServletRequest request){
 		User curUser = UserHelper.getCurrentUser(request);
 		
-		Example e = new Example(Cash.class);
+		Example e = new Example(Export.class);
 		e.createCriteria().andEqualTo("userId", curUser.getId());
 		
-		List<Cash> data = service.getListByExample(e);
+		List<Export> data = service.getListByExample(e);
 		map.put("data", data);
 		map.put("user", curUser);
 		
-		return "cash";
+		return "export";
 	}
-
-	@RequestMapping("/checkcash")
-	@ResponseBody
-	public OutpubResult checkCash(Long cashId, HttpServletRequest request) {
-		
-		boolean admin = UserHelper.isAdmin(request);
-		if (!admin) {
-			return OutpubResult.getError("权限不足");
-		}
-		
-		Cash c = service.getOne(cashId);
-		c.setState(1);
-		service.updateByPrimaryKeySelective(c);
-		return OutpubResult.getSuccess("审核成功");
-	}
-	
 }

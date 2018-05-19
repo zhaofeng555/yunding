@@ -46,6 +46,12 @@ h1 {
 		<form class="form-horizontal" id="applyForm">
 		
 		<div class="form-group">
+		<label for="inputEmail4" class="col-sm-2 control-label">备注：</label>
+			<div class="col-sm-8">
+				<div style="color:red;">7折兑现。 </div>
+			</div>
+		</div>
+		<div class="form-group">
 		<label for="inputEmail4" class="col-sm-2 control-label">账号：</label>
 			<div class="col-sm-8">
 				<div th:text="${user.username}">xxx</div>
@@ -83,6 +89,7 @@ h1 {
 			        <thead>
 			        <tr>
 			            <td>提现数额</td>
+			            <td>实际提现(7折)</td>
 			            <td>申请时间</td>
 			            <td>状态</td>
 			        </tr>
@@ -90,6 +97,7 @@ h1 {
 			        <tbody>
 			        <tr  th:each="cash : ${data}">
 			            <td th:text="${cash.num}">id</td>
+			            <td th:text="${cash.num * 0.7}">id</td>
 			            <td  th:text="${#dates.format(cash.createTime, 'yyyy-MM-dd')}">id</td>
 			            <td th:text="${cash.state==0} ? '未审核':'通过'">id</td>
 			        </tr>
