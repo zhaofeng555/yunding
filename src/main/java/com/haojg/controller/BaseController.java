@@ -73,8 +73,7 @@ public abstract class BaseController<T> {
 			@RequestParam(required=false, defaultValue="15")Integer pageSize,
 			ModelMap map) {
 		
-		String simpleClassName = entityClass.getSimpleName();
-		
+		String simpleClassName = entityClass.getSimpleName().toLowerCase();
 		List<T> list = getService().getPageList(pageNum, pageSize);
 		
 		Integer sum = getService().count();
