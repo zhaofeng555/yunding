@@ -1,33 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-<script th:src="@{/js/jquery-2.1.0.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	type="text/css" />
-
-<script type="text/javascript">
-	
-</script>
-<style>
-h1 {
-	font-family: 'Exo 2', sans-serif;
-	text-align: center; padding-top : 1em; font-weight : 400; color :
-	#2B2B36;
-	font-size: 2em;
-	padding-top: 1em;
-	font-weight: 400;
-	color: #2B2B36;
-}
-</style>
-</head>
+<head th:replace="commons :: head"></head>
 <body class="container">
-	<h1>交易记录：</h1>
+
+	<div th:replace="commons :: header"></div>
+	<h2>交易记录：</h2>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">

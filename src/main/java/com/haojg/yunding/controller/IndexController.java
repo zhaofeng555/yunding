@@ -11,7 +11,8 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(HttpSession session){
-        return "redirect:/login.html";
+//        return "redirect:/login.html";
+        return "redirect:/index.html";
     }
 
     @GetMapping("/goto/{path}")

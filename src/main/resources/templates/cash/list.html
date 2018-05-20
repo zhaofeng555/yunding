@@ -20,7 +20,7 @@ function changecash(cashId){
 		dataType:"json",
 		success: function(resp, textStatus){
 			if(resp.code == 0){
-				alert('审核通过');
+					alert('审核通过');
 				  window.location.reload();
 			}else{
 				alert('审核失败');
@@ -29,12 +29,12 @@ function changecash(cashId){
 	});
 }
 </script>
-
+	<div th:replace="commons :: header"></div>
 	<div th:replace="commons :: menu"></div>
 
+	<h2>提现管理</h2>
 	<div class="col-md-10">
 
-		<h3>提现管理</h3>
 
 		<div th:unless="${#lists.isEmpty(data)}">
 			<table class="table table-bordered">

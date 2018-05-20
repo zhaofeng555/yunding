@@ -3,19 +3,10 @@
 <head th:replace="commons :: head"></head>
 
 <body class="container">
-<style>
-h1 {
-	font-family: 'Exo 2', sans-serif;
-	text-align: center; padding-top : 1em; font-weight : 400; color :
-	#2B2B36;
-	font-size: 2em;
-	padding-top: 1em;
-	font-weight: 400;
-	color: #2B2B36;
-}
-</style>
 
-	<h1>公司简介：</h1>
+	<div th:replace="commons :: header"></div>
+
+	<h2>公司简介：</h2>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">

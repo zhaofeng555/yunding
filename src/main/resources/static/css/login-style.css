@@ -79,7 +79,7 @@ h1 {
 	width: 100%;
 }
 .avtar img {
-  margin: 2em 0 0;
+  margin: 1em 0 0;
 }
 .head-info {
   padding: 5px 0;
@@ -100,7 +100,7 @@ h1 {
 }
 input[name="username"] {
 	  width: 70%;
-	  padding: 1em 2em 1em 3em;
+	  padding: 0em 2em 1em 3em;
 	  color: #9199aa;
 	  font-size: 18px;
 	  outline: none;
@@ -108,7 +108,7 @@ input[name="username"] {
 	  border: none;
 	  font-weight: 100;
 	  border-bottom: 1px solid#484856;
-	  margin-top: 2em;
+	  margin-top: 1em;
 }
 input[name="idetifycode"] {
 	  width: 70%;

@@ -22,6 +22,9 @@ public class Transaction {
     @Column(name = "create_time")
     private Date createTime;
 
+    @Column(name = "to_user_id")
+    private Long toUserId;
+
     @Column(name = "update_time")
     private Date updateTime;
 
@@ -121,6 +124,20 @@ public class Transaction {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * @return to_user_id
+     */
+    public Long getToUserId() {
+        return toUserId;
+    }
+
+    /**
+     * @param toUserId
+     */
+    public void setToUserId(Long toUserId) {
+        this.toUserId = toUserId;
     }
 
     /**

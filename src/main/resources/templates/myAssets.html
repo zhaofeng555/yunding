@@ -4,49 +4,42 @@
 
 <body class="container">
 
-<script type="text/javascript">
-	
-</script>
-<style>
-h1 {
-	font-family: 'Exo 2', sans-serif;
-	text-align: center; padding-top : 1em; font-weight : 400; color :
-	#2B2B36;
-	font-size: 2em;
-	padding-top: 1em;
-	font-weight: 400;
-	color: #2B2B36;
-}
-</style>
-
-	<h1>我的资产：</h1>
+	<div th:replace="commons :: header"></div>
+	<h2>我的资产：</h2>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">
 		<form class="form-horizontal">
 		
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">账号：</label>
+			<label for="inputEmail4" class="col-sm-2 control-label">账号：</label>
 			<div class="col-sm-8">
+				<!--  class="form-control" -->
 				<div th:text="${data.username}"></div>
 			</div>
 		</div>
 		
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">持有份额：</label>
+			<label for="inputEmail4" class="col-sm-2 control-label">持有份额：</label>
 			<div class="col-sm-8">
 				<div th:text="${data.buyNum}">xxx</div>
 			</div>
 		</div>
 		
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">持有股份：</label>
+			<label for="inputEmail4" class="col-sm-2 control-label">持有股份：</label>
 			<div class="col-sm-8">
 				<div th:text="${data.stockNum}">xxx</div>
 			</div>
 		</div>
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">数字资产：</label>
+			<label for="inputEmail4" class="col-sm-2 control-label">持有筹码：</label>
+			<div class="col-sm-8">
+				<div th:text="${data.chip}">xxx</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail4" class="col-sm-2 control-label">数字资产：</label>
 			<div class="col-sm-8">
 				<div th:text="${data.assets}">xxx</div>
 			</div>
@@ -54,9 +47,6 @@ h1 {
 		
 		
 	</form>
-
-
-
 		
 	</div>
 

@@ -45,19 +45,9 @@
 		});
 	}
 </script>
-<style>
-h1 {
-	font-family: 'Exo 2', sans-serif;
-	text-align: center; padding-top : 1em; font-weight : 400; color :
-	#2B2B36;
-	font-size: 2em;
-	padding-top: 1em;
-	font-weight: 400;
-	color: #2B2B36;
-}
-</style>
 
-	<h1>个人信息：</h1>
+	<div th:replace="commons :: header"></div>
+	<h2>个人信息：</h2>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">
@@ -109,6 +99,24 @@ h1 {
 			<label for="inputEmail4" class="col-sm-2 control-label">持有份额：</label>
 				<div class="col-sm-8">
 					<div th:text="${data.buyNum}"></div>
+				</div>
+			</div>
+			<div class="form-group">
+			<label for="inputEmail4" class="col-sm-2 control-label">浮动资产：</label>
+				<div class="col-sm-8">
+					<div th:text="${data.assets}"></div>
+				</div>
+			</div>
+			<div class="form-group">
+			<label for="inputEmail4" class="col-sm-2 control-label">公司股份：</label>
+				<div class="col-sm-8">
+					<div th:text="${data.stockNum}"></div>
+				</div>
+			</div>
+			<div class="form-group">
+			<label for="inputEmail4" class="col-sm-2 control-label">赌场筹码：</label>
+				<div class="col-sm-8">
+					<div th:text="${data.chip}"></div>
 				</div>
 			</div>
 			
@@ -178,7 +186,6 @@ h1 {
 						            <input type="text" class="form-control" id="inputtext2"  name="mobile" placeholder="手机号"/>
 						        </div>
 						    </div>
-						    
 						
 						    <div class="form-group">
 						        <div class="col-sm-offset-2 col-sm-10">
@@ -186,7 +193,6 @@ h1 {
 						        </div>
 						    </div>
 						</form>
-						
 						
 					</div>
 				</div>

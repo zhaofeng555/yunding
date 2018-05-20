@@ -1,29 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>会员 信息</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script th:src="@{/js/jquery-2.1.0.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"
-	charset="utf-8"></script>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
-	type="text/css" />
+<head th:replace="commons :: head"></head>
 	
-<style>
-h1 {
-	font-family: 'Exo 2', sans-serif;
-	  text-align: center;
-	  padding-top: 1em;
-	  font-weight: 400;
-	  color: #2B2B36;
-	  font-size: 2em;
-}
-</style>
-</head>
 <body class="container">
-	<h1>会员 信息后台</h1>
+
+	<div th:replace="commons :: header"></div>
+	<h2>会员 信息后台</h2>
 	<div th:replace="commons :: menu"></div>
 	<div class="container">
 		<form class="form-horizontal">

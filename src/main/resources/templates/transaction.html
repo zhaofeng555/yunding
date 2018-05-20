@@ -23,23 +23,20 @@ function subTransation(){
 	});
 }
 </script>
-<style>
-h1 {
-	font-family: 'Exo 2', sans-serif;
-	text-align: center; padding-top : 1em; font-weight : 400; color :
-	#2B2B36;
-	font-size: 2em;
-	padding-top: 1em;
-	font-weight: 400;
-	color: #2B2B36;
-}
-</style>
 
-	<h1>挂盘交易：</h1>
+	<div th:replace="commons :: header"></div>
+	<h2>挂盘交易：</h2>
 	<div th:replace="commons :: menu"></div>
 	
 	<div class="col-md-10">
 		<form class="form-horizontal" role="form" id="editTrasactionForm">
+		
+		<div class="form-group">
+			<label for="inputEmail4" class="col-sm-2 control-label">持有浮动资产：</label>
+			<div class="col-sm-10">
+				<div th:text="${session.user.assets}"></div>
+			</div>
+		</div>
 		
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label">操作类型：</label>
@@ -70,9 +67,45 @@ h1 {
 		</div>
 	</form>
 	
+	<div class="col-sm-12">系统中所有正在交易的挂单</div>
+	<div th:unless="${#lists.isEmpty(dataList)}">
+		<table class="table table-bordered">
+		        <thead>
+		        <tr>
+		            <td>编号</td>
+		            <td>价格</td>
+		            <td>份额</td>
+		            <td>买/卖</td>
+		            <td>时间</td>
+		            <td>状态</td>
+		            <td>操作</td>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr  th:each="tran : ${dataList}">
+		            <td th:text="${tran.id}">id</td>
+		            <td th:text="${tran.price}">id</td>
+		            <td th:text="${tran.num}">id</td>
+		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
+		            <td th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
+		            <td th:switch="${tran.state}">
+					　　<span th:case="0">申请</span>
+					　　<span th:case="1">想购买</span>
+					　　<span th:case="2">成交</span>
+					</td>
+		            <td>
+	            		<a th:if="${session.user.id != tran.userId} and ${tran.state == 0}" href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">我要购买</a>  
+	            		<a th:if="${session.user.id == tran.userId} and ${tran.state == 1}" href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">撤销</a>  
+					</td>
+		            
+		        </tr>
+		
+		        </tbody>
+		    </table>
+	</div>
 
-	<div th:unless="${#lists.isEmpty(data)}">
-		<div class="col-sm-12">最近的历史记录</div>
+	<div class="col-sm-12">我的挂单记录</div>
+	<div th:unless="${#lists.isEmpty(myData)}">
 			<table class="table table-bordered">
 		        <thead>
 		        <tr>
@@ -85,15 +118,52 @@ h1 {
 		        </tr>
 		        </thead>
 		        <tbody>
-		        <tr  th:each="tran : ${data}">
+		        <tr  th:each="tran : ${myData}">
 		            <td th:text="${tran.price}">id</td>
 		            <td th:text="${tran.num}">id</td>
 		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
 		            <td  th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
-		            <td th:text="${tran.state==0} ? '未审核':'通过'">id</td>
-		            <td th:if="${tran.state eq 0}">
-		            	<a href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">撤回</a>  
-		            </td>
+		             <td th:switch="${tran.state}">
+					　　<span th:case="0">已申请</span>
+					　　<span th:case="1">有人想购买</span>
+					　　<span th:case="2">已成交</span>
+					</td>
+					<td th:if="${tran.state == 0}">
+					<a href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">删除</a>  
+					</td>
+		        </tr>
+		
+		        </tbody>
+		    </table>
+		</div>
+	
+	<div class="col-sm-12">我的购买记录</div>
+	<div th:unless="${#lists.isEmpty(wantBuyDataList)}">
+			<table class="table table-bordered">
+		        <thead>
+		        <tr>
+		            <td>价格</td>
+		            <td>份额</td>
+		            <td>买/卖</td>
+		            <td>时间</td>
+		            <td>状态</td>
+		            <td>操作</td>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr  th:each="tran : ${wantBuyDataList}">
+		            <td th:text="${tran.price}">id</td>
+		            <td th:text="${tran.num}">id</td>
+		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
+		            <td  th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
+		             <td th:switch="${tran.state}">
+					　　<span th:case="0">已申请</span>
+					　　<span th:case="1">有人想购买</span>
+					　　<span th:case="2">已成交</span>
+					</td>
+					<td th:if="${tran.state == 0}">
+					<a href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">撤销购买</a>  
+					</td>
 		        </tr>
 		
 		        </tbody>

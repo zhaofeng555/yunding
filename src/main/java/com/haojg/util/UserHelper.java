@@ -18,6 +18,9 @@ public class UserHelper {
 		request.getSession().setAttribute(USER_SESSION_KEY, user);
 		request.getSession().setAttribute("isAdmin", isAdmin(request));
 	}
+	public static void removeCurrentUser(HttpServletRequest request) {
+		request.getSession().removeAttribute(USER_SESSION_KEY);
+	}
 	
 	public static User getCurrentUser(HttpServletRequest request) {
 		User user = (User)request.getSession().getAttribute(USER_SESSION_KEY);

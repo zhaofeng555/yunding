@@ -12,13 +12,13 @@
 		$('#viewUserDialog').modal('show');
 		
 		$.ajax({
-			type: "post",
-			url:"/user/get.do",
+			type: "get",
+			url:"/user/getById",
 			contentType:"application/x-www-form-urlencoded",
 			data:{id:id},
 			dataType:"json",
 			success: function(resp, textStatus){
-				var user = resp.user;
+				var user = resp.data;
 				for(var a in user){
 					$('#editForm').find("input[name='"+a+"']").val(user[a]);
 					/*
@@ -112,53 +112,24 @@
 						        <div class="col-sm-3">
 						            <input type="text" class="form-control" id="inputtext1" name="username" placeholder="登录账号" value=""/>
 						        </div>
-						        <label for="inputtext2" class="col-sm-2 control-label">手机型号</label>
+						        <label for="inputtext2" class="col-sm-2 control-label">密码</label>
 						        <div class="col-sm-3">
-						            <input type="text" class="form-control" id="inputtext2" name="mobilType" placeholder="领取的手机型号"/>
+						            <input type="text" class="form-control" id="inputtext2" name="password" placeholder="密码"/>
 						        </div>
 						    </div>
 						    <div class="form-group">
-						        <label for="inputtext3" class="col-sm-2 control-label">密码</label>
+						        <label for="inputtext3" class="col-sm-2 control-label">姓名</label>
 						        <div class="col-sm-3">
-						            <input type="text" class="form-control" id="inputtext3" name="password" placeholder="密码"/>
+						            <input type="text" class="form-control" id="inputtext3" name="realname" placeholder="姓名"/>
 						        </div>
-						        <label for="inputtext6" class="col-sm-2 control-label">领取日期</label>
-						        <div class="col-sm-3">
-						            <input type="text" class="form-control" id="inputtext6" name="mobileApplyTime" placeholder="领取手机日期"/>
-						        </div>
-						        
-						    </div>
-						    <div class="form-group">
-						        <label for="inputtext7" class="col-sm-2 control-label">手机金额</label>
-						        <div class="col-sm-3">
-						            <input type="number" class="form-control" id="inputtext7" name="moneyNum" placeholder="提成金额(元)"/>
-						        </div>
-						        <label for="inputtext8" class="col-sm-2 control-label">手机金额</label>
-						        <div class="col-sm-3">
-						            <input type="number" class="form-control" id="inputtext8" name="mobileTotalMoney" placeholder="手机总金额(元)"/>
-						        </div>
-						    </div>
-						    <div class="form-group">
 						        <label for="inputtext7" class="col-sm-2 control-label">身份证</label>
 						        <div class="col-sm-3">
 						            <input type="text" class="form-control" id="inputtext7" name="cardId" placeholder="身份证号"/>
 						        </div>
-						          <label for="inputtext10" class="col-sm-2 control-label">每期尝还</label>
-						        <div class="col-sm-3">
-						            <input type="number" class="form-control" id="inputtext10" name="mobilePerMoney" placeholder="每期应还金额(元)"/>
-						        </div>
+						        
 						    </div>
-						    <div class="form-group">
-						        <label for="inputtext9" class="col-sm-2 control-label">姓名</label>
-						        <div class="col-sm-3">
-						            <input type="text" class="form-control" id="inputtext9" name="realName" placeholder="真实姓名"/>
-						        </div>
-						       <label for="inputtext12" class="col-sm-2 control-label">送出部数</label>
-						        <div class="col-sm-3">
-						            <input type="number" class="form-control" id="inputtext12" name="mobileNum" placeholder="送出的手机部数"/>
-						        </div>
-						    </div>
-						    <div class="form-group">
+						    
+						     <div class="form-group">
 						        <label for="inputtext11" class="col-sm-2 control-label">开户行</label>
 						        <div class="col-sm-3">
 						            <input type="text" class="form-control" id="inputtext11" name="bankName" placeholder="开户行名称(全称)"/>
@@ -168,11 +139,36 @@
 						            <input type="text" class="form-control" id="inputtext13" name="bankNo" placeholder="银行卡号"/>
 						        </div>
 						    </div>
+						    
+						   
 						    <div class="form-group">
-						       
 						        <label for="inputtext14" class="col-sm-2 control-label">联系方式</label>
 						        <div class="col-sm-3">
-						            <input type="text" class="form-control" id="inputtext14" name="telephoneNo" placeholder="联系方式(手机、座机)"/>
+						            <input type="text" class="form-control" id="inputtext14" name="mobile" placeholder="联系方式(手机、座机)"/>
+						        </div>
+						        <label for="inputtext15" class="col-sm-2 control-label">邮箱</label>
+						        <div class="col-sm-3">
+						            <input type="text" class="form-control" id="inputtext15" name="mail" placeholder="邮箱"/>
+						        </div>
+						    </div>
+						    <div class="form-group">
+						        <label for="inputtext16" class="col-sm-2 control-label">固定资产</label>
+						        <div class="col-sm-3">
+						            <input type="text" class="form-control" id="inputtext16" name="buyNum" placeholder="固定资产"/>
+						        </div>
+						        <label for="inputtext17" class="col-sm-2 control-label">浮动资产</label>
+						        <div class="col-sm-3">
+						            <input type="text" class="form-control" id="inputtext17" name="assets" placeholder="浮动资产"/>
+						        </div>
+						    </div>
+						    <div class="form-group">
+						        <label for="inputtext18" class="col-sm-2 control-label">持有股份</label>
+						        <div class="col-sm-3">
+						            <input type="text" class="form-control" id="inputtext18" name="stockNum" placeholder="持有股份"/>
+						        </div>
+						        <label for="inputtext19" class="col-sm-2 control-label">持有筹码</label>
+						        <div class="col-sm-3">
+						            <input type="text" class="form-control" id="inputtext19" name="chip" placeholder="持有筹码"/>
 						        </div>
 						    </div>
 						

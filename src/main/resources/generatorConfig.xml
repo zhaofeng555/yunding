@@ -31,5 +31,8 @@
        <table tableName="user" >
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table> 
+       <table tableName="transaction" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table> 
     </context>
 </generatorConfiguration>

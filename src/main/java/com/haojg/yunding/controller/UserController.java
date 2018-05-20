@@ -17,6 +17,7 @@ import com.haojg.controller.BaseController;
 import com.haojg.model.User;
 import com.haojg.output.OutpubResult;
 import com.haojg.service.CustomService;
+import com.haojg.service.TransferService;
 import com.haojg.service.UserService;
 import com.haojg.util.UserHelper;
 
@@ -50,12 +51,23 @@ public class UserController extends BaseController<User> {
 		return "redirect:/user/admin";
 	}
 	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpSession session, HttpServletRequest request){
+		UserHelper.removeCurrentUser(request);
+		return "redirect:/login.html";
+	}
+	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
 	public String admin(HttpSession session, HttpServletRequest request){
 		
 		return "admin";
 	}
-	
+	@RequestMapping(value="/getById", method=RequestMethod.GET)
+	@ResponseBody
+	public OutpubResult get(Long id) {
+		 User data = getService().getOne(id);
+		return OutpubResult.getSuccess(data);
+	}
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	@ResponseBody
 	public OutpubResult register(User user, HttpServletRequest request){
@@ -127,6 +139,8 @@ public class UserController extends BaseController<User> {
 		return "myAssets";
 	}
 	
+	
+	
 	@RequestMapping(value="/get", method=RequestMethod.GET)
 	@ResponseBody
 	public OutpubResult get(ModelMap map,  HttpServletRequest request) {
@@ -135,8 +149,5 @@ public class UserController extends BaseController<User> {
 		UserHelper.setCurrentUser(request, data);
 		return OutpubResult.getSuccess(data);
 	}
-	
-	
-	
 	
 }

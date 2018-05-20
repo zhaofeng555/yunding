@@ -44,6 +44,7 @@ public class SecurityFilter implements Filter {
 				String exUrlArr[] = excludeUrl.split(";");
 				exSecurity.addAll(Arrays.asList(exUrlArr));
 			}
+			logger.info("excludeUrl = {}", excludeUrl);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -79,6 +80,12 @@ public class SecurityFilter implements Filter {
 		String contextPath = request.getContextPath();
 
 		logger.info("uri = "+uri);
+		
+		//首页
+		if(StringUtils.equals(uri, "/")){
+			filterChain.doFilter(servletRequest, servletResponse);
+			return;
+		}
 		
 		// 特殊处理的url
 		for (String ex : exSecurity) {

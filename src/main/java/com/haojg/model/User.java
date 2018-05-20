@@ -25,12 +25,6 @@ public class User {
     @Column(name = "bank_no")
     private String bankNo;
 
-    /**
-     * 购买份额
-     */
-    @Column(name = "buy_num")
-    private Integer buyNum;
-
     private String mail;
 
     private String mobile;
@@ -42,6 +36,12 @@ public class User {
     private Date updateTime;
 
     /**
+     * 购买份额
+     */
+    @Column(name = "buy_num")
+    private Integer buyNum;
+
+    /**
      * 股份数
      */
     @Column(name = "stock_num")
@@ -51,6 +51,11 @@ public class User {
      * 我的资产
      */
     private Double assets;
+
+    /**
+     * 赌场筹码
+     */
+    private Integer chip;
 
     private String remark;
 
@@ -167,24 +172,6 @@ public class User {
     }
 
     /**
-     * 获取购买份额
-     *
-     * @return buy_num - 购买份额
-     */
-    public Integer getBuyNum() {
-        return buyNum;
-    }
-
-    /**
-     * 设置购买份额
-     *
-     * @param buyNum 购买份额
-     */
-    public void setBuyNum(Integer buyNum) {
-        this.buyNum = buyNum;
-    }
-
-    /**
      * @return mail
      */
     public String getMail() {
@@ -241,6 +228,24 @@ public class User {
     }
 
     /**
+     * 获取购买份额
+     *
+     * @return buy_num - 购买份额
+     */
+    public Integer getBuyNum() {
+        return buyNum;
+    }
+
+    /**
+     * 设置购买份额
+     *
+     * @param buyNum 购买份额
+     */
+    public void setBuyNum(Integer buyNum) {
+        this.buyNum = buyNum;
+    }
+
+    /**
      * 获取股份数
      *
      * @return stock_num - 股份数
@@ -274,6 +279,24 @@ public class User {
      */
     public void setAssets(Double assets) {
         this.assets = assets;
+    }
+
+    /**
+     * 获取赌场筹码
+     *
+     * @return chip - 赌场筹码
+     */
+    public Integer getChip() {
+        return chip;
+    }
+
+    /**
+     * 设置赌场筹码
+     *
+     * @param chip 赌场筹码
+     */
+    public void setChip(Integer chip) {
+        this.chip = chip;
     }
 
     /**
