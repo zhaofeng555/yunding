@@ -15,8 +15,9 @@
     <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
     <result column="mail" jdbcType="VARCHAR" property="mail" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="rec_user_id" jdbcType="BIGINT" property="recUserId" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="buy_num" jdbcType="INTEGER" property="buyNum" />
     <result column="stock_num" jdbcType="INTEGER" property="stockNum" />
@@ -24,4 +25,5 @@
     <result column="chip" jdbcType="INTEGER" property="chip" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+ 
 </mapper>

@@ -29,10 +29,13 @@ public class User {
 
     private String mobile;
 
-    private String area;
-
     @Column(name = "rec_user_id")
     private Long recUserId;
+
+    private String area;
+
+    @Column(name = "create_time")
+    private Date createTime;
 
     @Column(name = "update_time")
     private Date updateTime;
@@ -202,6 +205,20 @@ public class User {
     }
 
     /**
+     * @return rec_user_id
+     */
+    public Long getRecUserId() {
+        return recUserId;
+    }
+
+    /**
+     * @param recUserId
+     */
+    public void setRecUserId(Long recUserId) {
+        this.recUserId = recUserId;
+    }
+
+    /**
      * @return area
      */
     public String getArea() {
@@ -216,17 +233,17 @@ public class User {
     }
 
     /**
-     * @return rec_user_id
+     * @return create_time
      */
-    public Long getRecUserId() {
-        return recUserId;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     /**
-     * @param recUserId
+     * @param createTime
      */
-    public void setRecUserId(Long recUserId) {
-        this.recUserId = recUserId;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     /**

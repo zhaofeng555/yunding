@@ -92,6 +92,7 @@ public class UserController extends BaseController<User> {
 		}
 		
 		try {
+			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
 			user.setRecUserId(recUser.getId());
 			service.insertSelective(user);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -44,12 +45,27 @@ public class CashController extends BaseController<Cash> {
 		
 		User curUser = UserHelper.getCurrentUser(request);
 		
+		
+		Date startDateTime = curUser.getCreateTime();
+		
+		Date endDateTime = DateUtils.addDays(startDateTime, 180);
+		
+		Date curDateTime = new Date(System.currentTimeMillis());
+		
+		if(curDateTime.before(endDateTime)){
+			return OutpubResult.getError("要过180天周期");
+		}
+		
+		if(num%500 != 0){
+			return OutpubResult.getError("提现金额必须500的整数倍");
+		}
+		
 		curUser=userService.getOne(curUser.getId());
 		
 		Double assets = curUser.getAssets();
 		
 		if(assets<num){
-			return OutpubResult.getSuccess("资产不足");
+			return OutpubResult.getError("资产不足");
 		}
 		
 		Cash c = new Cash();

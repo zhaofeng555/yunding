@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,6 +47,16 @@ public class ExportController extends BaseController<Export> {
 		User curUser = UserHelper.getCurrentUser(request);
 		
 		curUser=userService.getOne(curUser.getId());
+		
+		Date startDateTime = curUser.getCreateTime();
+		
+		Date endDateTime = DateUtils.addDays(startDateTime, 180);
+		
+		Date curDateTime = new Date(System.currentTimeMillis());
+		
+		if(curDateTime.before(endDateTime)){
+			return OutpubResult.getError("要过180天周期");
+		}
 		
 		Double assets = curUser.getAssets();
 		

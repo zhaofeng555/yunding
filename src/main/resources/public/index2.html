@@ -1,0 +1,811 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="http://rwgweb.ipwtech.com/ico/favicon.ico">
+
+<!--<link rel="apple-touch-icon" href="ico/rwg-mobile-app.png" />-->
+
+<title>
+
+云顶 会员系统
+
+</title>
+<link rel="alternate" hreflang="en-us" href="http://www.genting.com/" />
+<link rel="alternate" hreflang="zh-cn" href="http://www.genting.com/zh-hans/" />
+<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+<link rel='dns-prefetch' href='//code.jquery.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v6.2.1 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+<script type="text/javascript" data-cfasync="false">
+		var disableStr = 'ga-disable-UA-104286678-1';
+
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+	__gaTracker('create', 'UA-104286678-1', 'auto');
+	__gaTracker('set', 'forceSSL', true);
+	__gaTracker('require', 'displayfeatures');
+	__gaTracker('require', 'linkid', 'linkid.js');
+	__gaTracker('send','pageview');
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.genting.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.2"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='layerslider-css'  href='http://www.genting.com/wp-content/plugins/LayerSlider/static/css/layerslider.css?ver=5.6.8' type='text/css' media='all' />
+<link rel='stylesheet' id='ls-google-fonts-css'  href='http://fonts.googleapis.com/css?family=Lato:100,300,regular,700,900%7COpen+Sans:300%7CIndie+Flower:regular%7COswald:300,regular,700&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-pagenavi-css'  href='http://www.genting.com/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70' type='text/css' media='all' />
+<link rel='stylesheet' id='spu-public-css-css'  href='http://www.genting.com/wp-content/plugins/popups/public/assets/css/public.css?ver=1.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='bootstrap_min-css'  href='http://www.genting.com/wp-content/themes/genting/css/bootstrap.min.css?ver=4.7.2' type='text/css' media='all' />
+<link rel='stylesheet' id='theme_css-css'  href='http://www.genting.com/wp-content/themes/genting/css/theme.css?ver=4.7.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mobile_css-css'  href='http://www.genting.com/wp-content/themes/genting/css/mobile.css?ver=4.7.2' type='text/css' media='all' />
+<link rel='stylesheet' id='vertical-css'  href='http://www.genting.com/wp-content/themes/genting/css/bootstrap.vertical-tabs.css?ver=4.7.2' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-css'  href='http://www.genting.com/wp-content/themes/genting/css/bootstrap-responsive-tabs.css?ver=4.7.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.genting.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var monsterinsights_frontend = {"js_events_tracking":"true","is_debug_mode":"false","download_extensions":"doc,exe,js,pdf,ppt,tgz,zip,xls","inbound_paths":"","home_url":"http:\/\/www.genting.com\/zh-hans","track_download_as":"event","internal_label":"int","hash_tracking":"false"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/plugins/google-analytics-for-wordpress/assets/js/frontend.min.js?ver=6.2.1'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/plugins/LayerSlider/static/js/greensock.js?ver=1.11.8'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var LS_Meta = {"v":"5.6.8"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/plugins/LayerSlider/static/js/layerslider.kreaturamedia.jquery.js?ver=5.6.8'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/plugins/LayerSlider/static/js/layerslider.transitions.js?ver=5.6.8'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/plugins/advanced-iframe/js/ai.js?ver=601914'></script>
+<meta name="generator" content="Powered by LayerSlider 5.6.8 - Multi-Purpose, Responsive, Parallax, Mobile-Friendly Slider Plugin for WordPress." />
+<!-- LayerSlider updates and docs at: https://kreaturamedia.com/layerslider-responsive-wordpress-slider-plugin/ -->
+<link rel='https://api.w.org/' href='http://www.genting.com/zh-hans/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.genting.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.genting.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.7.2" />
+<link rel="canonical" href="http://www.genting.com/zh-hans/" />
+<link rel='shortlink' href='http://www.genting.com/zh-hans/' />
+<link rel="alternate" type="application/json+oembed" href="http://www.genting.com/zh-hans/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.genting.com%2Fzh-hans%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.genting.com/zh-hans/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.genting.com%2Fzh-hans%2F&#038;format=xml" />
+<meta name="generator" content="WPML ver:3.8.2 stt:60,1;" />
+    <style type="text/css" media="screen">
+          div.printfriendly a, div.printfriendly a:link, div.printfriendly a:hover, div.printfriendly a:visited {
+            text-decoration: none;
+            border: none;
+          }
+    </style>
+           <style type="text/css" media="screen">
+          div.printfriendly {
+            margin: 12px 12px 12px 12px;
+          }
+          div.printfriendly a, div.printfriendly a:link, div.printfriendly a:visited {
+            font-size: 14px;
+            color: #6D9F00;
+            vertical-align: bottom;
+          }
+          .printfriendly a {
+            box-shadow:none;
+          }
+          .printfriendly a:hover {
+            cursor: pointer;
+          }
+          .printfriendly a img  {
+            border: none;
+            padding:0;
+            margin-right: 6px;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+          }
+          .printfriendly a span{
+            vertical-align: bottom;
+          }
+          .pf-alignleft {
+            float: left;
+          }
+          .pf-alignright {
+            float: right;
+          }
+          div.pf-aligncenter {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+          }
+        </style>
+        <style type="text/css" media="print">
+          .printfriendly {
+            display: none;
+          }
+        </style>
+<script type="text/javascript">
+	window._se_plugin_version = '8.1.6';
+</script>
+		<style type="text/css" id="wp-custom-css">
+			/*
+You can add your own CSS here.
+
+Click the help icon above to learn more.
+*/
+
+#graybackground {
+background: #e6e6e6;
+border: 1px solid #cccccc
+}
+
+
+
+#spu-1457 {
+background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/04/Fraud-Alert-HALF-typed-border-e1492480307596.jpg);
+min-height: 175px;
+padding-top: 10px;
+padding-left: 50px;
+padding-right: 50px;
+background-repeat: no-repeat;
+
+}
+
+#contentBoxFraud {
+background-color: #e6e6e6;
+padding-top: 15px;
+padding-left: 16px;
+padding-right: 16px;
+padding-bottom: 15px;
+background-repeat: no-repeat;
+
+}
+
+#spu-1516 {
+background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/04/Fraud-Alert-FULL-typed-border-e1492481375183.jpg);
+min-height: 420px;
+padding-top: 15px;
+padding-left: 53px;
+padding-right: 50px;
+background-repeat: no-repeat;
+}
+
+#popupheader {
+font-size: 34px;
+}
+
+#popuptext {
+font-size: 18px;
+}
+
+#popuptext1 {
+font-size: 18px;
+padding-top: 9px;
+padding-left: 15px;
+padding-right: 15px;
+}
+
+.popup img{
+    width: 700px;
+    height: 990px;
+    cursor: pointer
+}
+.show{
+    z-index: 999;
+    display: none;
+}
+
+.img-show img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+/*End style*/
+
+
+
+		</style>
+	<!-- Bootstrap core CSS -->
+
+<!-- Just for debugging purposes. Don't actually copy this line! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<div id="wrap">
+<!--big dropdown menu-->
+<div class="container noPadding">
+  <div class="container bdMenu" id="bdMenu">
+    <h1>云顶旗下公司与主要品牌</h1>
+    <div class="col-md-3 noPaddingLeft">
+      <h3><a href="http://www.genting.com/zh-hans">云顶有限公司</a></h3>
+       <ul>
+  <li><a href="http://www.rwlasvegas.com/" target="_blank">拉斯维加斯云顶世界</a></li>
+  </ul>
+      <br />
+       <h3><a href="http://www.genting.com/zh-hans/energy">云顶能源有限公司</a></h3>
+      <ul>
+        <li><a href="http://www.genting.com/zh-hans/energy">石油与天然气</a></li>
+        <li><a href="http://www.genting.com/zh-hans/energy">电力</a></li>
+      </ul>
+      
+      
+    </div>
+    <div class="col-md-3">
+      
+      <h3><a href="http://www.gentingmalaysia.com/" target="_blank">云顶马来西亚有限公司</a></h3>
+      <ul>
+		  <li><a href="http://www.rwgenting.com/" target="_blank">马来西亚云顶世界</a></li>
+		  <li><a href="http://www.rwkijal.com/" target="_blank">琪佳云顶世界</a></li>
+		  <li><a href="http://www.rwlangkawi.com/" target="_blank">浮罗交怡云顶世界</a></li>
+		  <li><a href="http://www.gentingcasinos.co.uk/" target="_blank">云顶英国</a></li>
+		  <li><a href="http://www.resortsworldbirmingham.co.uk/" target="_blank">伯明翰云顶世界</a></li>
+		  <li><a href="http://www.rwnewyork.com/index.php" target="_blank">纽约市云顶世界赌场</a></li>
+		  <li><a href="http://www.rwbimini.com/" target="_blank">比米尼云顶世界</a></li>
+	  </ul>
+      
+     
+      
+      
+    </div>
+    <div class="col-md-3">
+     <h3><a href="http://www.gentingsingapore.com/#!/en" target="_blank">云顶新加坡股份有限公司</a></h3>
+      <ul>
+      <li><a href="http://www.rwsentosa.com/" target="_blank">圣淘沙名胜世界</a></li>
+      </ul>
+     
+     <!-- <h3><a href="#">Genting Properties</a></h3>
+      <ul>
+      <li><a href="http://www.premiumoutlets.com.my/" target="_blank">Johor Premium Outlets<sup>®</sup></a></li>
+      <li><a href="http://genting.ipwtech.com/" target="_blank">Wisma Genting</a></li>
+      </ul>-->
+    </div>
+    <div class="col-md-3">
+    <h3><a href="http://www.gentingplantations.com/" target="_blank">云顶种植有限公司</a></h3>
+      <ul>
+      <li><a href="http://www.gentingplantations.com/business-divisions/plantation/" target="_blank">种植</a></li>
+      <li><a href="http://www.gentingplantations.com/business-divisions/downstream_manufacturing/" target="_blank">制造业</a></li>
+      <li><a href="http://www.gentingplantations.com/business-divisions/property" target="_blank">产业</a></li>
+      <li><a href="http://www.gentingplantations.com/business-divisions/biotechnology/">生物科技</a></li>
+      </ul>
+      <div class="closebdMenu" id="closebdMenu">X</div>
+    </div>
+  </div>
+</div>
+<!--big dropdown menu end-->
+
+<div class="navbar-wrapper">
+<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+<!--<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">-->
+<div class="container">
+<div class="navbar-header"> 
+  
+  <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collaps" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar top-bar"></span>
+          <span class="icon-bar middle-bar"></span>
+          <span class="icon-bar bottom-bar"></span>
+        </button>-->
+  
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button>
+  <a class="navbar-brand" href="http://www.genting.com/zh-hans"><img src="http://genting.ipwtech.com/wp-content/themes/genting/images/logox2.png" width="220" height="66"></a> </div>
+<div class="navbar-collapse collapse">
+<!--search-->
+<div class="topMenu">
+  
+    
+<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">
+	<ul><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-first-item wpml-ls-item-legacy-list-horizontal">
+				<a href="http://www.genting.com/"><span class="wpml-ls-native">ENG</span></a>
+			</li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-hans wpml-ls-current-language wpml-ls-last-item wpml-ls-item-legacy-list-horizontal">
+				<a href="http://www.genting.com/zh-hans/"><span class="wpml-ls-native">简体中文</span></a>
+			</li></ul>
+</div>  
+  <form class="navbar-form" role="search">
+    <div class="input-group add-on">
+      <form role="search" method="get" id="searchform"
+    class="navbar-form" action="http://www.genting.com/zh-hans/">
+  <div class="input-group add-on">
+    <input class="form-control" type="text" value="" name="s" id="s" />
+    <div class="input-group-btn">
+      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+    </div>
+  </div>
+</form>
+    </div>
+  </form>
+  
+  <a class="btn btn-default btnAGG" href="#" role="button" id="btnbdMenu">关于云顶</a>
+
+</div>
+<!--search end-->
+<ul class="nav navbar-nav">
+ <li  ><a href="http://www.genting.com/zh-hans">首页</a></li>
+  <li class="seperator">|</li>
+ <li  ><a href="/login.html">登录后台</a></li>
+  
+  <li class="seperator">|</li>
+  <li class="dropdown "> <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于我们</a>
+    <ul class="dropdown-menu">
+    <li  ><a href="http://www.genting.com/zh-hans/vision-mission">愿景和使命</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/corporate_profile">企业概要</a></li>
+      <li class="divider"></li>
+      <li><a href="http://www.genting.com/wp-content/uploads/2018/04/Genting-Premier-Brands_AR17.pdf" target="_blank">休闲娱乐品牌/旗下品牌</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/history">历史足迹</a></li>
+      <li class="divider"></li>
+      <li><a href="http://www.genting.com/wp-content/uploads/2018/04/Group-Corporate-Structure_AR17.pdf" target="_blank">企业集团组织结构</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/director-management">董事会与管理层</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/corporate_information">企业资讯</a></li>
+     </ul>
+  </li>
+  <li class="seperator">|</li>
+  <li class="dropdown "> <a href="#" class="dropdown-toggle" data-toggle="dropdown">业务领域 </a>
+    <ul class="dropdown-menu">
+      <li  ><a href="http://www.genting.com/zh-hans/leisure-hospitality">休闲与酒店</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.gentingplantations.com/business-divisions/plantation/" target="_blank">种植</a></li>
+      <li class="divider"></li>
+      <li ><a href="http://www.gentingplantations.com/business-divisions/property/" target="_blank">产业开发</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/energy">能源</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/life-sciences">生命科学与生物科技</a></li>
+    </ul>
+  </li>
+  
+  
+  <li class="seperator">|</li>
+  <li class="dropdown "> <a href="#" class="dropdown-toggle" data-toggle="dropdown">投资人相关</a>
+    <ul class="dropdown-menu">
+      <li  ><a href="http://www.genting.com/zh-hans/financial_snapshot">财务简报</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/stock-information">股份信息</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/ratings">评级与债券</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/announcements">最新消息/最新公告</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/quarterly-reports">季度报告</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/annual_reports">年度报告</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/annual-general-meeting">会议相关</a></li>
+      <li class="divider"></li>
+      <li><a href="http://www.genting.com/wp-content/themes/genting/PDF/warrants_exercise_form.pdf" target="_blank">权证信息</a></li>
+          </ul>
+  </li>
+  
+  <li class="seperator">|</li>
+  <li class="dropdown "> <a href="#" class="dropdown-toggle" data-toggle="dropdown">企业管理</a>
+    <ul class="dropdown-menu">
+      <li><a href="http://www.genting.com/wp-content/uploads/2018/03/GENT-BOARD-CHARTER-revised-and-adopted-in-Feb-2018.pdf" target="_blank">董事会章程</a></li>
+      <li class="divider"></li>
+      <li><a href="http://www.ssm.com.my/code-ethics-company-directors" target="_blank">董事职业守则</a></li>
+      <li class="divider"></li>
+      <li  ><a href="http://www.genting.com/zh-hans/terms-of-reference">职权范围</a></li>
+      <li class="divider"></li>
+      <li><a href="http://www.genting.com/PDF/Governance/Memorandum.pdf" target="_blank"> 备忘录和公司章程</a></li>
+      <li class="divider"></li>
+      <li><a href="http://www.genting.com/wp-content/uploads/2018/04/Corporate-Governance-Report-2017.pdf" target="_blank">Corporate Governance Report</a></li>
+      <li class="divider"></li>
+    </ul>
+  </li>
+  <li class="seperator">|</li>
+  
+   <li class="dropdown "> <a href="#" class="dropdown-toggle" data-toggle="dropdown">媒体</a>
+    <ul class="dropdown-menu">
+      <li ><a href="http://www.genting.com/zh-hans/press_releases">新闻发布</a></li>
+                </ul>
+  </li>
+  
+  
+    <li class="seperator">|</li>
+  <li  ><a href="http://www.genting.com/zh-hans/sustainability">可持续发展</a></li>
+  
+  <li class="seperator">|</li>
+  <li  ><a href="http://www.genting.com/zh-hans/careers">职业发展</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+    
+
+<!-- Carousel ================================================== -->
+
+
+
+<!--======================================================================SECTION DIVIDER ======================================================================-->
+
+
+<div class="pf-content"><script data-cfasync="false" type="text/javascript">var lsjQuery = jQuery;</script><script data-cfasync="false" type="text/javascript">
+lsjQuery(document).ready(function() {
+if(typeof lsjQuery.fn.layerSlider == "undefined") { lsShowNotice('layerslider_13','jquery'); }
+else {
+lsjQuery("#layerslider_13").layerSlider({twoWaySlideshow: true, skin: 'fullwidth', navPrevNext: false, hoverPrevNext: false, navStartStop: false, showCircleTimer: false, thumbnailNavigation: 'disabled', autoPlayVideos: false, lazyLoad: false, skinsPath: 'http://www.genting.com/wp-content/plugins/LayerSlider/static/skins/'})
+}
+});
+</script><div class="ls-wp-fullwidth-container" style="height:540px;"><div class="ls-wp-fullwidth-helper"><div id="layerslider_13" class="ls-wp-container" style="width:1170px;height:540px;max-width:1170px;margin:0 auto;margin-bottom: 100px;"><div class="ls-slide" data-ls="slidedelay:7000;transition2d:1;"><img src="http://www.genting.com/wp-content/uploads/2017/04/GB-Web-Banner-2017.jpg" class="ls-bg" alt="GB Web Banner 2017" /><p class="ls-l" style="top:485px;left:0px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"></p></div><div class="ls-slide" data-ls="slidedelay:7000;transition2d:1;"><img src="http://www.genting.com/wp-content/uploads/2017/03/slider-home-02.jpg" class="ls-bg" alt="slider-home-02" /><div class="ls-l" style="top:482px;left:30px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:16px;line-height:;color:#ffffff;background:;border-radius:;white-space: nowrap;" data-ls="offsetxin:0;fadein:false;offsetxout:0;fadeout:false;"><b> 休闲与酒店  <br>
+Resorts World Genting, Malaysia </b>
+</div></div><div class="ls-slide" data-ls="slidedelay:7000;transition2d:1;"><img src="http://www.genting.com/wp-content/uploads/2017/04/RWS_Overview_Evening1.jpg" class="ls-bg" alt="LayerSlider (RWS)" /><div class="ls-l" style="top:482px;left:30px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:16px;line-height:;color:#ffffff;background:;border-radius:;white-space: nowrap;" data-ls="offsetxin:0;fadein:false;offsetxout:0;fadeout:false;"><b> 休闲与酒店  <br>
+Resorts World Sentosa, Singapore </b>
+</div></div><div class="ls-slide" data-ls="slidedelay:7000;transition2d:1;"><img src="http://www.genting.com/wp-content/uploads/2017/04/GlobalIndo.jpg" class="ls-bg" alt="LayerSlider (Plantations)" /><div class="ls-l" style="top:482px;left:30px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:16px;line-height:;color:#ffffff;background:;border-radius:;white-space: nowrap;" data-ls="offsetxin:0;fadein:false;offsetxout:0;fadeout:false;"><b> 种植 <br>
+GlobalIndo Estates, Central Kalimantan, Indonesia</b>
+</div></div><div class="ls-slide" data-ls="slidedelay:7000;transition2d:1;"><img src="http://www.genting.com/wp-content/uploads/2017/03/slider-home-04.jpg" class="ls-bg" alt="slider-home-04" /><div class="ls-l" style="top:482px;left:30px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:16px;line-height:;color:#000000;background:;border-radius:;white-space: nowrap;" data-ls="offsetxin:0;fadein:false;offsetxout:0;fadeout:false;"><b> 生命科学与生物科技  <br>
+ACGT Laboratories at Technology Park, Malaysia </b>
+</div></div><div class="ls-slide" data-ls="slidedelay:7000;transition2d:1;"><img src="http://www.genting.com/wp-content/uploads/2017/04/PROPERTY.jpeg" class="ls-bg" alt="LayerSlider (Property)" /><div class="ls-l" style="top:482px;left:30px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:16px;line-height:;color:#ffffff;background:;border-radius:;white-space: nowrap;" data-ls="offsetxin:0;fadein:false;offsetxout:0;fadeout:false;"><b> 产业开发 <br>
+Genting Pura Kencana, Batu Pahat </b>
+</div></div><div class="ls-slide" data-ls="slidedelay:7000;transition2d:1;"><img src="http://www.genting.com/wp-content/uploads/2017/04/Energy.jpeg" class="ls-bg" alt="LayerSlider (Energy)" /><div class="ls-l" style="top:482px;left:30px;
+;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:16px;line-height:;color:#fcf9f9;background:;border-radius:;white-space: nowrap;" data-ls="offsetxin:0;durationin:0;fadein:false;offsetxout:0;durationout:0;fadeout:false;"><table>
+<col width="580">
+<td style="background-color: transparent; border: 0"><b> 天然能源（电力）<br>
+Banten Power Plant, Indonesia </b></td>
+
+    <td style="background-color: transparent; border: 0"><b> 天然能源（石油与天然气） <br>
+ChengDaoXi Block, China </b></td>
+  
+</table>
+</div></div></div></div></div>
+
+<!--======================================== Chairman's Message start ============================================
+<section>
+  <div class="container">
+    <h1>主席献词</h1>
+    <div class="bgCM" style="background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/04/bg_CMnew.jpg);">
+      <div class="col-md-8 noPaddingLeft pMPCopy">
+         <p style="font-size:15.5px ; text-align:justify">您好！欢迎浏览云顶集团的控股公司—云顶有限公司网站。</p>
+
+<p style="font-size:15.5px ; text-align:justify">我希望透过此平台，大家可以进一步了解云顶有限公司，其上市子公司云顶马来西亚有限公司、云顶种植有限公司、云顶新加坡股份有限公司及其全资子公司云顶能源有限公司，及我们在全球所涉足的业务，财务业绩，产品与服务以及所推广的可持续性发展计划。</p>
+
+<p style="font-size:15.5px ; text-align:justify">尽管2017年的前景仍然像前一年那样具挑战性，但我们并没因此而放缓脚步。我可以保证，云顶团队将继续努力，确保现有业务保持强劲，同时保持新项目的稳健发展。前路也许遍布荆棘，充满挑战，我会继续带领我的团队奋进，为云顶有限公司创下佳绩。</p>
+
+<p style="font-size:15.5px ; text-align:justify">随着科技的日新月异，作为健康与高品质生活的崇尚者，我对生命科学投资的前景和潜能感到万分雀跃。我们的部分投资包含了研究与开发项目，这或许需要一段时间才能看到成果，但这些成果一定能为人类的未来生活带来正面的影响。 </p>
+
+<p style="font-size:15.5px ; text-align:justify">对我们的利益相关者，包括我们的股东、客户、监管机构、业务伙伴、供应商，以及我的董事、管理层和员工，感谢你们这些年来的坚定支持与合作,促成云顶的成功。我期待著您的持续支持，携手引领云顶勇攀高峰，再续辉煌。</p>
+
+<p style="font-size:15.5px ; text-align:justify"> 谢谢。 </p> 
+        <p style="font-size:15px ; text-align:justify"><strong>丹斯里林国泰<br />
+          主席兼總執行長<br />
+          云顶有限公司</strong></p>
+      </div>
+      <div class="col-md-4 noPaddingRight pMPImg" style="background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/03/chairman.png);"></div>
+     </div>
+  </div>
+</section>-->
+<!--====================================== Our Business Division start ===========================================-->
+<section>
+  <div class="container">
+    <h1>业务领域</h1>
+    <ul class="bdHome">
+    <!-------------------------------------------------- Thumbnail 1 --------------------------------------------->
+      <a href="http://www.genting.com/zh-hans/leisure-hospitality">
+      <li id="gm" style="background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/03/homeBD-01.jpg);">
+        <h3>休闲与酒店</h3>
+      </li>
+      </a>
+
+      <!-------------------------------------------------- Thumbnail 2 --------------------------------------------->
+      <a href="http://www.gentingplantations.com/business-divisions/plantation/" target="_blank">
+      <li id="gp" style="background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/03/homeBD-02.jpg);">
+        <h3>种植</h3>
+      </li>
+      </a>
+      <!-------------------------------------------------- Thumbnail 3 --------------------------------------------->
+      <a href="http://www.gentingplantations.com/business-divisions/property/" target="_blank">
+      <li id="gp2" style="background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/03/homeBD-03.jpg);">
+        <h3>产业开发</h3>
+      </li>
+      </a>
+      <!-------------------------------------------------- Thumbnail 4 --------------------------------------------->
+      <a href="http://www.genting.com/zh-hans/energy">
+      <li id="ge" style="background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/03/homeBD-05.jpg);">
+        <h3>能源</h3>
+      </li>
+      </a>
+      <!-------------------------------------------------- Thumbnail 5 --------------------------------------------->
+      <a href="http://www.genting.com/zh-hans/life-sciences">
+      <li id="gs" style="background-image: url(http://genting.ipwtech.com/wp-content/uploads/2017/03/homeBD-04.jpg);">
+        <h3>生命科学与生物科技</h3>
+      </li>
+      </a>
+    </ul>
+  </div>
+</section>
+<!--=========================================== Highlights start =================================================-->
+<section>
+  <div class="container">
+    <div class="col-md-6 noPaddingLeft">
+      <h1>最新消息</h1>
+      <div id="myCarousel2" class="carousel highlighSlider slide" data-ride="carousel">
+        <div class="carousel-inner">
+        
+          <!--------------------------------------------------- Slide 1 -------------------------------------------->
+          <div class="item active"> <a href="investor_relations/annual_reports/" style="color: #202020; text-decoration: none;"> 
+          <img src="http://genting.ipwtech.com/wp-content/uploads/2017/04/Highlight-AR.jpg" / id="full">
+            <div class="CBcaption col-md-6"> 云顶有限公司2016年年度报告( 最新) </div>
+          </div></a>
+
+          <!--------------------------------------------------- Slide 2 -------------------------------------------->
+          <div class="item"> <a href="sustainability" style="color: #202020; text-decoration: none;"> 
+          <img src="http://genting.ipwtech.com/wp-content/uploads/2017/04/Highlight-SR.jpg" / id="full">
+            <div class="CBcaption col-md-6"> 云顶有限公司可持续发展2016年年度报告( 最新)</div>
+          </div></a>     
+        </div> 
+
+        <!-- Controls --> 
+        <a class="left carousel-control" href="#myCarousel2" role="button" data-slide="prev"> <!--<img src="http://gentingplantations.ipwtech.com/wp-content/themes/genting/images/icoArrowXL-left.png" />--> </a> <a class="right carousel-control" href="#myCarousel2" role="button" data-slide="next"> <!--<img src="http://gentingplantations.ipwtech.com/wp-content/themes/genting/images/icoArrowXL.png" />--> </a> </div>
+    </div>
+
+<!--=========================================== Stock Quotes start ==============================================-->    
+    <div class="col-md-6 noPaddingRight"> <a href="http://www.bursamalaysia.com/market/listed-companies/list-of-companies/plc-profile.html?stock_code=3182" target="_blank">
+      <h1 class="plusIcoTitle">股份报价</h1>
+      </a>
+     <!--<iframe width="100%" class="stockquotes-height" src="http://www.insage.com.my/IR/GENTING/Corp_Stockquote.aspx" scrolling="no" frameborder="0"></iframe>-->
+
+      <style type="text/css">
+                 .errordiv { padding:10px; margin:10px; border: 1px solid #555555;color: #000000;background-color: #f8f8f8; text-align:center; width:500px; }
+                 #ai-div-hide-content-advanced_iframe { width:100%;height:100%;position:fixed;z-index:999;top:0px;left:0px;background-color:; }
+                 </style><style type="text/css"></style><script type="text/javascript">   var ai_iframe_width_advanced_iframe = 0;   var ai_iframe_height_advanced_iframe = 0;
+			if (typeof aiReadyCallbacks === 'undefined') {
+			    var aiReadyCallbacks = [];  
+			} else if (!(aiReadyCallbacks instanceof Array)) {
+			    var aiReadyCallbacks = [];			
+			}var onloadFiredadvanced_iframe = false;     function aiShowIframe() { jQuery("#advanced_iframe").css("visibility", "visible");    }    function aiShowIframeId(id_iframe) { jQuery("#"+id_iframe).css("visibility", "visible");    }    function aiResizeIframeHeight(height) { aiResizeIframeHeight(height,advanced_iframe); }    function aiResizeIframeHeightId(height,width,id) {aiResizeIframeHeightById(id,height);}</script><iframe id='advanced_iframe'  name='advanced_iframe'  src='http://www.insage.com.my/IR/GENTING/Corp_Stockquote.aspx'  width='100%'  height='380'  scrolling='auto'  frameborder='0'  border='0'  allowtransparency='true' ></iframe><script type="text/javascript">var ifrm_advanced_iframe = document.getElementById("advanced_iframe");</script><script type="text/javascript">
+                var hiddenTabsDoneadvanced_iframe = false;
+                function resizeCallbackadvanced_iframe() {}function aiChangeUrl(loc) {}</script>
+      
+      
+
+      
+
+
+
+
+
+     
+  </div>
+</section>
+
+<!--==================================== NOTIFICATION =======================================-->
+<section>
+  <div class="container">
+      <h1>警示</h1>
+      <p id="contentBoxFraud" style="text-align:justify">
+诈骗警告：我们注意到，云顶集团及旗下部分公司，度假酒店产业以及云顶集团管理层的相关资料，在未经我们的许可与授权，擅自引用本网内容。
+<a href="important-notice" style="color: #202020; text-decoration: none;"> <b><br/> 查阅更多 >>></b> </a> </p>
+
+  </div>
+</section>
+
+<!--========================================== Sustainability start ==============================================-->
+<section>
+  <div class="container subFooterIndex">
+    <div class="col-md-6 col-sm-6 noPaddingLeft">
+      <h1>可持续发展</h1>
+      <div class="contentBoxHori">
+        <div class="contentBoxHoriIMG col-md-6 noPadding"><a href="sustainability"><img src="http://genting.ipwtech.com/wp-content/uploads/2017/03/homeSustainability.jpg" / id="full"></a></div>
+        <a href="sustainability">
+        <div class="CBcaption col-md-6">
+          <p>我们承认必须拥有可持续及尽责的态度去建立我们全球企业发展。</p>
+        </div>
+        </a> </div>
+    </div>
+<!--============================================== Careers start =================================================-->      
+    <div class="col-md-6 col-sm-6 noPaddingRight">
+      <h1>职业发展</h1>
+      <div class="contentBoxHori">
+        <div class="contentBoxHoriIMG col-md-6 noPadding"><a href="careers"><img src="http://genting.ipwtech.com/wp-content/themes/genting/images/homeCareer1.jpg" / id="full"></a></div>
+        <a href="careers">
+        <div class="CBcaption col-md-6">
+          <p>云顶集团是亚洲领先及拥有卓越管理的跨国企业之一。业务横跨娱乐休闲与酒店、种植、房地产、生命科学与生物科技、邮轮以及能源领域。</p>
+        </div>
+        </a> </div>
+    </div>
+  </div>
+</section></div>
+  
+
+
+
+
+<!--======================================================================SECTION DIVIDER ======================================================================-->
+
+
+  </div>
+<!--wrap--> 
+
+
+
+<!-- end this -->
+
+              <div class="copyrights">
+  <div class="container">
+    <p class="fLeft"><a href="http://www.genting.com/zh-hans/disclaimer" target="_blank">免责声明</a> &nbsp;  | &nbsp; <a href="http://www.genting.com/zh-hans/privacy_policy" target="_blank">隐私政策</a> &nbsp;  | &nbsp; <a href="http://www.genting.com/PDF/Whistleblower Policy.pdf" target="_blank">告密政策 </a> &nbsp;| &nbsp; <a href="http://www.genting.com/zh-hans/important-notice" target="_blank">重要通知</a> &nbsp;| &nbsp;<a href="http://www.genting.com/zh-hans/contact_us" target="_blank">联系我们</a></p>
+
+ <p class="fRight">云顶有限公司（7916-A）版权所有2017</p>
+  </div>
+</div>        
+    
+<!--footer--> 
+<!-- Bootstrap core JavaScript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>--> 
+<script src="js/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/docs.min.js"></script>
+
+
+<!--- The following scripts are necessary to do TweenLite tweens on CSS properties --> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js"></script> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script> 
+
+
+
+<!--scroll top--> 
+<script>
+	$(document).ready(function() {
+		var offset=250, // At what pixels show Back to Top Button
+		scrollDuration=300; // Duration of scrolling to top
+			$(window).scroll(function() {
+			if ($(this).scrollTop() > offset) {
+					$('.top').fadeIn(500); // Time(in Milliseconds) of appearing of the Button when scrolling down.
+					} else {
+			$('.top').fadeOut(500); // Time(in Milliseconds) of disappearing of Button when scrolling up.
+			}
+		});
+	
+		// Smooth animation when scrolling
+		$('.top').click(function(event) {
+			event.preventDefault();
+				$('html, body').animate({
+				scrollTop: 0}, scrollDuration);
+			})
+		});
+</script>
+
+
+<!--Responsive Tabs jQuery--> 
+<script src="js/jquery.bootstrap-responsive-tabs.min.js"></script> 
+<script>
+$('.responsive-tabs').responsiveTabs({
+  accordionOn: ['xs', 'sm']
+});
+</script>
+
+
+  
+<!--<script>
+$('ul.nav li.dropdown').hover(function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(20).fadeIn(300);
+}, function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(20).fadeOut(300);
+});
+</script> -->
+
+
+
+<script type="text/javascript">if(window.aiModifyParent) {aiModifyParent();}</script>      <script type="text/javascript">
+
+          var pfHeaderImgUrl = '';
+          var pfHeaderTagline = '';
+          var pfdisableClickToDel = '0';
+          var pfHideImages = '0';
+          var pfImageDisplayStyle = 'right';
+          var pfDisableEmail = '0';
+          var pfDisablePDF = '0';
+          var pfDisablePrint = '0';
+          var pfCustomCSS = '';
+      (function() {
+            var e = document.createElement('script'); e.type="text/javascript";
+        if('https:' == document.location.protocol) {
+        js='https://pf-cdn.printfriendly.com/ssl/main.js';
+        }
+        else{
+        js='http://cdn.printfriendly.com/printfriendly.js';
+        }
+            e.src = js;
+            document.getElementsByTagName('head')[0].appendChild(e);
+        })();
+      </script>
+<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css'  href='http://www.genting.com/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.css?ver=1' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var spuvar = {"is_admin":"","disable_style":"","safe_mode":"","ajax_mode":"1","ajax_url":"http:\/\/www.genting.com\/wp-admin\/admin-ajax.php","ajax_mode_url":"http:\/\/www.genting.com\/?spu_action=spu_load&lang=zh-hans","pid":"2018","is_front_page":"1","is_category":"","site_url":"http:\/\/www.genting.com","is_archive":"","is_search":"","seconds_confirmation_close":"5"};
+var spuvar_social = [];
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/plugins/popups/public/assets/js/min/public-min.js?ver=1.7.1'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/jquery.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/bootstrap.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/docs.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/easing/EasePack.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/scroll_top.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/jquery.bootstrap-responsive-tabs.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/responsive1.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/big_dropdown.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/dropdown1.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/dropdown2.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/bar_chart.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/morris.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://code.jquery.com/jquery-1.7.0.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/animatedNum/jquery.animateNumber.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/step_factory.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/popout.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-content/themes/genting/js/scroll1.js?ver=4.7.2'></script>
+<script type='text/javascript' src='http://www.genting.com/wp-includes/js/wp-embed.min.js?ver=4.7.2'></script>
+</body>
