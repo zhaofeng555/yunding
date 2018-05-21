@@ -29,6 +29,8 @@ public class User {
 
     private String mobile;
 
+    private String area;
+
     @Column(name = "rec_user_id")
     private Long recUserId;
 
@@ -197,6 +199,20 @@ public class User {
      */
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    /**
+     * @return area
+     */
+    public String getArea() {
+        return area;
+    }
+
+    /**
+     * @param area
+     */
+    public void setArea(String area) {
+        this.area = area;
     }
 
     /**

@@ -15,6 +15,7 @@
     <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
     <result column="mail" jdbcType="VARCHAR" property="mail" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="rec_user_id" jdbcType="BIGINT" property="recUserId" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="buy_num" jdbcType="INTEGER" property="buyNum" />

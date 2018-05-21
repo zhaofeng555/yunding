@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,7 +18,6 @@ import com.haojg.controller.BaseController;
 import com.haojg.model.User;
 import com.haojg.output.OutpubResult;
 import com.haojg.service.CustomService;
-import com.haojg.service.TransferService;
 import com.haojg.service.UserService;
 import com.haojg.util.UserHelper;
 
@@ -78,6 +78,12 @@ public class UserController extends BaseController<User> {
 		
 		Integer recBuyNum = recUser.getBuyNum();
 		Double recAssets = recUser.getAssets();
+		
+		String recArea = recUser.getArea();
+		String area = user.getArea();
+		if(!StringUtils.endsWith(recArea, area)) {
+			return OutpubResult.getError("地区权限不足");
+		}
 		
 		
 		if((recBuyNum+recAssets) < buyNum) {
