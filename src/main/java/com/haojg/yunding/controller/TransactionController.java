@@ -1,6 +1,5 @@
 package com.haojg.yunding.controller;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.haojg.constant.StateConstant;
 import com.haojg.controller.BaseController;
 import com.haojg.model.Transaction;
 import com.haojg.model.User;
@@ -47,30 +47,8 @@ public class TransactionController extends BaseController<Transaction> {
 	public OutpubResult register(Transaction tran, HttpServletRequest request){
 		
 		User curUser = UserHelper.getCurrentUser(request);
-		
-		curUser=userService.getOne(curUser.getId());
-		
-		Double assets = curUser.getAssets();
-		
-		Integer num = tran.getNum();
-		if(assets<num){
-			return OutpubResult.getError("资产不足");
-		}
-		
-		Transaction c = new Transaction();
-		c.setCreateTime(new Date());
-		c.setUpdateTime(new Date());
-		c.setUserId(curUser.getId());
-		c.setNum(num);
-		c.setPrice(tran.getPrice());
-		c.setState(0);
-		
-		service.insertSelective(c);
-		
-		curUser.setAssets(assets-num);
-		userService.updateByPrimaryKeySelective(curUser);
-		
-		return OutpubResult.getSuccess("注册成功");
+
+		return service.applyTransaction(curUser, tran);
 	}
 	
 	@RequestMapping(value="/wantBuy", method=RequestMethod.POST)
@@ -78,11 +56,16 @@ public class TransactionController extends BaseController<Transaction> {
 	public OutpubResult register(Long id, HttpServletRequest request){
 		User curUser = UserHelper.getCurrentUser(request);
 		
+		Transaction curTrans = service.getOne(id);
+		if(curTrans.getState()!=StateConstant.TANSACTION_APPLY_STATE) {
+			return OutpubResult.getError("已经有人申购");
+		}
+		
 		Transaction c = new Transaction();
 		
 		//想要购买
 		c.setId(id);
-		c.setState(1);
+		c.setState(StateConstant.TANSACTION_WANT_BUY_STATE);
 		c.setToUserId(curUser.getId());
 		service.updateByPrimaryKeySelective(c);
 		
@@ -90,19 +73,25 @@ public class TransactionController extends BaseController<Transaction> {
 	}
 
 	//申购人 撤销 想购买
-	@RequestMapping(value="/cancle", method=RequestMethod.POST)
+	@RequestMapping(value="/cancleWantBuy", method=RequestMethod.POST)
 	@ResponseBody
 	public OutpubResult cancle(Long id, HttpServletRequest request){
 		User curUser = UserHelper.getCurrentUser(request);
 		
-		
 		//撤销
 		Transaction c = service.getOne(id);
+		
+		if(!c.getToUserId().equals(curUser.getId())) {
+			return OutpubResult.getError("权限不足");
+		}
+		if(c.getState()!=StateConstant.TANSACTION_WANT_BUY_STATE) {
+			return OutpubResult.getError("状态异常");
+		}
 		
 		//只能撤销自己申请的
 		if(c.getToUserId().equals(curUser.getId())){
 			
-			c.setState(0);
+			c.setState(StateConstant.TANSACTION_APPLY_STATE);
 			c.setToUserId(0L);
 			service.updateByPrimaryKeySelective(c);
 		}else{
@@ -117,44 +106,7 @@ public class TransactionController extends BaseController<Transaction> {
 	public OutpubResult verify(Long id, HttpServletRequest request){
 		User curUser = UserHelper.getCurrentUser(request);
 		
-		
-		//撤销
-		Transaction c = service.getOne(id);
-		
-		//只能确认自己的挂单
-		if(c.getUserId().equals(curUser.getId())){
-			
-			//确认有人申购的挂单
-			if(c.getState() == 1){
-				c.setState(2);
-				service.updateByPrimaryKeySelective(c);
-				
-				
-				//给toUser转账
-				Integer num = c.getNum();
-				Long toUserId = c.getToUserId();
-				
-				User toUser = userService.getOne(toUserId);
-				if(toUser == null){
-					throw new RuntimeException("toUser用户不存在");
-				}
-				
-				Double assets = toUser.getAssets();
-				
-				User updateUser = new User();
-				updateUser.setId(toUserId);
-				updateUser.setAssets(assets+num);
-				userService.updateByPrimaryKeySelective(updateUser);
-				
-			}else{
-				return OutpubResult.getError("挂单状态不对");
-			}
-			
-		}else{
-			return OutpubResult.getError("权限不足");
-		}
-		
-		return OutpubResult.getSuccess("确认成功");
+		return service.verifyTransaction(curUser, id);
 	}
 	
 	@RequestMapping(value="/transactionListing", method=RequestMethod.GET)
@@ -165,7 +117,13 @@ public class TransactionController extends BaseController<Transaction> {
 		//my transaction list
 		{
 			Example myExample = new Example(Transaction.class);
-			myExample.createCriteria().andEqualTo("userId", curUser.getId());
+			
+			Set<Integer> stateSet = new HashSet<>();
+			stateSet.add(StateConstant.TANSACTION_APPLY_STATE);
+			stateSet.add(StateConstant.TANSACTION_WANT_BUY_STATE);
+			myExample.createCriteria()
+			.andEqualTo("userId", curUser.getId())
+			.andIn("state", stateSet);
 			
 			List<Transaction> myData = service.getListByExample(myExample);
 			map.put("myData", myData);
@@ -175,8 +133,8 @@ public class TransactionController extends BaseController<Transaction> {
 		{
 			Example allExample = new Example(Transaction.class);
 			Set<Integer> stateSet = new HashSet<>();
-			stateSet.add(0);
-			stateSet.add(1);
+			stateSet.add(StateConstant.TANSACTION_APPLY_STATE);
+			stateSet.add(StateConstant.TANSACTION_WANT_BUY_STATE);
 			allExample.createCriteria().andIn("state", stateSet);
 			
 			List<Transaction> dataList = service.getListByExample(allExample);
@@ -187,8 +145,8 @@ public class TransactionController extends BaseController<Transaction> {
 		{
 			Example wantBuyExample = new Example(Transaction.class);
 			Set<Integer> stateSet = new HashSet<>();
-			stateSet.add(1);
-			stateSet.add(2);
+			stateSet.add(StateConstant.TANSACTION_WANT_BUY_STATE);
+//			stateSet.add(2);
 			wantBuyExample.createCriteria().andIn("state", stateSet)
 			.andEqualTo("toUserId", curUser.getId());
 			

@@ -5,6 +5,7 @@
 <body class="container">
 
 <script type="text/javascript">
+//挂单逻辑
 function subTransation(){
 	$.ajax({
 		type: "post",
@@ -21,6 +22,92 @@ function subTransation(){
 			}
 		}
 	});
+}
+
+function delTransation(id){
+	$.ajax({
+		type: "post",
+		url:"/transaction/delete",
+		contentType:"application/x-www-form-urlencoded",
+		data:{id:id},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('删除成功');
+				window.location.reload();
+			}else{
+				alert(resp.message)
+			}
+		}
+	});
+}
+
+//我要购买的逻辑
+function subWantBuy(id){
+	$.ajax({
+		type: "post",
+		url:"/transaction/wantBuy",
+		contentType:"application/x-www-form-urlencoded",
+		data:{id:id},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('申购成功');
+				window.location.reload();
+			}else{
+				alert(resp.message)
+			}
+		}
+	});
+}
+
+function cancleWantBuy(id){
+	$.ajax({
+		type: "post",
+		url:"/transaction/cancleWantBuy",
+		contentType:"application/x-www-form-urlencoded",
+		data:{id:id},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('撤销成功');
+				window.location.reload();
+			}else{
+				alert(resp.message)
+			}
+		}
+	});
+}
+
+function verifySell(id){
+	$.ajax({
+		type: "post",
+		url:"/transaction/verify",
+		contentType:"application/x-www-form-urlencoded",
+		data:{id:id},
+		dataType:"json",
+		success: function(resp, textStatus){
+			if(resp.code == 0){
+				alert('确认成功');
+				window.location.reload();
+			}else{
+				alert(resp.message)
+			}
+		}
+	});
+}
+
+//我要卖出的逻辑
+function subWantSell(id){
+
+}
+
+function cancleWantSell(id){
+
+}
+
+function verifyBuy(id){
+
 }
 </script>
 
@@ -42,7 +129,9 @@ function subTransation(){
 			<label for="inputEmail4" class="col-sm-2 control-label">操作类型：</label>
 			<div class="col-sm-10">
 				<select name="type">
-					<option value="0">买入</option>
+					<!--
+						<option value="0">买入</option>
+					-->
 					<option value="1">卖出</option>
 				</select>
 			</div>
@@ -90,12 +179,14 @@ function subTransation(){
 		            <td th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
 		            <td th:switch="${tran.state}">
 					　　<span th:case="0">申请</span>
-					　　<span th:case="1">想购买</span>
+					　　<span th:case="1">有人想购买</span>
 					　　<span th:case="2">成交</span>
 					</td>
 		            <td>
-	            		<a th:if="${session.user.id != tran.userId} and ${tran.state == 0}" href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">我要购买</a>  
-	            		<a th:if="${session.user.id == tran.userId} and ${tran.state == 1}" href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">撤销</a>  
+						<a th:if="${session.user.id != tran.userId} and ${tran.state == 0}" href="javascript:void(0)" th:onclick="'subWantBuy('+${tran.id}+');'">我要购买</a>
+						<!--
+							<a th:if="${session.user.id == tran.userId} and ${tran.state == 1}" href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">撤销</a>  
+						-->  
 					</td>
 		            
 		        </tr>
@@ -109,6 +200,7 @@ function subTransation(){
 			<table class="table table-bordered">
 		        <thead>
 		        <tr>
+		            <td>编号</td>
 		            <td>价格</td>
 		            <td>份额</td>
 		            <td>买/卖</td>
@@ -119,17 +211,21 @@ function subTransation(){
 		        </thead>
 		        <tbody>
 		        <tr  th:each="tran : ${myData}">
+					<td th:text="${tran.id}">id</td>
 		            <td th:text="${tran.price}">id</td>
 		            <td th:text="${tran.num}">id</td>
 		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
-		            <td  th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
-		             <td th:switch="${tran.state}">
+		            <td th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
+		            <td th:switch="${tran.state}">
 					　　<span th:case="0">已申请</span>
 					　　<span th:case="1">有人想购买</span>
 					　　<span th:case="2">已成交</span>
 					</td>
 					<td th:if="${tran.state == 0}">
-					<a href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">删除</a>  
+						<a href="javascript:void(0)" th:onclick="'delTransation('+${tran.id}+');'">删除</a>  
+					</td>
+					<td th:if="${tran.state == 1}">
+						<a href="javascript:void(0)" th:onclick="'verifySell('+${tran.id}+');'">确认卖出</a>  
 					</td>
 		        </tr>
 		
@@ -142,6 +238,7 @@ function subTransation(){
 			<table class="table table-bordered">
 		        <thead>
 		        <tr>
+		            <td>编号</td>
 		            <td>价格</td>
 		            <td>份额</td>
 		            <td>买/卖</td>
@@ -152,6 +249,7 @@ function subTransation(){
 		        </thead>
 		        <tbody>
 		        <tr  th:each="tran : ${wantBuyDataList}">
+					<td th:text="${tran.id}">id</td>
 		            <td th:text="${tran.price}">id</td>
 		            <td th:text="${tran.num}">id</td>
 		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
@@ -161,15 +259,14 @@ function subTransation(){
 					　　<span th:case="1">有人想购买</span>
 					　　<span th:case="2">已成交</span>
 					</td>
-					<td th:if="${tran.state == 0}">
-					<a href="javascript:void(0)" th:onclick="'changecash('+${tran.id}+');'">撤销购买</a>  
+					<td th:if="${tran.state == 1}">
+						<a href="javascript:void(0)" th:onclick="'cancleWantBuy('+${tran.id}+');'">撤销购买</a>  
 					</td>
 		        </tr>
 		
 		        </tbody>
 		    </table>
 		</div>
-	
 		
 	</div>
 
