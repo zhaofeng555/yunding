@@ -6,6 +6,13 @@
 
 <script type="text/javascript">
 function subExport(){
+	
+	if(!globalSecurity){
+		showSecondLogin2();
+		return;
+	}
+	
+	
 	$.ajax({
 		type: "post",
 		url:"/export/apply",
@@ -23,6 +30,7 @@ function subExport(){
 		}
 	});
 }
+
 </script>
 	<div th:replace="commons :: header"></div>
 	<h2>个人资产转出：</h2>

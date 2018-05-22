@@ -64,6 +64,7 @@ function validateCode(idetifycode){
 		success: function(resp, textStatus){
 			if(resp.code == 0){
 				$("#loginForm").submit();
+				//checkUserPassword();
 			}else{
 				alert('验证码不正确');
 			}
@@ -111,10 +112,10 @@ function checkUserPassword(){
 		</div>
 		<form action="/user/login" method="post" id="loginForm">
 			<div>
-			<input type="text" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" />
+			<input type="text" id="username" name="username" value="用户名" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户名';}" />
 			</div>
 			<div>
-			<input type="password" name="password" value="xxx" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'xxxxxx';}" />
+			<input type="password" id="password" name="password" value="xxx" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'xxxxxx';}" />
 			</div>
 			<div>
 			<img id="imgAuth" height="40px" width="200px"  alt="验证码" src="/auth/identifycode.do" onclick="freshImg();"/>
@@ -123,7 +124,7 @@ function checkUserPassword(){
 				<input type="text" id="idetifycode" name="idetifycode" value="验证码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}" />
 			</div>
 			<div class="signin">
-				<input type="submit" class="submit"  value="登录" />
+				<input type="button"  onclick="subUserForm()" class="submit"  value="登录" />
 			</div> 
 		</form>
 	</div>

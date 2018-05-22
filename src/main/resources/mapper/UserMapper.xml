@@ -8,6 +8,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="second_password" jdbcType="VARCHAR" property="secondPassword" />
     <result column="realname" jdbcType="VARCHAR" property="realname" />
     <result column="role" jdbcType="INTEGER" property="role" />
     <result column="card_id" jdbcType="VARCHAR" property="cardId" />

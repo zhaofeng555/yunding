@@ -5,9 +5,14 @@
 
 <body class="container">
 
-
 <script type="text/javascript">
 function subCash(){
+	
+	if(!globalSecurity){
+		showSecondLogin2();
+		return;
+	}
+	
 	$.ajax({
 		type: "post",
 		url:"/cash/apply",
@@ -24,6 +29,7 @@ function subCash(){
 		}
 	});
 }
+
 
 </script>
 
@@ -99,6 +105,9 @@ function subCash(){
 
 		
 	</div>
+
+
+
 
 </body>
 </html>

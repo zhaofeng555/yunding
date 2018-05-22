@@ -12,6 +12,9 @@ public class User {
 
     private String password;
 
+    @Column(name = "second_password")
+    private String secondPassword;
+
     private String realname;
 
     private Integer role;
@@ -104,6 +107,20 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return second_password
+     */
+    public String getSecondPassword() {
+        return secondPassword;
+    }
+
+    /**
+     * @param secondPassword
+     */
+    public void setSecondPassword(String secondPassword) {
+        this.secondPassword = secondPassword;
     }
 
     /**

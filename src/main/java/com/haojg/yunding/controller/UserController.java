@@ -81,7 +81,9 @@ public class UserController extends BaseController<User> {
 		
 		String recArea = recUser.getArea();
 		String area = user.getArea();
-		if(!StringUtils.endsWith(recArea, area)) {
+		
+		
+		if(!UserHelper.isAdmin(request) && !StringUtils.endsWith(recArea, area)) {
 			return OutpubResult.getError("地区权限不足");
 		}
 		
@@ -155,6 +157,70 @@ public class UserController extends BaseController<User> {
 		User data = getService().getOne(user.getId());
 		UserHelper.setCurrentUser(request, data);
 		return OutpubResult.getSuccess(data);
+	}
+	
+	@RequestMapping(value="/changePasswd", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult changePasswd(String oldPassword, String newPassword,  HttpServletRequest request){
+		if(StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)){
+			return OutpubResult.getError("密码不能为空");
+		}
+		User user = UserHelper.getCurrentUser(request);
+		user = getService().getOne(user.getId());
+		
+		String password = user.getPassword();
+		if(StringUtils.equals(password, oldPassword)){
+			User updateUser = new User();
+			updateUser.setId(user.getId());
+			updateUser.setPassword(newPassword);
+			updateUser.setUpdateTime(new Date());
+			int ct = service.updateByPrimaryKeySelective(updateUser);
+			if(ct >= 0 ){
+				return OutpubResult.getSuccess("修改密码成功");
+			}
+		}
+		
+		return OutpubResult.getError("修改密码失败");
+	}
+	
+	@RequestMapping(value="/changeSecondPasswd", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult changeSecondPasswd(String oldPassword, String newPassword,  HttpServletRequest request){
+		if(StringUtils.isEmpty(oldPassword) || StringUtils.isEmpty(newPassword)){
+			return OutpubResult.getError("密码不能为空");
+		}
+		User user = UserHelper.getCurrentUser(request);
+		user = getService().getOne(user.getId());
+		
+		String password = user.getSecondPassword();
+		if(StringUtils.equals(password, oldPassword)){
+			User updateUser = new User();
+			updateUser.setId(user.getId());
+			updateUser.setSecondPassword(newPassword);
+			updateUser.setUpdateTime(new Date());
+			int ct = service.updateByPrimaryKeySelective(updateUser);
+			if(ct >= 0 ){
+				return OutpubResult.getSuccess("修改密码成功");
+			}
+		}
+		
+		return OutpubResult.getError("修改密码失败");
+	}
+	
+	
+	@RequestMapping(value="/login2", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult login2(String secondPassword, HttpServletRequest request){
+		User user = UserHelper.getCurrentUser(request);
+		
+		String password = user.getSecondPassword();
+		if(StringUtils.equals(password, secondPassword)){
+			return OutpubResult.getSuccess("成功");
+		}
+		
+		return OutpubResult.getError("失败");
+		
+		
 	}
 	
 }

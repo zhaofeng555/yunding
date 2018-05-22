@@ -7,6 +7,12 @@
 <script type="text/javascript">
 //挂单逻辑
 function subTransation(){
+	
+	if(!globalSecurity){
+		showSecondLogin2();
+		return;
+	}
+	
 	$.ajax({
 		type: "post",
 		url:"/transaction/apply",
@@ -44,6 +50,13 @@ function delTransation(id){
 
 //我要购买的逻辑
 function subWantBuy(id){
+	
+	if(!globalSecurity){
+		showSecondLogin2();
+		return;
+	}
+	
+	
 	$.ajax({
 		type: "post",
 		url:"/transaction/wantBuy",
@@ -62,6 +75,13 @@ function subWantBuy(id){
 }
 
 function cancleWantBuy(id){
+	
+	if(!globalSecurity){
+		showSecondLogin2();
+		return;
+	}
+	
+	
 	$.ajax({
 		type: "post",
 		url:"/transaction/cancleWantBuy",
@@ -80,6 +100,13 @@ function cancleWantBuy(id){
 }
 
 function verifySell(id){
+	
+	if(!globalSecurity){
+		showSecondLogin2();
+		return;
+	}
+	
+	
 	$.ajax({
 		type: "post",
 		url:"/transaction/verify",
