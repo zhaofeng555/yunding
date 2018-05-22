@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SlidesJS Standard Code Example</title>
+
+  <style>
+    #slides{
+      display: none;
+      margin-bottom:50px;
+    }
+	
+    .slidesjs-navigation {
+      margin-top:3px;
+    }
+
+    .slidesjs-previous {
+      margin-right: 5px;
+      float: left;
+    }
+
+    .slidesjs-next {
+      margin-right: 5px;
+      float: left;
+    }
+
+    .slidesjs-pagination {
+      margin: 6px 0 0;
+      float: right;
+      list-style: none;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+      margin: 0 1px;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 13px;
+      height: 0;
+      padding-top: 13px;
+      background-image: url(img/pagination.png);
+      background-position: 0 0;
+      float: left;
+      overflow: hidden;
+    }
+
+    .slidesjs-pagination li a.active,
+    .slidesjs-pagination li a:hover.active {
+      background-position: 0 -13px
+    }
+
+    .slidesjs-pagination li a:hover {
+      background-position: 0 -26px
+    }
+
+    a:link,
+    a:visited {
+      color: #333
+    }
+
+    a:hover,
+    a:active {
+      color: #9e2020
+    }
+
+    .navbar {
+      overflow: hidden
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="slides">
+      <img src="img/example-slide-1.jpg" alt="Photo by: Missy S Link: http://www.flickr.com/photos/listenmissy/5087404401/">
+      <img src="img/example-slide-2.jpg" alt="Photo by: Daniel Parks Link: http://www.flickr.com/photos/parksdh/5227623068/">
+      <img src="img/example-slide-3.jpg" alt="Photo by: Mike Ranweiler Link: http://www.flickr.com/photos/27874907@N04/4833059991/">
+      <img src="img/example-slide-4.jpg" alt="Photo by: Stuart SeegerLink: http://www.flickr.com/photos/stuseeger/97577796/">
+      <a href="#" class="slidesjs-previous slidesjs-navigation"><i class="icon-chevron-left"></i></a>
+      <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right"></i></a>
+    </div>
+  </div>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="js/jquery.slides.min.js"></script>
+  <script>
+    $(function() {
+      $('#slides').slidesjs({
+        width: 940,
+        height: 528,
+        navigation: false
+      });
+    });
+  </script>
+  
+  <!--shuoming-->
+  
+<div class="pf-content"><!--======================================= OUR VISION start =============================================-->
+<section>
+  <div class="container">
+    <div class="col-md-12 noPadding">
+      <div class="borderBox">
+        <h1>我们的愿景</h1>
+        <div class="BBcaption">我们作为世界领先跨国企业，致力实现股东最大的价值利益以及确保企业核心业务可达到持续发展。</div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <br>
+    <br>
+<!--======================================= OUR MISSION start =============================================-->    
+    <div class="col-md-12 noPadding">
+      <div class="borderBox">
+        <h1>我们的使命</h1>
+        <div class="BBcaption">
+          <p class="text-left">我们将：</p>
+          <ol class="text-left noMargin">
+            <li>竭力满足客户不断变化的需求及不断优化我们的产品与服务。</li>
+            <li>透过创新理念与前卫的科技，提升竞争优势。</li>
+            <li>为股东创造稳定增长的合理回报。</li>
+            <li>实践人事政策，对员工表现与业绩进行考评及奖励，同时提供员工适当的培训与个人发展，以及职业发展机会。</li>
+            <li>成为尽责的企业公民，致力加强企业监督管理与透明度。</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section></div>
+
+  
+</body>
+</html>

@@ -146,14 +146,19 @@ function changUserSecondPassword(){
 		return;
 	}
 	
+	var postData = {
+			oldPassword:oldPassword,
+			newPassword:newPassword
+		};
+	console.log(postData);
+	
+	return ;
+	
 	$.ajax({
 		type: "post",
 		url:"/user/changeSecondPasswd",
 		dataType:"json",
-		data:{
-			oldPassword:oldPassword,
-			newPassword:newPassword
-		},
+		data:postData,
 		success: function(resp, textStatus){
 			$('#changeUserSecondPasswdDialog').modal('hide');
 			if(resp.code ==0){
@@ -288,7 +293,7 @@ function login2(){
 					</div>
 					<div class="modal-body">
 						
-						<form id="changUserPaaswdForm" class="form-horizontal">
+						<form id="changUserSecondPaaswdForm" class="form-horizontal">
 						    <div class="form-group">
 						        <label for="inputtext2" class="col-sm-3 control-label">原始二级密码：</label>
 						        <div class="col-sm-7">
