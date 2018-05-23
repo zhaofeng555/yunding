@@ -142,20 +142,20 @@ function verifyBuy(id){
 	<h2>挂盘交易：</h2>
 	<div th:replace="commons :: menu"></div>
 	
-	<div class="col-md-10">
-		<form class="form-horizontal" role="form" id="editTrasactionForm">
+	<div class="col-md-10" >
+		<form class="form-horizontal" role="form" id="editTrasactionForm"  th:if="${!session.isAdmin}">
 		
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label">持有浮动资产：</label>
 			<div class="col-sm-10">
-				<div th:text="${session.user.assets}"></div>
+				<div class="form-control" th:text="${session.user.assets}"></div>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label">操作类型：</label>
 			<div class="col-sm-10">
-				<select name="type">
+				<select name="type" class="form-control">
 					<!--
 						<option value="0">买入</option>
 					-->
@@ -166,13 +166,13 @@ function verifyBuy(id){
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label">价格：</label>
 			<div class="col-sm-10">
-				<input type="number" name="price" value=""/>
+				<input class="form-control" type="number" name="price" value=""/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="inputEmail4" class="col-sm-2 control-label">份额：</label>
 			<div class="col-sm-10">
-				<input type="number" name="num"  value=""/>
+				<input class="form-control" type="number" name="num"  value=""/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -183,18 +183,18 @@ function verifyBuy(id){
 		</div>
 	</form>
 	
-	<div class="col-sm-12">系统中所有正在交易的挂单</div>
+	<div class="col-sm-12"><h4>系统中所有正在交易的挂单</h4></div>
 	<div th:unless="${#lists.isEmpty(dataList)}">
-		<table class="table table-bordered">
+		<table class="table table-bordered table-hover">
 		        <thead>
 		        <tr>
-		            <td>编号</td>
-		            <td>价格</td>
-		            <td>份额</td>
-		            <td>买/卖</td>
-		            <td>时间</td>
-		            <td>状态</td>
-		            <td>操作</td>
+		            <th>编号</th>
+		            <th>价格</th>
+		            <th>份额</th>
+		            <th>买/卖</th>
+		            <th>时间</th>
+		            <th>状态</th>
+		            <th>操作</th>
 		        </tr>
 		        </thead>
 		        <tbody>
@@ -222,77 +222,82 @@ function verifyBuy(id){
 		    </table>
 	</div>
 
-	<div class="col-sm-12">我的挂单记录</div>
-	<div th:unless="${#lists.isEmpty(myData)}">
-			<table class="table table-bordered">
-		        <thead>
-		        <tr>
-		            <td>编号</td>
-		            <td>价格</td>
-		            <td>份额</td>
-		            <td>买/卖</td>
-		            <td>时间</td>
-		            <td>状态</td>
-		            <td>操作</td>
-		        </tr>
-		        </thead>
-		        <tbody>
-		        <tr  th:each="tran : ${myData}">
-					<td th:text="${tran.id}">id</td>
-		            <td th:text="${tran.price}">id</td>
-		            <td th:text="${tran.num}">id</td>
-		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
-		            <td th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
-		            <td th:switch="${tran.state}">
-					　　<span th:case="0">已申请</span>
-					　　<span th:case="1">有人想购买</span>
-					　　<span th:case="2">已成交</span>
-					</td>
-					<td th:if="${tran.state == 0}">
-						<a href="javascript:void(0)" th:onclick="'delTransation('+${tran.id}+');'">删除</a>  
-					</td>
-					<td th:if="${tran.state == 1}">
-						<a href="javascript:void(0)" th:onclick="'verifySell('+${tran.id}+');'">确认卖出</a>  
-					</td>
-		        </tr>
-		
-		        </tbody>
-		    </table>
+	<div class="col-sm-12" th:if="${!session.isAdmin}">
+	
+		<div class="col-sm-12"><h4>我的挂单记录</h4></div>
+		<div th:unless="${#lists.isEmpty(myData)}">
+				<table class="table table-bordered table-hover">
+			        <thead>
+			        <tr>
+			            <th>编号</th>
+			            <th>价格</th>
+			            <th>份额</th>
+			            <th>买/卖</th>
+			            <th>时间</th>
+			            <th>状态</th>
+			            <th>操作</th>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        <tr  th:each="tran : ${myData}">
+						<td th:text="${tran.id}">id</td>
+			            <td th:text="${tran.price}">id</td>
+			            <td th:text="${tran.num}">id</td>
+			            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
+			            <td th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
+			            <td th:switch="${tran.state}">
+						　　<span th:case="0">已申请</span>
+						　　<span th:case="1">有人想购买</span>
+						　　<span th:case="2">已成交</span>
+						</td>
+						<td th:if="${tran.state == 0}">
+							<a href="javascript:void(0)" th:onclick="'delTransation('+${tran.id}+');'">删除</a>  
+						</td>
+						<td th:if="${tran.state == 1}">
+							<a href="javascript:void(0)" th:onclick="'verifySell('+${tran.id}+');'">确认卖出</a>  
+						</td>
+			        </tr>
+			
+			        </tbody>
+			    </table>
+			</div>
 		</div>
 	
-	<div class="col-sm-12">我的购买记录</div>
-	<div th:unless="${#lists.isEmpty(wantBuyDataList)}">
-			<table class="table table-bordered">
-		        <thead>
-		        <tr>
-		            <td>编号</td>
-		            <td>价格</td>
-		            <td>份额</td>
-		            <td>买/卖</td>
-		            <td>时间</td>
-		            <td>状态</td>
-		            <td>操作</td>
-		        </tr>
-		        </thead>
-		        <tbody>
-		        <tr  th:each="tran : ${wantBuyDataList}">
-					<td th:text="${tran.id}">id</td>
-		            <td th:text="${tran.price}">id</td>
-		            <td th:text="${tran.num}">id</td>
-		            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
-		            <td  th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
-		             <td th:switch="${tran.state}">
-					　　<span th:case="0">已申请</span>
-					　　<span th:case="1">有人想购买</span>
-					　　<span th:case="2">已成交</span>
-					</td>
-					<td th:if="${tran.state == 1}">
-						<a href="javascript:void(0)" th:onclick="'cancleWantBuy('+${tran.id}+');'">撤销购买</a>  
-					</td>
-		        </tr>
-		
-		        </tbody>
-		    </table>
+	<div class="col-sm-12" th:if="${!session.isAdmin}">
+		<div class="col-sm-12"><h4>我的购买记录</h4></div>
+		<div th:unless="${#lists.isEmpty(wantBuyDataList)}">
+				<table class="table table-bordered table-hover">
+			        <thead>
+			        <tr>
+			            <th>编号</th>
+			            <th>价格</th>
+			            <th>份额</th>
+			            <th>买/卖</th>
+			            <th>时间</th>
+			            <th>状态</th>
+			            <th>操作</th>
+			        </tr>
+			        </thead>
+			        <tbody>
+			        <tr  th:each="tran : ${wantBuyDataList}">
+						<td th:text="${tran.id}">id</td>
+			            <td th:text="${tran.price}">id</td>
+			            <td th:text="${tran.num}">id</td>
+			            <td th:text="${tran.type==0} ? '买入':'卖出'">id</td>
+			            <td  th:text="${#dates.format(tran.createTime, 'yyyy-MM-dd HH-mm-ss')}">id</td>
+			             <td th:switch="${tran.state}">
+						　　<span th:case="0">已申请</span>
+						　　<span th:case="1">有人想购买</span>
+						　　<span th:case="2">已成交</span>
+						</td>
+						<td th:if="${tran.state == 1}">
+							<a href="javascript:void(0)" th:onclick="'cancleWantBuy('+${tran.id}+');'">撤销购买</a>  
+						</td>
+			        </tr>
+			
+			        </tbody>
+			    </table>
+			</div>
 		</div>
 		
 	</div>

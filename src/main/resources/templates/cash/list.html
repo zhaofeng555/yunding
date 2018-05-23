@@ -37,19 +37,20 @@ function changecash(cashId){
 
 
 		<div th:unless="${#lists.isEmpty(data)}">
-			<table class="table table-bordered">
+		
+			<table class="table table-bordered table-hover">
 		        <thead>
 		        <tr>
-		            <td>提现数额</td>
-		            <td>申请时间</td>
-		            <td>状态</td>
-		            <td>操作</td>
+		            <th>提现数额</th>
+		            <th>申请时间</th>
+		            <th>状态</th>
+		            <th>操作</th>
 		        </tr>
 		        </thead>
 		        <tbody>
-		        <tr  th:each="cash : ${data}">
+		        <tr  th:each="cash ,stat : ${data}" th:class="${stat.odd}?'info':''" >
 		            <td th:text="${cash.num}">id</td>
-		            <td  th:text="${#dates.format(cash.createTime, 'yyyy-MM-dd')}">id</td>
+		            <td th:text="${#dates.format(cash.createTime, 'yyyy-MM-dd')}">id</td>
 		            <td th:text="${cash.state==0} ? '未审核':'通过'">id</td>
 		            <td th:if="${cash.state eq 0}">
 		            	<a href="javascript:void(0)" th:onclick="'changecash('+${cash.id}+');'">通过</a>  

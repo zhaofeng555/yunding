@@ -48,7 +48,8 @@ public class UserController extends BaseController<User> {
 		UserHelper.setCurrentUser(request, user);
 		
 //		return OutpubResult.getSuccess("注册成功");
-		return "redirect:/user/admin";
+//		return "redirect:/user/admin";
+		return "redirect:/goto/company";
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
@@ -62,6 +63,9 @@ public class UserController extends BaseController<User> {
 		
 		return "admin";
 	}
+	
+	
+	
 	@RequestMapping(value="/getById", method=RequestMethod.GET)
 	@ResponseBody
 	public OutpubResult get(Long id) {

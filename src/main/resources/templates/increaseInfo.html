@@ -11,17 +11,19 @@
 	
 	<div class="col-md-10">
 		<div th:unless="${#lists.isEmpty(data)}">
-		    <table class="table table-bordered">
+		    <table class="table table-bordered table-hover">
 		        <thead>
 		        <tr>
-		            <td>增长</td>
-		            <td>总资产</td>
-		            <td>日期</td>
+		            <th>增长</th>
+		            <th>百分比</th>
+		            <th>总资产</th>
+		            <th>日期</th>
 		        </tr>
 		        </thead>
 		        <tbody>
 		        <tr  th:each="info : ${data}">
 		            <td th:text="${info.num}">id</td>
+		            <td>1%</td>
 		            <td th:text="${info.sum}">id</td>
 		            <td th:text="${#dates.format(info.createTime, 'yyyy-MM-dd')}">id</td>
 		        </tr>

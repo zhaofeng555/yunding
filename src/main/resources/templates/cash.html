@@ -90,7 +90,7 @@ function subCash(){
 			        </tr>
 			        </thead>
 			        <tbody>
-			        <tr  th:each="cash : ${data}">
+			        <tr  th:each="cash ,stat : ${data}" th:class="${stat.odd}?'info':''" >
 			            <td th:text="${cash.num}">id</td>
 			            <td th:text="${cash.num * 0.7}">id</td>
 			            <td  th:text="${#dates.format(cash.createTime, 'yyyy-MM-dd')}">id</td>

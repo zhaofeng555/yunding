@@ -55,21 +55,21 @@
 <h3>用户信息</h3>
 
 <div th:unless="${#lists.isEmpty(data)}">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
-            <td>ID号</td>
-            <td>用户名</td>
-            <td>姓名</td>
-            <td>身份证号</td>
-            <td>银行卡号</td>
-            <td>联系方式</td>
-            <td>数字资产</td>
-            <td>操作</td>
+            <th>ID号</th>
+            <th>用户名</th>
+            <th>姓名</th>
+            <th>身份证号</th>
+            <th>银行卡号</th>
+            <th>联系方式</th>
+            <th>数字资产</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr  th:each="user : ${data}">
+        <tr  th:each="user,userStat : ${data}" th:class="${userStat.odd}?'success':''" >
             <td th:text="${user.id}">id</td>
             <td th:text="${user.username}">id</td>
             <td th:text="${user.realname}">id</td>
@@ -112,9 +112,15 @@
 						        <div class="col-sm-3">
 						            <input type="text" class="form-control" id="inputtext1" name="username" placeholder="登录账号" value=""/>
 						        </div>
+						    </div>
+						    <div class="form-group">
 						        <label for="inputtext2" class="col-sm-2 control-label">密码</label>
 						        <div class="col-sm-3">
 						            <input type="text" class="form-control" id="inputtext2" name="password" placeholder="密码"/>
+						        </div>
+						        <label for="secondPassword" class="col-sm-2 control-label">二级密码</label>
+						        <div class="col-sm-3">
+						            <input type="text" class="form-control" id="secondPassword" name="secondPassword" placeholder="密码"/>
 						        </div>
 						    </div>
 						    <div class="form-group">

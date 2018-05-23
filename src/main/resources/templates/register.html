@@ -60,6 +60,19 @@ function registUser(){
 				</div>
 			</div>
 			<div class="form-group">
+				<label for="secondPassword"  class="col-sm-2 control-label">二级密码：</label>
+				<div class="col-sm-10">
+					<input type="text" id="secondPassword" name="secondPassword" value=""/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="reSecondPassword" class="col-sm-2 control-label">确认二级密码：</label>
+				<div class="col-sm-10">
+					<input type="text" id="reSecondPassword" value=""/>
+					<span class="tishi">与上边二级密码相同</span>
+				</div>
+			</div>
+			<div class="form-group">
 				<label for="realname" class="col-sm-2 control-label">姓名：</label>
 				<div class="col-sm-10">
 					<input type="text" id="realname" name="realname" value=""/>
@@ -69,8 +82,8 @@ function registUser(){
 			<div class="form-group">
 				<label for="realname" class="col-sm-2 control-label">地区：</label>
 				<div class="col-sm-10">
-					<input type="text" id="area" name="area" value=""/>
-					<span class="tishi">地区,只能注册自己所在地区的用户</span>
+					<input type="text" id="area" name="area" th:value="${session.user.area}"/>
+					<span class="tishi">保护地区为：【<span th:text="${session.user.area}"></span>】,只能注册自己所在地区的用户,(管理员不受限制)</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -132,21 +145,21 @@ function registUser(){
 		
 		<div class="col-md-12">
 			
-			<div class="col-sm-12">注册申报记录</div>
+			<div class="col-sm-12"><h4>注册申报记录</h4></div>
 			<div th:unless="${#lists.isEmpty(data)}">
-			    <table class="table table-bordered">
+			    <table class="table table-bordered table-hover">
 			        <thead>
 			        <tr>
-			            <td>账号</td>
-			            <td>姓名</td>
-			            <td>联系方式</td>
-			            <td>银行卡号</td>
-			            <td>购买份额</td>
-			            <td>电话</td>
+			            <th>账号</th>
+			            <th>姓名</th>
+			            <th>联系方式</th>
+			            <th>银行卡号</th>
+			            <th>购买份额</th>
+			            <th>电话</th>
 			        </tr>
 			        </thead>
 			        <tbody>
-			        <tr  th:each="user : ${data}">
+			        <tr  th:each="user  ,stat : ${data}" th:class="${stat.odd}?'info':''" >
 			            <td th:text="${user.username}">id</td>
 			            <td th:text="${user.realname}">id</td>
 			            <td th:text="${user.cardId}">id</td>
