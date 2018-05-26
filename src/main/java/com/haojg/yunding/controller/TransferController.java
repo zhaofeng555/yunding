@@ -59,12 +59,13 @@ public class TransferController extends BaseController<Transfer> {
 			return OutpubResult.getError("要过180天周期");
 		}
 		
+		Integer perGu = 2000;
 		
 		Double assets = curUser.getAssets();
 		Integer stockNum = curUser.getStockNum();
 		
 		Integer num = tran.getNum();
-		if(assets<num){
+		if(assets<num || num < perGu){
 			return OutpubResult.getSuccess("资产不足");
 		}
 		
@@ -77,10 +78,11 @@ public class TransferController extends BaseController<Transfer> {
 		
 		service.insertSelective(c);
 		
-		//减少浮动资产
-		curUser.setAssets(assets-num);
+		int addStockNum = num/perGu;
 		
-		int addStockNum = num/stockNum;
+		//减少浮动资产
+		curUser.setAssets(assets-(addStockNum*num));
+		
 		//增加股份资产
 		curUser.setStockNum(stockNum+addStockNum);
 		
