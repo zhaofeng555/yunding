@@ -86,7 +86,10 @@
                         <li class="item-second" th:if="${!session.isAdmin}"><a href="/goto/chip">转换筹码</a></li>
                         <li class="item-second" th:if="${!session.isAdmin}"><a href="/user/assets">我的资产</a></li>
                         <li class="item-second" th:if="${!session.isAdmin}"><a href="/export/exportListing">资产转出</a></li>
+                        <!-- 
                         <li class="item-second" th:if="${!session.isAdmin}"><a href="/goto/transactionListing">交易记录</a></li>
+                         -->
+                        
                         <li class="item-second" th:if="${session.isAdmin}"><a href="/cash/listing">提现管理</a></li>
                         <li class="item-second" th:if="${session.isAdmin}"><a href="/user/listing">会员管理</a></li>
                     </ul>
@@ -106,9 +109,9 @@
 -->
 
 <div class="col-md-12" th:fragment="copy">
-	<center>
+	<footer style="background:red;text-align:center;">
 		云顶数字资产    &copy; 2018 
-	</center>
+	</footer>
 </div>
 
 <header class="publicHeader col-md-12" th:fragment="header">
