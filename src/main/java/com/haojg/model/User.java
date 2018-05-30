@@ -8,6 +8,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Id
+    private String mobile;
+
     private String username;
 
     private String password;
@@ -30,8 +33,6 @@ public class User {
 
     private String mail;
 
-    private String mobile;
-
     @Column(name = "rec_user_id")
     private Long recUserId;
 
@@ -47,7 +48,7 @@ public class User {
      * 购买份额
      */
     @Column(name = "buy_num")
-    private Integer buyNum;
+    private Double buyNum;
 
     /**
      * 股份数
@@ -79,6 +80,20 @@ public class User {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     /**
@@ -208,20 +223,6 @@ public class User {
     }
 
     /**
-     * @return mobile
-     */
-    public String getMobile() {
-        return mobile;
-    }
-
-    /**
-     * @param mobile
-     */
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    /**
      * @return rec_user_id
      */
     public Long getRecUserId() {
@@ -282,7 +283,7 @@ public class User {
      *
      * @return buy_num - 购买份额
      */
-    public Integer getBuyNum() {
+    public Double getBuyNum() {
         return buyNum;
     }
 
@@ -291,7 +292,7 @@ public class User {
      *
      * @param buyNum 购买份额
      */
-    public void setBuyNum(Integer buyNum) {
+    public void setBuyNum(Double buyNum) {
         this.buyNum = buyNum;
     }
 

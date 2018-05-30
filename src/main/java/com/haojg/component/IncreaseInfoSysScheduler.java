@@ -38,7 +38,7 @@ public class IncreaseInfoSysScheduler {
         	info.setCreateTime(new Date());
         	info.setUserId(u.getId());
         	
-        	Integer buyNum = u.getBuyNum();
+        	Double buyNum = u.getBuyNum();
         	Double assets = u.getAssets();
         	
         	Double num = buyNum * 0.01;

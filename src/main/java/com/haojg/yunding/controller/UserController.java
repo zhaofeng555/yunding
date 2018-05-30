@@ -78,9 +78,9 @@ public class UserController extends BaseController<User> {
 		
 		User recUser = UserHelper.getCurrentUser(request);
 		recUser=service.getOne(recUser.getId());
-		Integer buyNum = user.getBuyNum();
+		Double buyNum = user.getBuyNum();
 		
-		Integer recBuyNum = recUser.getBuyNum();
+		Double recBuyNum = recUser.getBuyNum();
 		Double recAssets = recUser.getAssets();
 		
 		String recArea = recUser.getArea();
@@ -107,7 +107,7 @@ public class UserController extends BaseController<User> {
 			if(recBuyNum >= buyNum){
 				recUser.setBuyNum(recBuyNum-buyNum);
 			}else{
-				recUser.setBuyNum(0);
+				recUser.setBuyNum(0D);
 				recUser.setAssets(recAssets - (buyNum-recBuyNum));
 			}
 			service.updateByPrimaryKeySelective(recUser);
