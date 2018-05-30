@@ -12,11 +12,33 @@
 
 <style>
 .assets{
-	background-color: red;
+	border:2px solid #eee;
+	margin:3px;
 }
 .assets_num{
 	font-size: 50px;
 	font-family: 'Courier New', Courier, monospace;
+	height:100px;
+}
+.gudingzichan_num{
+	background:url(/images/c3-50x50.png) no-repeat;
+	width:100px;
+	height:50px;
+}
+.fudongzichan_num{
+	background:url(/images/c4-50x50.png) no-repeat;
+	width:100px;
+	height:50px;
+}
+.chiyougufen_num{
+	background:url(/images/c5-50x50.png) no-repeat;
+	width:100px;
+	height:50px;
+}
+.chiyouchouma_num{
+	background:url(/images/c6-50x50.png) no-repeat;
+	width:100px;
+	height:50px;
 }
 </style>
 
@@ -36,16 +58,36 @@
 		</div>
 		
 		<div class="form-group">
-
-				<div class="col-sm-offset-2 col-sm-4 " style="border:3px solid blue;margin:5px;">
-					<div>固定资产</div>
-					<div class="glyphicon glyphicon-yen assets_num" th:text="${data.stockNum}">xxx</div>
+			<div class="col-sm-5 assets">
+				<div class="col-sm-offset-2">固定资产</div>
+				<div class="col-sm-offset-2  assets_num" >
+					<span class="gudingzichan_num">&nbsp;&nbsp;</span>
+					<span th:text="${data.buyNum}">xxx</span>
 				</div>
-				<div class="col-sm-4"  style="border:3px solid blue;margin:5px;">
-					<div>固定资产</div>
-					<div class="glyphicon glyphicon-yen assets_num" th:text="${data.stockNum}">xxx</div>
+			</div>
+			<div class="col-sm-5 assets">
+				<div class="col-sm-offset-2">持有股份</div>
+				<div class="col-sm-offset-2  assets_num" >
+					<span class="chiyougufen_num">&nbsp;&nbsp;</span>
+					<span th:text="${data.stockNum}">xxx</span>
 				</div>
-
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-5 assets">
+				<div class="col-sm-offset-2">持有筹码</div>
+				<div class="col-sm-offset-2  assets_num" >
+					<span class="chiyouchouma_num">&nbsp;&nbsp;</span>
+					<span th:text="${data.chip}">xxx</span>
+				</div>
+			</div>
+			<div class="col-sm-5 assets">
+				<div class="col-sm-offset-2">浮动资产</div>
+				<div class="col-sm-offset-2  assets_num" >
+					<span class="fudongzichan_num">&nbsp;&nbsp;</span>
+					<span th:text="${data.assets}">xxx</span>
+				</div>
+			</div>
 		</div>
 
 		<!--
