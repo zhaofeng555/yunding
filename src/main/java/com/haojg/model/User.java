@@ -8,9 +8,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
-    private String mobile;
-
     private String username;
 
     private String password;
@@ -32,6 +29,8 @@ public class User {
     private String bankNo;
 
     private String mail;
+
+    private String mobile;
 
     @Column(name = "rec_user_id")
     private Long recUserId;
@@ -80,20 +79,6 @@ public class User {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * @return mobile
-     */
-    public String getMobile() {
-        return mobile;
-    }
-
-    /**
-     * @param mobile
-     */
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     /**
@@ -220,6 +205,20 @@ public class User {
      */
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    /**
+     * @return mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     /**
