@@ -227,4 +227,18 @@ public class UserController extends BaseController<User> {
 		
 	}
 	
+	@RequestMapping(value="/check", method=RequestMethod.GET)
+	@ResponseBody
+	public OutpubResult check(HttpServletRequest request){
+		User user = UserHelper.getCurrentUser(request);
+		
+		if(user == null ){
+			return OutpubResult.getSuccess("成功");
+		}
+		
+		return OutpubResult.getError("失败");
+		
+		
+	}
+	
 }

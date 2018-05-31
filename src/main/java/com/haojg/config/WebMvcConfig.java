@@ -7,6 +7,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.haojg.filter.CorsInterceptor;
+
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -19,7 +21,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new CrosInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new CorsInterceptor()).addPathPatterns("/**");
     }
 
     /**
