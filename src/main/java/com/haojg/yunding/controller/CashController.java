@@ -126,7 +126,7 @@ public class CashController extends BaseController<Cash> {
 		Long curTime = System.currentTimeMillis();
 		Long endTime=endDateTime.getTime();
 		if(curTime < endTime){
-			Long shengyuTime = endTime - (curTime-10);
+			Long shengyuTime = endTime - curTime;
 			
 			day = shengyuTime/oneDay;
 			

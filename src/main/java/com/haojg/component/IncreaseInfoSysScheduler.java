@@ -33,6 +33,11 @@ public class IncreaseInfoSysScheduler {
         List<User> all = userService.getAll();
         for (User u : all) {
 			
+        	Date createDateTime = u.getCreateTime();
+        	if(getDays(createDateTime) > 500){
+        		continue;
+        	}
+        	
         	IncreaseInfo info = new IncreaseInfo();
         	info.setCreateTime(new Date());
         	info.setUserId(u.getId());
@@ -54,5 +59,19 @@ public class IncreaseInfoSysScheduler {
 		}
         
     }
+    
+    static Long oneDay = 1000*60*60*24L;
+	private Long getDays(Date createDateTime){
+		System.out.println(createDateTime);
+		Long day = 0L;
+		Long curTime = System.currentTimeMillis();
+		Long createTime=createDateTime.getTime();
+		
+		Long shengyuTime = curTime-createTime;
+		
+		day = shengyuTime/oneDay;
+		
+		return day;
+	}
 }
 
