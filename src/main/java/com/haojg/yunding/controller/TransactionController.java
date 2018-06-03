@@ -156,6 +156,23 @@ public class TransactionController extends BaseController<Transaction> {
 		
 		return "transaction";
 	}
+	
+	@RequestMapping(value="/viewSellUser", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult viewSellUser(Long userId, HttpServletRequest request){
+		User u = userService.getOne(userId);
+		
+		User su = new User();
+		su.setMobile(u.getMobile());
+		su.setBankName(u.getBankName());
+		su.setBankNo(u.getBankNo());
+		su.setUsername(u.getUsername());
+		su.setRealname(u.getRealname());
+		su.setMail(u.getMail());
+		
+		return OutpubResult.getSuccess(su);
+		
+	}
 
 	
 }

@@ -11,10 +11,23 @@ public class Cash {
     @Column(name = "user_id")
     private Long userId;
 
+    private String username;
+
+    @Column(name = "bank_name")
+    private String bankName;
+
+    @Column(name = "bank_no")
+    private String bankNo;
+
+    private String mobile;
+
     /**
      * 提现金额数字
      */
-    private Integer num;
+    @Column(name = "buy_num")
+    private Integer buyNum;
+
+    private Integer assets;
 
     /**
      * 状态
@@ -56,21 +69,91 @@ public class Cash {
     }
 
     /**
+     * @return username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return bank_name
+     */
+    public String getBankName() {
+        return bankName;
+    }
+
+    /**
+     * @param bankName
+     */
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    /**
+     * @return bank_no
+     */
+    public String getBankNo() {
+        return bankNo;
+    }
+
+    /**
+     * @param bankNo
+     */
+    public void setBankNo(String bankNo) {
+        this.bankNo = bankNo;
+    }
+
+    /**
+     * @return mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    /**
      * 获取提现金额数字
      *
-     * @return num - 提现金额数字
+     * @return buy_num - 提现金额数字
      */
-    public Integer getNum() {
-        return num;
+    public Integer getBuyNum() {
+        return buyNum;
     }
 
     /**
      * 设置提现金额数字
      *
-     * @param num 提现金额数字
+     * @param buyNum 提现金额数字
      */
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setBuyNum(Integer buyNum) {
+        this.buyNum = buyNum;
+    }
+
+    /**
+     * @return assets
+     */
+    public Integer getAssets() {
+        return assets;
+    }
+
+    /**
+     * @param assets
+     */
+    public void setAssets(Integer assets) {
+        this.assets = assets;
     }
 
     /**

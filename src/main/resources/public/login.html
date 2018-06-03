@@ -27,6 +27,9 @@ function myLoad(){
 	if(h.indexOf('error') > 0){
 		alert("用户名或密码错误");
 	}
+	if(h.indexOf('lock') > 0){
+		alert("您的账号已经被锁定，请联系系统管理员");
+	}
 }
 myLoad();	
 
@@ -94,6 +97,12 @@ function checkUserPassword(){
 		}
 	});
 }
+
+$(document).keyup(function(event){
+	 if(event.keyCode ==13){
+		 subUserForm();
+	 }
+});
 
 	</script>
 	

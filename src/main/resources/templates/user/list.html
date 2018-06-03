@@ -45,6 +45,28 @@
 			}
 		});
 	}
+	
+	
+	function checkUser(userId, state){
+		var msg = (state == 1)?"您确定激活该用户？":"您确定要锁定该用户？";
+		if (!confirm(msg)) {
+			return false;
+		}
+		
+		$.ajax({
+			type: "post",
+			url:"/user/check.do",
+			data:{
+				userId:userId,
+				state:state
+			},
+			contentType:"application/x-www-form-urlencoded",
+			dataType:"json",
+			success: function(resp, textStatus){
+				window.location.reload();
+			}
+		});
+	}
 </script>
 
 <header th:replace="commons :: header"></header>
@@ -78,7 +100,9 @@
             <td th:text="${user.mobile}">id</td>
             <td th:text="${user.assets}">id</td>
             <td>
-            <a href="javascript:void(0)" th:onclick="'viewUser('+${user.id}+');'">修改</a>  
+            	<a href="javascript:void(0)" th:onclick="'viewUser('+${user.id}+');'">修改</a>  
+            	<a href="javascript:void(0)" th:if="${user.state == 1}" th:onclick="'checkUser('+${user.id}+',0);'">锁号</a>  
+            	<a href="javascript:void(0)" th:if="${user.state == 0}" th:onclick="'checkUser('+${user.id}+',1);'">激活</a>  
             </td>
         </tr>
 

@@ -20,7 +20,10 @@ public class Export {
     /**
      * 导出
      */
-    private Integer num;
+    @Column(name = "buy_num")
+    private Integer buyNum;
+
+    private Integer assets;
 
     /**
      * 状态
@@ -92,19 +95,33 @@ public class Export {
     /**
      * 获取导出
      *
-     * @return num - 导出
+     * @return buy_num - 导出
      */
-    public Integer getNum() {
-        return num;
+    public Integer getBuyNum() {
+        return buyNum;
     }
 
     /**
      * 设置导出
      *
-     * @param num 导出
+     * @param buyNum 导出
      */
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setBuyNum(Integer buyNum) {
+        this.buyNum = buyNum;
+    }
+
+    /**
+     * @return assets
+     */
+    public Integer getAssets() {
+        return assets;
+    }
+
+    /**
+     * @param assets
+     */
+    public void setAssets(Integer assets) {
+        this.assets = assets;
     }
 
     /**

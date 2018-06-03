@@ -65,6 +65,8 @@ public class User {
      */
     private Integer chip;
 
+    private Integer state;
+
     private String remark;
 
     /**
@@ -347,6 +349,20 @@ public class User {
      */
     public void setChip(Integer chip) {
         this.chip = chip;
+    }
+
+    /**
+     * @return state
+     */
+    public Integer getState() {
+        return state;
+    }
+
+    /**
+     * @param state
+     */
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     /**

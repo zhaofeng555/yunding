@@ -45,6 +45,11 @@ public class UserController extends BaseController<User> {
 //			return OutpubResult.getError("用户名或密码错误");
 		}
 		
+		if(user.getState()==0){
+			return "redirect:/login.html?lock=2";
+		}
+		
+		
 		UserHelper.setCurrentUser(request, user);
 		
 //		return OutpubResult.getSuccess("注册成功");
@@ -101,6 +106,7 @@ public class UserController extends BaseController<User> {
 			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
 			user.setRecUserId(recUser.getId());
+			user.setState(1);
 			service.insertSelective(user);
 			
 			//扣除推荐人的数字资产
@@ -227,9 +233,9 @@ public class UserController extends BaseController<User> {
 		
 	}
 	
-	@RequestMapping(value="/check", method=RequestMethod.GET)
+	@RequestMapping(value="/validate", method=RequestMethod.GET)
 	@ResponseBody
-	public OutpubResult check(HttpServletRequest request){
+	public OutpubResult validate(HttpServletRequest request){
 		User user = UserHelper.getCurrentUser(request);
 		
 		if(user == null ){
@@ -239,6 +245,27 @@ public class UserController extends BaseController<User> {
 		return OutpubResult.getError("失败");
 		
 		
+	}
+	
+	@RequestMapping(value="/check", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult check(Long userId, Integer state, HttpServletRequest request){
+		
+		
+		boolean admin = UserHelper.isAdmin(request);
+		
+		if(admin){
+			User updateUser = new User();
+			updateUser.setId(userId);
+			updateUser.setState(state);
+			int ct = service.updateByPrimaryKeySelective(updateUser);
+			if(ct>0){
+				return OutpubResult.getSuccess("成功");
+			}
+		}else{
+			return OutpubResult.getError("权限不足");
+		}
+		return OutpubResult.getError("失败");
 	}
 	
 }

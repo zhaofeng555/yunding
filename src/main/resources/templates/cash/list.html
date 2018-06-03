@@ -41,7 +41,11 @@ function changecash(cashId){
 			<table class="table table-bordered table-hover">
 		        <thead>
 		        <tr>
-		            <th>提现数额</th>
+		            <th>用户名</th>
+		            <th>联系方式</th>
+		            <th>卡号</th>
+		            <th>固定提现</th>
+		            <th>浮动提现</th>
 		            <th>申请时间</th>
 		            <th>状态</th>
 		            <th>操作</th>
@@ -49,7 +53,10 @@ function changecash(cashId){
 		        </thead>
 		        <tbody>
 		        <tr  th:each="cash ,stat : ${data}" th:class="${stat.odd}?'info':''" >
-		            <td th:text="${cash.num}">id</td>
+		            <td th:text="${cash.username}">id</td>
+		            <td th:text="${cash.mobile}">id</td>
+		            <td th:text="${cash.buyNum}">id</td>
+		            <td th:text="${cash.asserts}">id</td>
 		            <td th:text="${#dates.format(cash.createTime, 'yyyy-MM-dd')}">id</td>
 		            <td th:text="${cash.state==0} ? '未审核':'通过'">id</td>
 		            <td th:if="${cash.state eq 0}">

@@ -24,6 +24,7 @@
     <result column="stock_num" jdbcType="INTEGER" property="stockNum" />
     <result column="assets" jdbcType="DOUBLE" property="assets" />
     <result column="chip" jdbcType="INTEGER" property="chip" />
+    <result column="state" jdbcType="INTEGER" property="state" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
 </mapper>

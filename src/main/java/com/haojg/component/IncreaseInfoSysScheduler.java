@@ -26,10 +26,9 @@ public class IncreaseInfoSysScheduler {
 	IncreaseInfoService increaseInfoService;
 	
 	//每天1点钟触发
-    @Scheduled(cron = "0 0 1 * * ?")
-    // 每10秒执行一次
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void scheduler() {
-        log.info(">>>>>>>>>>>>> scheduled ...");
+        log.info(">>>>>>>>>>>>> scheduled ...{}", new Date());
         
         List<User> all = userService.getAll();
         for (User u : all) {

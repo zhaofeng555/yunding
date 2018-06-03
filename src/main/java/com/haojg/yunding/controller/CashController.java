@@ -1,5 +1,6 @@
 package com.haojg.yunding.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,51 +42,110 @@ public class CashController extends BaseController<Cash> {
 	
 	@RequestMapping(value="/apply", method=RequestMethod.POST)
 	@ResponseBody
-	public OutpubResult register(Integer num, HttpServletRequest request){
+	public OutpubResult register(Cash cash, HttpServletRequest request){
 		
 		User curUser = UserHelper.getCurrentUser(request);
-		
-		
-		Date startDateTime = curUser.getCreateTime();
-		
-		Date endDateTime = DateUtils.addDays(startDateTime, 180);
-		
-		Date curDateTime = new Date(System.currentTimeMillis());
-		
-		if(curDateTime.before(endDateTime)){
-			return OutpubResult.getError("要过180天周期");
-		}
-		
-		if(num%500 != 0){
-			return OutpubResult.getError("提现金额必须500的整数倍");
-		}
-		
 		curUser=userService.getOne(curUser.getId());
 		
-		Double assets = curUser.getAssets();
+		//提现浮动资产
+		Integer cashAssets = cash.getAssets();
+		//提现固定资产
+		Integer cashBuyNum = cash.getBuyNum();
 		
-		if(assets<num){
-			return OutpubResult.getError("资产不足");
-		}
 		
 		Cash c = new Cash();
+		User updateUser = new User();
+		updateUser.setId(curUser.getId());
+		
+		if(cashBuyNum!=null && cashBuyNum > 0){
+			
+			Date startDateTime = curUser.getCreateTime();
+			
+			Date endDateTime = DateUtils.addDays(startDateTime, 180);
+			
+			Date curDateTime = new Date(System.currentTimeMillis());
+			
+			if(curDateTime.before(endDateTime)){
+				return OutpubResult.getError("要过180天周期");
+			}
+			
+			if(cashBuyNum%500 != 0){
+				return OutpubResult.getError("提现金额必须500的整数倍");
+			}
+			
+			Double curBuyNum = curUser.getBuyNum();
+			if(curBuyNum<cashBuyNum){
+				return OutpubResult.getError("资产不足");
+			}
+			
+			c.setBuyNum(cashBuyNum);
+			c.setAssets(0);
+			updateUser.setBuyNum(curBuyNum-cashBuyNum);
+			
+		}else if(cashAssets!=null && cashAssets>0){
+			
+			if(cashAssets%500 != 0){
+				return OutpubResult.getError("提现金额必须500的整数倍");
+			}
+			
+			Double curAssets = curUser.getAssets();
+			if(curAssets<cashAssets){
+				return OutpubResult.getError("资产不足");
+			}
+			
+			c.setAssets(cashAssets);
+			c.setBuyNum(0);
+			updateUser.setAssets(curAssets-cashAssets);
+		}else{
+			return OutpubResult.getError("申请失败");
+		}
+		
+		
+		
 		c.setCreateTime(new Date());
 		c.setUpdateTime(new Date());
 		c.setUserId(curUser.getId());
-		c.setNum(num);
+		c.setBankName(curUser.getBankName());
+		c.setBankNo(curUser.getBankNo());
+		c.setMobile(curUser.getMobile());
+		c.setUsername(curUser.getUsername());
 		c.setState(0);
 		
-		service.insertSelective(c);
+		int ct = service.insertSelective(c);
+		if(ct>0){
+			userService.updateByPrimaryKeySelective(updateUser);
+		}
 		
-		curUser.setAssets(assets-num);
-		userService.updateByPrimaryKeySelective(curUser);
-		
-		return OutpubResult.getSuccess("注册成功");
+		return OutpubResult.getSuccess("申请成功");
+	}
+	
+	
+	Long oneDay = 1000*60*60*24L;
+	private Long getDays(Date endDateTime){
+		Long day = 0L;
+		Long curTime = System.currentTimeMillis();
+		Long endTime=endDateTime.getTime();
+		if(curTime < endTime){
+			Long shengyuTime = endTime - (curTime-10);
+			
+			day = shengyuTime/oneDay;
+			
+			if(shengyuTime%oneDay != 0){
+				day += 1;
+			}
+			
+		}
+		return day;
 	}
 	
 	@RequestMapping(value="/cashListing", method=RequestMethod.GET)
 	public String registerList(ModelMap map, HttpServletRequest request){
 		User curUser = UserHelper.getCurrentUser(request);
+		curUser = userService.getOne(curUser.getId());
+		Date startDateTime = curUser.getCreateTime();
+		Date endDateTime = DateUtils.addDays(startDateTime, 180);
+		Long days = getDays(endDateTime);
+		
 		
 		Example e = new Example(Cash.class);
 		e.createCriteria().andEqualTo("userId", curUser.getId());
@@ -93,6 +153,7 @@ public class CashController extends BaseController<Cash> {
 		List<Cash> data = service.getListByExample(e);
 		map.put("data", data);
 		map.put("user", curUser);
+		map.put("days", days);
 		
 		return "cash";
 	}

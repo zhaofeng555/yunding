@@ -40,6 +40,10 @@
 	width:100px;
 	height:50px;
 }
+.wenzi{
+	font-size:20px;
+	font-weight: bold;
+}
 </style>
 
 	<div th:replace="commons :: header"></div>
@@ -59,14 +63,14 @@
 		
 		<div class="form-group">
 			<div class="col-sm-5 assets">
-				<div class="col-sm-offset-2">固定资产</div>
+				<div class="col-sm-offset-2 wenzi">GSS固定资产</div>
 				<div class="col-sm-offset-2  assets_num" >
 					<span class="gudingzichan_num">&nbsp;&nbsp;</span>
 					<span th:text="${data.buyNum}">xxx</span>
 				</div>
 			</div>
 			<div class="col-sm-5 assets">
-				<div class="col-sm-offset-2">持有股份</div>
+				<div class="col-sm-offset-2 wenzi">持有股份</div>
 				<div class="col-sm-offset-2  assets_num" >
 					<span class="chiyougufen_num">&nbsp;&nbsp;</span>
 					<span th:text="${data.stockNum}">xxx</span>
@@ -75,14 +79,14 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-5 assets">
-				<div class="col-sm-offset-2">持有筹码</div>
+				<div class="col-sm-offset-2 wenzi" >持有筹码</div>
 				<div class="col-sm-offset-2  assets_num" >
 					<span class="chiyouchouma_num">&nbsp;&nbsp;</span>
 					<span th:text="${data.chip}">xxx</span>
 				</div>
 			</div>
 			<div class="col-sm-5 assets">
-				<div class="col-sm-offset-2">浮动资产</div>
+				<div class="col-sm-offset-2 wenzi" >GSS浮动资产</div>
 				<div class="col-sm-offset-2  assets_num" >
 					<span class="fudongzichan_num">&nbsp;&nbsp;</span>
 					<span th:text="${data.assets}">xxx</span>

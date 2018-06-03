@@ -40,6 +40,12 @@ function subExport(){
 		<form class="form-horizontal" id="exportForm">
 		
 		<div class="form-group">
+		<label for="inputEmail4" class="col-sm-2 control-label">备注：</label>
+			<div class="col-sm-8">
+				<div  class="form-control" style="color:red">每次只能转出一种资产</div>
+			</div>
+		</div>
+		<div class="form-group">
 		<label for="inputEmail4" class="col-sm-2 control-label">账号：</label>
 			<div class="col-sm-8">
 				<div  class="form-control" th:text="${user.username}">xxx</div>
@@ -47,20 +53,32 @@ function subExport(){
 		</div>
 		
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">持有资产份额：</label>
+		<label for="inputEmail4" class="col-sm-2 control-label">持有GSS固定资产：</label>
+			<div class="col-sm-8">
+				<div  class="form-control" th:text="${user.buyNum}">xxx</div>
+			</div>
+		</div>
+		<div class="form-group">
+		<label for="inputEmail4" class="col-sm-2 control-label">持有GSS浮动资产：</label>
 			<div class="col-sm-8">
 				<div  class="form-control" th:text="${user.assets}">xxx</div>
 			</div>
 		</div>
 		
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">转出数额：</label>
+		<label for="inputEmail4" class="col-sm-2 control-label">转出固定资产：</label>
 			<div class="col-sm-8">
-				<input  class="form-control" type="text" value="" name="num"/>
+				<input  class="form-control" type="number" value="" name="buyNum"/>
 			</div>
 		</div>
 		<div class="form-group">
-		<label for="inputEmail4" class="col-sm-2 control-label">转个用户名：</label>
+		<label for="inputEmail4" class="col-sm-2 control-label">转出浮动资产：</label>
+			<div class="col-sm-8">
+				<input  class="form-control" type="number" value="" name="assets"/>
+			</div>
+		</div>
+		<div class="form-group">
+		<label for="inputEmail4" class="col-sm-2 control-label">转出用户名：</label>
 			<div class="col-sm-8">
 				<input  class="form-control" type="text" name="toUsername" value=""/>
 				<span>要转给的用户名(系统用户名)</span>
@@ -83,13 +101,14 @@ function subExport(){
 		    <table class="table table-bordered">
 		        <thead>
 		        <tr>
-		            <td>编号</td><td>转出份额</td><td>转给用户</td><td>日期</td><td>状态</td>
+		            <td>编号</td><td>转出固定资产</td><td>转出浮动资产</td><td>转给用户</td><td>日期</td><td>状态</td>
 		        </tr>
 		        </thead>
 		        <tbody>
 		        <tr  th:each="info ,stat : ${data}" th:class="${stat.odd}?'info':''" >
 		            <td th:text="${info.id}">id</td>
-		            <td th:text="${info.num}">id</td>
+		            <td th:text="${info.buyNum}">id</td>
+		            <td th:text="${info.assets}">id</td>
 		            <td th:text="${info.toUsername}">id</td>
 		            <td th:text="${#dates.format(info.createTime, 'yyyy-MM-dd')}">id</td>
 		            <td th:text="${info.state ==0 ? '通过':'通过'}">id</td>

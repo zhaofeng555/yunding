@@ -9,7 +9,8 @@
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="to_user_id" jdbcType="BIGINT" property="toUserId" />
     <result column="to_username" jdbcType="VARCHAR" property="toUsername" />
-    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="buy_num" jdbcType="INTEGER" property="buyNum" />
+    <result column="assets" jdbcType="INTEGER" property="assets" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />

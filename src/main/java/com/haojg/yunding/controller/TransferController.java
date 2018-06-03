@@ -48,16 +48,16 @@ public class TransferController extends BaseController<Transfer> {
 		
 		curUser=userService.getOne(curUser.getId());
 		
-
-		Date startDateTime = curUser.getCreateTime();
-		
-		Date endDateTime = DateUtils.addDays(startDateTime, 180);
-		
-		Date curDateTime = new Date(System.currentTimeMillis());
-		
-		if(curDateTime.before(endDateTime)){
-			return OutpubResult.getError("要过180天周期");
-		}
+//
+//		Date startDateTime = curUser.getCreateTime();
+//		
+//		Date endDateTime = DateUtils.addDays(startDateTime, 180);
+//		
+//		Date curDateTime = new Date(System.currentTimeMillis());
+//		
+//		if(curDateTime.before(endDateTime)){
+//			return OutpubResult.getError("要过180天周期");
+//		}
 		
 		Integer perGu = 2000;
 		
