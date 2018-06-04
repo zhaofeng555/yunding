@@ -26,7 +26,7 @@ public class IncreaseInfoSysScheduler {
 	IncreaseInfoService increaseInfoService;
 	
 	//每天1点钟触发
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void scheduler() {
         log.info(">>>>>>>>>>>>> scheduled ...{}", new Date());
         
