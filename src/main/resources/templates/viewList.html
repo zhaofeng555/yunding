@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons :: head"></head>
+
+<body class="container">
+	<div th:replace="commons :: header"></div>
+	<h2>公告列表</h2>
+	<div th:replace="commons :: menu"></div>
+
+	<div class="col-md-10">
+		
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<td>ID</td>
+					<td>公告名字</td>
+					<td>公告内容</td>
+					<td>创建日期</td>
+					<td>操作</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="notice : ${data}">
+					<td th:text="${notice.id}">标题</td>
+					<td th:text="${notice.name}">标题</td>
+					<td th:text="${notice.content}">内容</td>
+					<td th:text="${#dates.format(notice.createTime, 'yyyy-MM-dd')}">日期</td>
+					<td>
+						<a href="#" target="_blank" th:href="@{/notice/edit.do(id=${notice.id})}"><span>预览</span></a>
+						</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<ul class="pager">
+				<li class="previous" th:classappend="${isFirst}? 'disabled'"><a href="#" th:href="@{/notice/listing(pageNum=${pageNum-1},pageSize=15)}">&larr; 上一页</a></li>
+				<li class="next" th:classappend="${isLast}? 'disabled'"><a href="#" th:href="@{/notice/listing(pageNum=${pageNum+1},pageSize=15)}">下一页 &rarr;</a></li>
+			</ul>
+
+	</div>
+	
+</body>
+</html>

@@ -105,6 +105,9 @@
 		.tixianguanli{
 			background:url(/images/c1-20x20.png) no-repeat ;
 		}
+		.tongzhi{
+			background:url(/images/notice.png) no-repeat;
+		}
 		
     </style>
 
@@ -118,7 +121,7 @@
                 <div class="item-body">
                     <ul class="list-unstyled">
                         <li class="item-second gongsi"><a href="/goto/company">公司简介</a></li>
-                        <li class="item-second gongsi"><a href="/notice/list">系统通知</a></li>
+                        <li class="item-second tongzhi" th:if="${!session.isAdmin}"><a href="/notice/viewList">系统通知</a></li>
                         <li class="item-second geren"><a href="/user/me">个人信息</a></li>
                         <li class="item-second guapan"><a href="/transaction/transactionListing">挂盘交易</a></li>
                         <li class="item-second zhuce"><a href="/user/registerListing">注册申报</a></li>
@@ -134,7 +137,7 @@
                         
                         <li class="item-second tixianguanli" th:if="${session.isAdmin}"><a href="/cash/listing">提现管理</a></li>
                         <li class="item-second huiyuanguanli" th:if="${session.isAdmin}"><a href="/user/listing">会员管理</a></li>
-                        <li class="item-second huiyuanguanli" th:if="${session.isAdmin}"><a href="/notice/listing">通知管理</a></li>
+                        <li class="item-second tongzhi" th:if="${session.isAdmin}"><a href="/notice/listing">通知管理</a></li>
                     </ul>
                 </div>
             </div>
@@ -214,9 +217,6 @@ function changUserSecondPassword(){
 			oldPassword:oldPassword,
 			newPassword:newPassword
 		};
-	console.log(postData);
-	
-	return ;
 	
 	$.ajax({
 		type: "post",

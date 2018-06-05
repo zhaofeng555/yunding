@@ -1,12 +1,9 @@
 <!doctype html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="utf-8" />
-<title>公告管理</title>
+<head th:replace="commons :: head"></head>
 
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-<script src="/js/jquery-2.1.0.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<body class="container">
+
 <script type="text/javascript" src="/js/xheditor/xheditor-1.2.2.min.js"></script>
 <script type="text/javascript" src="/js/xheditor/xheditor_lang/zh-cn.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -80,13 +77,13 @@ $.fn.serializeObject = function()
 		$('#noticeContent').xheditor({upImgUrl:"notice/uploadNoticeImage.do",upImgExt:"jpg,jpeg,gif,png"});
 	})
 </script>
-</head>
 
-<body class="container">
+<div th:replace="commons :: header"></div>
+	<h2>公告列表</h2>
 	<div th:replace="commons :: menu"></div>
 
 	<div class="col-md-10">
-		<h2>公告列表</h2>
+		
 		<input type="button" value="增加公告" onclick="showAddNoticeDialog();"/>
 		<table class="table table-bordered">
 			<thead>
@@ -99,11 +96,11 @@ $.fn.serializeObject = function()
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="notice : ${notices.getContent()}">
+				<tr th:each="notice : ${data}">
 					<td th:text="${notice.id}">标题</td>
 					<td th:text="${notice.name}">标题</td>
 					<td th:text="${notice.content}">内容</td>
-					<td th:text="${notice.createTimeCn}">日期</td>
+					<td th:text="${#dates.format(notice.createTime, 'yyyy-MM-dd')}">日期</td>
 					<td>
 						<a href="#" target="_blank" th:href="@{/notice/edit.do(id=${notice.id})}"><span>预览</span></a>
 						<a href="javascript:void(0)" th:onclick="'delNotice('+${notice.id}+');'"><span>删除</span></a>
@@ -113,13 +110,9 @@ $.fn.serializeObject = function()
 		</table>
 
 		<ul class="pager">
-			<li class="previous" th:classappend="${notices.isFirst()}? 'disabled'">
-				<a href="#" th:href="@{/notice/listing(page=${notices.getNumber()-1},size=15)}">&larr; 上一页</a>
-			</li>
-			<li class="next" th:classappend="${notices.isLast()}? 'disabled'">
-				<a href="#" th:href="@{/notice/listing(page=${notices.getNumber()+1},size=15)}">下一页 &rarr;</a>
-			</li>
-		</ul>
+				<li class="previous" th:classappend="${isFirst}? 'disabled'"><a href="#" th:href="@{/notice/listing(pageNum=${pageNum-1},pageSize=15)}">&larr; 上一页</a></li>
+				<li class="next" th:classappend="${isLast}? 'disabled'"><a href="#" th:href="@{/notice/listing(pageNum=${pageNum+1},pageSize=15)}">下一页 &rarr;</a></li>
+			</ul>
 
 	</div>
 	
