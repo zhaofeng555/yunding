@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.haojg.controller.BaseController;
@@ -25,12 +26,11 @@ import tk.mybatis.mapper.entity.Example;
 
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController<User> {
+public class UserController{
 
 	@Autowired
 	UserService service;
 	
-	@Override
 	public CustomService<User> getService() {
 		return service;
 	}
@@ -73,7 +73,10 @@ public class UserController extends BaseController<User> {
 	
 	@RequestMapping(value="/getById", method=RequestMethod.GET)
 	@ResponseBody
-	public OutpubResult get(Long id) {
+	public OutpubResult get(Long id, HttpServletRequest request) {
+		if(!UserHelper.isAdmin(request)){
+			return OutpubResult.getError("权限不足");
+		}
 		 User data = getService().getOne(id);
 		return OutpubResult.getSuccess(data);
 	}
@@ -91,6 +94,30 @@ public class UserController extends BaseController<User> {
 		String recArea = recUser.getArea();
 		String area = user.getArea();
 		
+		String cardId = user.getCardId();
+		if(StringUtils.isBlank(cardId)){
+			return OutpubResult.getError("身份证号为空");
+		}
+		String mobile = user.getMobile();
+		if(StringUtils.isBlank(mobile)){
+			return OutpubResult.getError("手机号为空");
+		}
+		
+		//检查cardId
+		Example countUserByCardIdEx = new Example(User.class);
+		countUserByCardIdEx.createCriteria().andEqualTo("cardId", cardId);
+		Integer ctByCardId = service.count(countUserByCardIdEx);
+		if(ctByCardId > 0){
+			return OutpubResult.getError("该身份证号已经被注册");
+		}
+		
+		//
+		Example countUserByMobileEx = new Example(User.class);
+		countUserByMobileEx.createCriteria().andEqualTo("mobile", mobile);
+		Integer ctByMobile = service.count(countUserByMobileEx);
+		if(ctByMobile > 0){
+			return OutpubResult.getError("该手机号号已经被注册");
+		}
 		
 		if(!UserHelper.isAdmin(request) && !StringUtils.endsWith(recArea, area)) {
 			return OutpubResult.getError("地区权限不足");
@@ -268,4 +295,85 @@ public class UserController extends BaseController<User> {
 		return OutpubResult.getError("失败");
 	}
 	
+
+	@RequestMapping(value="/save", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult save(User record, HttpServletRequest request) throws Exception {
+		User currentUser = UserHelper.getCurrentUser(request);
+		if(currentUser==null){
+			return OutpubResult.getError("权限不足");
+		}
+		if(!currentUser.getId().equals(record.getId()) && !UserHelper.isAdmin(request)){
+			return OutpubResult.getError("权限不足");
+		}
+		
+		User updateUser = new User();
+		updateUser.setId(record.getId());
+		updateUser.setRealname(record.getRealname());
+		updateUser.setCardId(record.getCardId());
+		updateUser.setBankName(record.getBankName());
+		updateUser.setBankNo(record.getBankNo());
+		updateUser.setMail(record.getMail());
+		updateUser.setMobile(record.getMobile());
+		
+		int ct = getService().saveOrUpdate(updateUser);
+		
+		if(ct == 0) {
+			return OutpubResult.getError("保存失败");
+		}
+		return OutpubResult.getSuccess(updateUser);
+	}
+	
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult delete(Long id, HttpServletRequest request) {
+		if(!UserHelper.isAdmin(request)){
+			return OutpubResult.getError("权限不足");
+		}
+		int ct = getService().delete(id);
+		if(ct == 0) {
+			return OutpubResult.getError("删除失败");
+		}
+		return OutpubResult.getSuccess(id);
+	}
+	
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	@ResponseBody
+	public OutpubResult list(
+			@RequestParam(required=false, defaultValue="1")Integer pageNum, 
+			@RequestParam(required=false, defaultValue="15")Integer pageSize, 
+			HttpServletRequest request) {
+		if(!UserHelper.isAdmin(request)){
+			return OutpubResult.getError("权限不足");
+		}
+		List<User> list = getService().getPageList(pageNum, pageSize);
+		return OutpubResult.getSuccess(list);
+	}
+	
+	@RequestMapping(value="/listing", method=RequestMethod.GET)
+	public String list(
+			@RequestParam(required=false, defaultValue="1")Integer pageNum, 
+			@RequestParam(required=false, defaultValue="15")Integer pageSize,
+			ModelMap map, HttpServletRequest request) {
+		
+		if(!UserHelper.isAdmin(request)){
+			return "error";
+		}
+		String simpleClassName = User.class.getSimpleName().toLowerCase();
+		List<User> list = getService().getPageList(pageNum, pageSize);
+		
+		Integer sum = getService().count();
+		Integer total = sum/pageSize;
+		if(sum%pageSize != 0){
+			++total;
+		}
+		
+		map.put("data", list);
+		map.put("pageNum", pageNum);
+		map.put("total", total);
+		map.put("isFirst", (pageNum<=1));
+		map.put("isLast", (pageNum>=total));
+		map.put("pageSize", pageSize);
+		return simpleClassName+"/list";
+	}
 }

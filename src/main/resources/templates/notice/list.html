@@ -99,8 +99,8 @@ $.fn.serializeObject = function()
 				<tr th:each="notice : ${data}">
 					<td th:text="${notice.id}">标题</td>
 					<td th:text="${notice.name}">标题</td>
-					<td th:text="${notice.content}">内容</td>
-					<td th:text="${#dates.format(notice.createTime, 'yyyy-MM-dd')}">日期</td>
+					<td th:utext="${notice.simpleContent}">内容</td>
+					<td th:text="${notice.createTimeCn}">日期</td>
 					<td>
 						<a href="#" target="_blank" th:href="@{/notice/edit.do(id=${notice.id})}"><span>预览</span></a>
 						<a href="javascript:void(0)" th:onclick="'delNotice('+${notice.id}+');'"><span>删除</span></a>

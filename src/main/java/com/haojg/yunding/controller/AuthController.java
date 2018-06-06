@@ -21,14 +21,24 @@ import com.alibaba.fastjson.JSONObject;
 import com.haojg.util.GenICodeUtils;
 import com.haojg.util.WebMiscMethod;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("auth")
+@Slf4j
 public class AuthController {
 
+	
+	
 	@RequestMapping(value = "validateIdentifycode")
 	public void validateIdentifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
-
+		String remoteHost = request.getRemoteHost();
+//		if(StringUtils.equalsIgnoreCase("127.0.0.1", remoteHost)){
+//			WebMiscMethod.writeJson(response, OutpubResult.getSuccess("OK"));
+//			return;
+//		}
+		log.info("access remote host {}", remoteHost);
 		String identifycode = WebMiscMethod.getStr(request, "identifycode");
 		String code = (String) session.getAttribute("code");
 		JSONObject rs = new JSONObject();

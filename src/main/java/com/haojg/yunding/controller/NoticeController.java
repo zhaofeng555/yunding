@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -225,4 +226,34 @@ public class NoticeController extends BaseController<Notice>{
 		}
 	}
 
+	@RequestMapping(value="/listing", method=RequestMethod.GET)
+	public String list(
+			@RequestParam(required=false, defaultValue="1")Integer pageNum, 
+			@RequestParam(required=false, defaultValue="15")Integer pageSize,
+			ModelMap map) {
+		
+		List<NoticeForm> rs = new ArrayList<>();
+		
+		String simpleClassName = entityClass.getSimpleName().toLowerCase();
+		List<Notice> list = getService().getPageList(pageNum, pageSize);
+		for (Notice n : list) {
+			NoticeForm nf = new NoticeForm();
+			BeanUtils.copyProperties(n, nf);
+			rs.add(nf);
+		}
+		
+		Integer sum = getService().count();
+		Integer total = sum/pageSize;
+		if(sum%pageSize != 0){
+			++total;
+		}
+		
+		map.put("data", rs);
+		map.put("pageNum", pageNum);
+		map.put("total", total);
+		map.put("isFirst", (pageNum<=1));
+		map.put("isLast", (pageNum>=total));
+		map.put("pageSize", pageSize);
+		return simpleClassName+"/list";
+	}
 }
