@@ -44,8 +44,13 @@ public class ExportService extends CustomService<Export> {
 		
 		User toUser = userService.findByUsername(export.getToUsername());
 		if (toUser == null) {
-			return OutpubResult.getSuccess("转出的用户不存在");
+			return OutpubResult.getError("转出的用户不存在");
 		}
+		
+		if(toUser.getId().equals(curUser.getId())){
+			return OutpubResult.getError("不能给自己转账");
+		}
+		
 		User updateToUser = new User();
 		updateToUser.setId(toUser.getId());
 		

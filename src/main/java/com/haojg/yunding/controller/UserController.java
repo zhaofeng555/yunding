@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -300,21 +301,24 @@ public class UserController{
 	@ResponseBody
 	public OutpubResult save(User record, HttpServletRequest request) throws Exception {
 		User currentUser = UserHelper.getCurrentUser(request);
-		if(currentUser==null){
-			return OutpubResult.getError("权限不足");
-		}
-		if(!currentUser.getId().equals(record.getId()) && !UserHelper.isAdmin(request)){
+		
+		User updateUser = new User();
+		if(currentUser.getId().equals(record.getId())){
+			updateUser.setId(record.getId());
+			updateUser.setRealname(record.getRealname());
+			updateUser.setCardId(record.getCardId());
+			updateUser.setBankName(record.getBankName());
+			updateUser.setBankNo(record.getBankNo());
+			updateUser.setMail(record.getMail());
+			updateUser.setMobile(record.getMobile());
+		}else if(UserHelper.isAdmin(request)){
+			BeanUtils.copyProperties(record, updateUser);
+		}else{
 			return OutpubResult.getError("权限不足");
 		}
 		
-		User updateUser = new User();
-		updateUser.setId(record.getId());
-		updateUser.setRealname(record.getRealname());
-		updateUser.setCardId(record.getCardId());
-		updateUser.setBankName(record.getBankName());
-		updateUser.setBankNo(record.getBankNo());
-		updateUser.setMail(record.getMail());
-		updateUser.setMobile(record.getMobile());
+		
+		
 		
 		int ct = getService().saveOrUpdate(updateUser);
 		
