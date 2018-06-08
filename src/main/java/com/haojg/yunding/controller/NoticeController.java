@@ -58,7 +58,13 @@ public class NoticeController extends BaseController<Notice>{
 			@RequestParam(required=false, defaultValue="15")Integer pageSize,
 			ModelMap map) {
 		
+		List<NoticeForm> rs = new ArrayList<>();
 		List<Notice> list = getService().getPageList(pageNum, pageSize);
+		for (Notice n : list) {
+			NoticeForm nf = new NoticeForm();
+			BeanUtils.copyProperties(n, nf);
+			rs.add(nf);
+		}
 		
 		Integer sum = getService().count();
 		Integer total = sum/pageSize;
@@ -66,7 +72,7 @@ public class NoticeController extends BaseController<Notice>{
 			++total;
 		}
 		
-		map.put("data", list);
+		map.put("data", rs);
 		map.put("pageNum", pageNum);
 		map.put("total", total);
 		map.put("isFirst", (pageNum<=1));
