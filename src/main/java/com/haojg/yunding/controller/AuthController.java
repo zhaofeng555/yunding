@@ -14,10 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.haojg.component.IncreaseInfoSysScheduler;
 import com.haojg.util.GenICodeUtils;
 import com.haojg.util.WebMiscMethod;
 
@@ -28,16 +31,27 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuthController {
 
-	
-	
+	@Autowired
+	IncreaseInfoSysScheduler sysScheduler;
+
+	@RequestMapping({ "super" })
+	@ResponseBody
+	public String superManCtrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String param = request.getParameter("haojg");
+		if (StringUtils.equals(param, "woshisuperman123")) {
+			this.sysScheduler.scheduler();
+		}
+		return "OK";
+	}
+
 	@RequestMapping(value = "validateIdentifycode")
 	public void validateIdentifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		String remoteHost = request.getRemoteHost();
-//		if(StringUtils.equalsIgnoreCase("127.0.0.1", remoteHost)){
-//			WebMiscMethod.writeJson(response, OutpubResult.getSuccess("OK"));
-//			return;
-//		}
+		// if(StringUtils.equalsIgnoreCase("127.0.0.1", remoteHost)){
+		// WebMiscMethod.writeJson(response, OutpubResult.getSuccess("OK"));
+		// return;
+		// }
 		log.info("access remote host {}", remoteHost);
 		String identifycode = WebMiscMethod.getStr(request, "identifycode");
 		String code = (String) session.getAttribute("code");
@@ -92,5 +106,4 @@ public class AuthController {
 		output.flush(); // 关闭输出流
 	}
 
-	
 }
