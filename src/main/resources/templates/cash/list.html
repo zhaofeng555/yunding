@@ -56,7 +56,7 @@ function changecash(cashId){
 		            <td th:text="${cash.username}">id</td>
 		            <td th:text="${cash.mobile}">id</td>
 		            <td th:text="${cash.buyNum}">id</td>
-		            <td th:text="${cash.asserts}">id</td>
+		            <td th:text="${cash.assets}">id</td>
 		            <td th:text="${#dates.format(cash.createTime, 'yyyy-MM-dd')}">id</td>
 		            <td th:text="${cash.state==0} ? '未审核':'通过'">id</td>
 		            <td th:if="${cash.state eq 0}">

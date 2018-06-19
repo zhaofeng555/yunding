@@ -38,10 +38,7 @@ public class IncreaseInfoSysScheduler {
     		log.info("不增长");
     	   return;
     	}  
-    	
-        
-        
-        
+
         List<User> all = userService.getAll();
         for (User u : all) {
 			

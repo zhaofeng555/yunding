@@ -138,11 +138,20 @@ public class UserController{
 			service.insertSelective(user);
 			
 			//扣除推荐人的数字资产
+			/*
 			if(recBuyNum >= buyNum){
 				recUser.setBuyNum(recBuyNum-buyNum);
 			}else{
 				recUser.setBuyNum(0D);
 				recUser.setAssets(recAssets - (buyNum-recBuyNum));
+			}
+			*/
+			//优先扣除浮动资产
+			if(recAssets >= buyNum){
+				recUser.setAssets(recAssets - buyNum);
+			}else{
+				recUser.setAssets(0D);
+				recUser.setBuyNum(recBuyNum - (buyNum-recAssets));
 			}
 			service.updateByPrimaryKeySelective(recUser);
 			
