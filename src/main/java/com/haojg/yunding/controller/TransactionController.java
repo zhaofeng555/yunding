@@ -51,6 +51,15 @@ public class TransactionController extends BaseController<Transaction> {
 		return service.applyTransaction(curUser, tran);
 	}
 	
+	@RequestMapping(value="/cancleApply", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult cancleApply(Long id, HttpServletRequest request){
+		
+		User curUser = UserHelper.getCurrentUser(request);
+		
+		return service.cancleApplyTransaction(curUser, id);
+	}
+	
 	@RequestMapping(value="/wantBuy", method=RequestMethod.POST)
 	@ResponseBody
 	public OutpubResult register(Long id, HttpServletRequest request){

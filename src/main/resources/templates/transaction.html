@@ -33,13 +33,13 @@ function subTransation(){
 function delTransation(id){
 	$.ajax({
 		type: "post",
-		url:"/transaction/delete",
+		url:"/transaction/cancleApply",
 		contentType:"application/x-www-form-urlencoded",
 		data:{id:id},
 		dataType:"json",
 		success: function(resp, textStatus){
 			if(resp.code == 0){
-				alert('删除成功');
+				alert('撤销成功');
 				window.location.reload();
 			}else{
 				alert(resp.message)
@@ -274,7 +274,7 @@ function viewSellUser(userId){
 						　　<span th:case="2">已成交</span>
 						</td>
 						<td th:if="${tran.state == 0}">
-							<a href="javascript:void(0)" th:onclick="'delTransation('+${tran.id}+');'">删除</a>  
+							<a href="javascript:void(0)" th:onclick="'delTransation('+${tran.id}+');'">撤销</a>  
 						</td>
 						<td th:if="${tran.state == 1}">
 							<a href="javascript:void(0)" th:onclick="'verifySell('+${tran.id}+');'">确认卖出</a>  

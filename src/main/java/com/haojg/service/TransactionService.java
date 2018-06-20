@@ -118,4 +118,33 @@ public class TransactionService extends CustomService<Transaction> {
 		return OutpubResult.getSuccess("注册成功");
 
 	}
+	//取消申请
+	@Transactional
+	public OutpubResult cancleApplyTransaction(User curUser, Long tranId) {
+		
+		curUser = userService.getOne(curUser.getId());
+		Double assets = curUser.getAssets();
+		
+		Transaction tran = mapper.selectByPrimaryKey(tranId);
+		
+		Integer num = tran.getNum();
+		Double cost = tran.getPrice() * num;
+		
+		Double newAssets = assets + cost;
+		
+		
+		int ct = mapper.deleteByPrimaryKey(tranId);
+		if (ct < 1) {
+			throw new RuntimeException("删除Transaction失败");
+		}
+		
+		curUser.setAssets(newAssets);
+		ct = userMapper.updateByPrimaryKeySelective(curUser);
+		if (ct < 1) {
+			throw new RuntimeException("更新 user 信息 失败");
+		}
+		
+		return OutpubResult.getSuccess("撤销成功");
+		
+	}
 }
