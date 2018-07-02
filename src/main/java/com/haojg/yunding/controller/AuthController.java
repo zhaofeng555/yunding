@@ -34,6 +34,12 @@ public class AuthController {
 	@Autowired
 	IncreaseInfoSysScheduler sysScheduler;
 
+	@RequestMapping("test")
+	@ResponseBody
+	public String test(){
+		return "test";
+	}
+
 	@RequestMapping({ "super" })
 	@ResponseBody
 	public String superManCtrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
