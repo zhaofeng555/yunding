@@ -42,6 +42,7 @@ function changecash(cashId){
 		        <thead>
 		        <tr>
 		            <th>用户名</th>
+		            <th>真实名</th>
 		            <th>联系方式</th>
 		            <th>卡号</th>
 		            <th>固定提现</th>
@@ -54,6 +55,7 @@ function changecash(cashId){
 		        <tbody>
 		        <tr  th:each="cash ,stat : ${data}" th:class="${stat.odd}?'info':''" >
 		            <td th:text="${cash.username}">id</td>
+		            <td th:text="${cash.realname}">id</td>
 		            <td th:text="${cash.mobile}">id</td>
 		            <td th:text="${cash.buyNum}">id</td>
 		            <td th:text="${cash.assets}">id</td>

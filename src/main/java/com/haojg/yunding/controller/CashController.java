@@ -1,29 +1,31 @@
 package com.haojg.yunding.controller;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.haojg.controller.BaseController;
 import com.haojg.model.Cash;
 import com.haojg.model.User;
+import com.haojg.output.CashForm;
 import com.haojg.output.OutpubResult;
 import com.haojg.service.CashService;
 import com.haojg.service.CustomService;
 import com.haojg.service.UserService;
 import com.haojg.util.UserHelper;
-
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import tk.mybatis.mapper.entity.Example;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cash")
@@ -172,5 +174,53 @@ public class CashController extends BaseController<Cash> {
 		service.updateByPrimaryKeySelective(c);
 		return OutpubResult.getSuccess("审核成功");
 	}
-	
+
+	@RequestMapping(value="/listing", method=RequestMethod.GET)
+	public String list(
+			@RequestParam(required=false, defaultValue="1")Integer pageNum,
+			@RequestParam(required=false, defaultValue="15")Integer pageSize,
+			ModelMap map) {
+
+		String simpleClassName = entityClass.getSimpleName().toLowerCase();
+		List<Cash> list = getService().getPageList(pageNum, pageSize);
+
+		List<Long> userIdList = Lists.newArrayList();
+
+		for(Cash c : list){
+			userIdList.add(c.getUserId());
+		}
+
+		Example e =  new Example(User.class);
+		e.createCriteria().andIn("id", userIdList);
+		List<User> userList = userService.getListByExample(e);
+		Map<Long, String> userIdUserNameMap = Maps.newHashMap();
+		for (User user : userList) {
+			userIdUserNameMap.put(user.getId(), user.getRealname());
+		}
+
+		List<CashForm> cashExtList = Lists.newArrayList();
+
+		for (Cash cash : list) {
+			CashForm cf = new CashForm();
+			BeanUtils.copyProperties(cash, cf);
+			cf.setRealname(userIdUserNameMap.get(cf.getUserId()));
+			cashExtList.add(cf);
+		}
+
+		Integer sum = getService().count();
+		Integer total = sum/pageSize;
+		if(sum%pageSize != 0){
+			++total;
+		}
+
+		map.put("data", cashExtList);
+		map.put("pageNum", pageNum);
+		map.put("total", total);
+		map.put("isFirst", (pageNum<=1));
+		map.put("isLast", (pageNum>=total));
+		map.put("pageSize", pageSize);
+		return simpleClassName+"/list";
+	}
+
+
 }
