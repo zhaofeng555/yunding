@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.haojg.model.User;
@@ -78,6 +79,8 @@ public class SecurityFilter implements Filter {
 
 		String uri = request.getRequestURI();
 		String contextPath = request.getContextPath();
+
+		//String method = ((HttpServletRequest) servletRequest).getMethod();
 
 		logger.info("uri = "+uri);
 		

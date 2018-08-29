@@ -149,7 +149,43 @@ function registUser(){
 				</div>
 			</div>
 		</form>
-		
+
+
+
+
+
+
+		<div class="col-md-12">
+
+			<div class="col-sm-12"><h4>上级推荐人</h4></div>
+			<div>
+				<table class="table table-bordered table-hover">
+					<thead>
+					<tr>
+						<th>账号</th>
+						<th>姓名</th>
+						<th>联系方式</th>
+						<th>银行卡号</th>
+						<th>购买GSS份额</th>
+						<th>电话</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr  th:if="${recUser != null}" >
+						<td th:text="${recUser.username}">id</td>
+						<td th:text="${recUser.realname}">id</td>
+						<td th:text="${recUser.cardId}">id</td>
+						<td th:text="${recUser.bankNo}">id</td>
+						<td th:text="${recUser.buyNum}">id</td>
+						<td th:text="${recUser.mobile}">id</td>
+					</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
 		<div class="col-md-12">
 			
 			<div class="col-sm-12"><h4>注册申报记录</h4></div>

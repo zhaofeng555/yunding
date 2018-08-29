@@ -172,7 +172,10 @@ public class UserController{
 		
 		List<User> userList = service.getListByExample(e);
 		map.put("data", userList);
-		
+
+		User recUser = getService().getOne(curUser.getRecUserId());
+		map.put("recUser", recUser);
+
 		return "register";
 	}
 

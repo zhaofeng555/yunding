@@ -7,6 +7,11 @@
 		<Property name="webAppRootKey">
 			yunding
 		</Property>
+		<!-- /home/logs/ -->
+		<!-- ~/logs/ -->
+		<Property name="logPath">
+			/home/logs/
+		</Property>
 	</Properties>
 
 	<Appenders>
@@ -15,8 +20,8 @@
 		</Console>
 
 		<!-- Rolling File Appender -->
-		<RollingFile name="FileAppender" fileName="/home/logs/${webAppRootKey}.log"
-			filePattern="/home/logs/${webAppRootKey}-%d{yyyy-MM-dd}-%i.log">
+		<RollingFile name="FileAppender" fileName="${logPath}/${webAppRootKey}.log"
+			filePattern="${}logPath}${webAppRootKey}-%d{yyyy-MM-dd}-%i.log">
 			<PatternLayout>
 				<Pattern>${LOG_PATTERN}</Pattern>
 			</PatternLayout>
