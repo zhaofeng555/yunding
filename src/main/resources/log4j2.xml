@@ -21,7 +21,7 @@
 
 		<!-- Rolling File Appender -->
 		<RollingFile name="FileAppender" fileName="${logPath}/${webAppRootKey}.log"
-			filePattern="${}logPath}${webAppRootKey}-%d{yyyy-MM-dd}-%i.log">
+			filePattern="${logPath}${webAppRootKey}-%d{yyyy-MM-dd}-%i.log">
 			<PatternLayout>
 				<Pattern>${LOG_PATTERN}</Pattern>
 			</PatternLayout>

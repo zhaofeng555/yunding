@@ -6,13 +6,13 @@
 
 <script type="text/javascript">
 function subExport(){
-	
+
 	if(!globalSecurity){
 		showSecondLogin2();
 		return;
 	}
-	
-	
+
+
 	$.ajax({
 		type: "post",
 		url:"/export/apply",
@@ -29,16 +29,49 @@ function subExport(){
 			}
 		}
 	});
+
+
 }
+
+function onCheckUser(input){
+    var value = $(input).val();
+    if(value.length){
+
+        $.ajax({
+            type: "post",
+            url:"/user/getUserInfoByUserName",
+            contentType:"application/x-www-form-urlencoded",
+            data:{username:value},
+            dataType:"json",
+            success: function(resp, textStatus){
+                if(resp.code == 0){
+
+					$("#exportRealName").html(resp.data.realname);
+					$("#exportMobile").html(resp.data.mobile);
+					$("#showMsgInfo").show();
+                }else{
+                    $("#showMsgInfo").hide();
+
+                    alert(resp.message);
+                }
+            }
+        });
+    }else {
+        $("#showMsgInfo").hide();
+	}
+}
+
+
+
 
 </script>
 	<div th:replace="commons :: header"></div>
 	<h2>个人资产转出：</h2>
 	<div th:replace="commons :: menu"></div>
-	
+
 	<div class="col-md-10">
 		<form class="form-horizontal" id="exportForm">
-		
+
 		<div class="form-group">
 		<label for="inputEmail4" class="col-sm-2 control-label">备注：</label>
 			<div class="col-sm-8">
@@ -80,8 +113,9 @@ function subExport(){
 		<div class="form-group">
 		<label for="inputEmail4" class="col-sm-2 control-label">转出用户名：</label>
 			<div class="col-sm-8">
-				<input  class="form-control" type="text" name="toUsername" value=""/>
-				<span>要转给的用户名(系统用户名)</span>
+				<input  class="form-control" type="text" name="toUsername" value="" onblur="onCheckUser(this)"/>
+				<div>要转给的用户名(系统用户名)</div>
+				<div id="showMsgInfo" style="display:none;color: blue;">真实姓名：<span id="exportRealName"></span>，手机号：<span id="exportMobile"></span></div>
 			</div>
 		</div>
 		

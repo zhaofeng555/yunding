@@ -69,8 +69,22 @@ public class UserController{
 		
 		return "admin";
 	}
-	
-	
+
+	@RequestMapping(value="/getUserInfoByUserName", method=RequestMethod.POST)
+	@ResponseBody
+	public OutpubResult getUserInfoById(String username, HttpServletRequest request) {
+
+		User data = service.findByUsername(username);
+		if(data != null){
+			User userInfo = new User();
+			userInfo.setId(data.getId());
+			userInfo.setMobile(data.getMobile());
+			userInfo.setRealname(data.getRealname());
+			userInfo.setUsername(data.getUsername());
+			return OutpubResult.getSuccess(userInfo);
+		}
+		return OutpubResult.getError("不存在此用户");
+	}
 	
 	@RequestMapping(value="/getById", method=RequestMethod.GET)
 	@ResponseBody
