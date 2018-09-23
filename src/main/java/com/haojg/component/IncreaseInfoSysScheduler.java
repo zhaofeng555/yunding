@@ -1,9 +1,11 @@
 package com.haojg.component;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,12 @@ public class IncreaseInfoSysScheduler {
 	
 	@Autowired
 	IncreaseInfoService increaseInfoService;
-	
+
+	static String[]excludeDate = {"2018-09-23","2018-09-24","2018-09-25"};
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
 	//每天1点钟触发
     @Scheduled(cron = "0 0 1 * * ?")
     public void scheduler() {
@@ -37,7 +44,18 @@ public class IncreaseInfoSysScheduler {
     	if(cal.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY || (cal.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)){
     		log.info("不增长");
     	   return;
-    	}  
+    	}
+
+		String rs = sdf.format(new Date());
+
+		for(String ex : excludeDate){
+			if(StringUtils.equals(rs, ex)){
+				log.info("排除 {} 不增长", ex);
+				return;
+			}
+		}
+
+
 
         List<User> all = userService.getAll();
         for (User u : all) {
